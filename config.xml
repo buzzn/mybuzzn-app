@@ -9,7 +9,8 @@
     </author>
     <content src="index.html" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
-    <preference name="BackgroundColor" value="0xfdd830"/>
+    <plugin name="cordova-plugin-customurlscheme" spec="1" />
+    <preference name="BackgroundColor" value="0xfffdd830"/>
     <preference name="Orientation" value="portrait" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -18,6 +19,11 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <feature name="Custom URL scheme">
+        <param name="id" value="cordova-plugin-customurlscheme" />
+        <param name="url" value="https://github.com/EddyVerbruggen/Custom-URL-scheme.git" />
+        <variable name="URL_SCHEME" value="mybuzzn" />
+    </feature>
     <platform name="android">
         <allow-intent href="market:*" />
         <icon src="resources/android/drawable-ldpi/icon.png" density="ldpi" />
@@ -25,11 +31,14 @@
         <icon src="resources/android/drawable-hdpi/icon.png" density="hdpi" />
         <icon src="resources/android/drawable-xhdpi/icon.png" density="xhdpi" />
         <icon src="resources/android/drawable-xxhdpi/icon.png" density="xxhdpi" />
-        <icon src="resources/android/drawable-xxxhdpi/icon.png" density="xxxhdpi">
-        <splash src="resources/android/drawable-hdpi/screen.png" density="port-hdpi"/>
+        <icon src="resources/android/drawable-xxxhdpi/icon.png" density="xxxhdpi" />
+        <!-- Splash Screens -->
         <splash src="resources/android/drawable-ldpi/screen.png" density="port-ldpi"/>
+        <splash src="resources/android/drawable-hdpi/screen.png" density="port-hdpi"/>
         <splash src="resources/android/drawable-mdpi/screen.png" density="port-mdpi"/>
         <splash src="resources/android/drawable-xhdpi/screen.png" density="port-xhdpi"/>
+        <splash src="resources/android/drawable-xxhdpi/screen.png" density="port-xxhdpi"/>
+        <splash src="resources/android/drawable-xxxhdpi/screen.png" density="port-xxxhdpi"/>
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
