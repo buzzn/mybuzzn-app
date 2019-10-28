@@ -1,5 +1,6 @@
 // FONTS
 $fontFamily: 'Asap', sans-serif;
+$fontSize: 16px;
 
 // COLORS
 $black: black;
@@ -24,6 +25,7 @@ $solar: #ffeb3b;
 $solar-1: #fff176; 
 $solar-2: #fdd830; 
 $solar-3: #fbc020;
+$solarGradient: linear-gradient(180deg, rgba(255,235,59,1) 0%, rgba(251,192,32,1) 100%);
 
 $heat: #ffa726;
 $heat-1: #ffcc80;

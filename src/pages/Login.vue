@@ -1,17 +1,22 @@
 <template>
-  <div>
+  <div class="theme--login">
     <header-bar>{{ 'login' | translate }}</header-bar>
-    login
+    <logo></logo>
+    <version-bar></version-bar>
   </div>
 </template>
 
 <script>
-import HeaderBar from '../components/HeaderBar';
+import HeaderBar from '@/components/HeaderBar';
+import Logo from '@/components/Logo';
+import VersionBar from '@/components/VersionBar';
 
 export default {
   name: 'Login',
   components: {
     HeaderBar,
+    Logo,
+    VersionBar,
   },
 };
 </script>
