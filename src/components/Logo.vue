@@ -16,7 +16,7 @@ export default {
 .logo-container {
   width: 209px;
   max-width: 100%;
-  margin: 0 auto;
+  margin: 0 auto 34px;
   opacity: 0;
   animation: fadeUp 1000ms ease-out forwards;
   img {

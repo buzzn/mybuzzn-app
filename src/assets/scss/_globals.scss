@@ -1,4 +1,14 @@
 body {
     background: $primary;
     font-family: $fontFamily;
+    max-width: 100%;
+    overflow-x: hidden;
+    color: $color;
+
+    .wrap {
+        margin: 0 20px;
+        @media #{$mediaMd} {
+            margin: 0 auto;
+        }
+    }
 }

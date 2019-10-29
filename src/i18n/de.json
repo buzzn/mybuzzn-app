@@ -1,3 +1,23 @@
 {
-    "login": "Anmelden"
+    "welcome": "Willkommen!",
+    "enter-password": "Trage dein Passwort ein und schon kann es losgehen.",
+    "login-intro": "Melde dich an und schon kann es losgehen.",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "repeat-password": "Passwort wiederholen",
+    "start": "Start",
+    "register": "Anmelden",
+    "login": "Login",
+    "profile": "Mein Account",
+    "my-buzzn": "My BUZZN",
+    "our-buzzn": "Our BUZZN",
+    "logout": "Logout",
+    "privacy-policy": "Datenschutz",
+    "imprint": "Impressum",
+    "terms": "AGB",
+    "has-already-an-account": "Du hast bereits einen Account?",
+    "has-no-account": "Du hast noch keinen Account?",
+    "demo-text": "Du willst erst mal nur kucken?",
+    "demo-modus": "Demo Modus",
+    "help": "Hilfe"
 }
