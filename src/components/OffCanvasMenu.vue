@@ -2,16 +2,18 @@
     <div id="off-canvas-menu" :class="{'open': open}">
         <nav>
             <ul>
-                <li><router-link :to="{ name: 'Profile' }">{{ 'profile' | translate }}</router-link></li>
-                <li><router-link :to="{ name: 'MyBuzzn' }">{{ 'my-buzzn' | translate }}</router-link></li>
-                <li><router-link :to="{ name: 'OurBuzzn' }">{{ 'our-buzzn' | translate }}</router-link></li>
+                <li><router-link @click.native="$emit('navigate')" :to="{ name: 'Profile' }">{{ 'profile' | translate }}</router-link></li>
+                <li><router-link @click.native="$emit('navigate')" :to="{ name: 'MyBuzzn' }">{{ 'my-buzzn' | translate }}</router-link></li>
+                <li><router-link @click.native="$emit('navigate')" :to="{ name: 'OurBuzzn' }">{{ 'our-buzzn' | translate }}</router-link></li>
+                <li><router-link @click.native="$emit('navigate')" to="/meta/support">{{ 'support' | translate }}</router-link></li>
+                <li><a href="#" @click.prevent="logout">{{ 'logout' | translate }}</a></li>
             </ul>
         </nav>
         <nav class="meta">
             <ul>
-                <li><router-link :to="{ name: 'Meta' }">{{ 'privacy-policy' | translate }}</router-link></li>
-                <li><router-link :to="{ name: 'Meta' }">{{ 'imprint' | translate }}</router-link></li>
-                <li><router-link :to="{ name: 'Meta' }">{{ 'terms' | translate }}</router-link></li>
+                <li><router-link @click.native="$emit('navigate')" :to="{ path: '/meta/privacy-policy' }">{{ 'privacy-policy' | translate }}</router-link></li>
+                <li><router-link @click.native="$emit('navigate')" :to="{ path: '/meta/imprint' }">{{ 'imprint' | translate }}</router-link></li>
+                <li><router-link @click.native="$emit('navigate')" :to="{ path: '/meta/terms' }">{{ 'terms' | translate }}</router-link></li>
             </ul>
         </nav>
     </div>
@@ -21,6 +23,12 @@
 export default {
   name: 'OffCanvasMenu',
   props: ['open'],
+  methods: {
+    logout() {
+      // do logout call here
+      this.$router.push({ name: 'Login' });
+    },
+  },
 };
 </script>
 

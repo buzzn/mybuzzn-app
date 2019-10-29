@@ -53,6 +53,8 @@ export default {
   p {
     text-align: center;
     font-size: 12px;
+    margin: 0;
+    padding: 0 0 1em;
     a {
       text-decoration: none;
       font-weight: bold;

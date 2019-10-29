@@ -1,6 +1,6 @@
 <template>
   <div id="app" :class="{ 'open-menu': openMenu }">
-    <off-canvas-menu :open="openMenu"></off-canvas-menu>
+    <off-canvas-menu :open="openMenu" @navigate="openMenu = false"></off-canvas-menu>
     <div class="container" >
       <router-view @menu="toggleMenu"/>
     </div>

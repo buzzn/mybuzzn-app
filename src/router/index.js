@@ -79,6 +79,8 @@ router.beforeEach((to, from, next) => {
         name: 'MyBuzzn',
       });
     }
+  } else {
+    next();
   }
 });
 

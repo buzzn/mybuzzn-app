@@ -1,10 +1,29 @@
 <template>
-  <div>meta</div>
+  <div class="theme--meta">
+    <header-bar @menu="$emit('menu')">{{ $route.params.slug | translate }}</header-bar>
+    <component :is="$route.params.slug"></component>
+    <version-bar></version-bar>
+  </div>
 </template>
 
 <script>
+import HeaderBar from '@/components/HeaderBar';
+import VersionBar from '@/components/VersionBar';
+import Support from '@/pages/meta/Support';
+import Imprint from '@/pages/meta/Imprint';
+import Terms from '@/pages/meta/Terms';
+import PrivacyPolicy from '@/pages/meta/PrivacyPolicy';
+
 export default {
   name: 'Meta',
+  components: {
+    HeaderBar,
+    VersionBar,
+    Support,
+    Imprint,
+    Terms,
+    PrivacyPolicy,
+  },
 };
 </script>
 
