@@ -1,14 +1,19 @@
 <template>
     <div class="field">
         <label :for="name">{{ label }}</label>
-        <input :id="name" :name="name" :type="type || 'text'" :placeholder="label" />
+        <input ref="input" @input="update" :value="value" :id="name" :name="name" :type="type || 'text'" :placeholder="label" />
     </div>
 </template>
 
 <script>
 export default {
   name: 'Field',
-  props: ['label', 'type', 'name'],
+  props: ['label', 'type', 'name', 'value'],
+  methods: {
+    update() {
+      this.$emit('input', this.$refs.input.value);
+    },
+  },
 };
 </script>
 

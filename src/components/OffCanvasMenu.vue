@@ -2,11 +2,11 @@
     <div id="off-canvas-menu" :class="{'open': open}">
         <nav>
             <ul>
-                <li><router-link @click.native="$emit('navigate')" :to="{ name: 'Profile' }">{{ 'profile' | translate }}</router-link></li>
-                <li><router-link @click.native="$emit('navigate')" :to="{ name: 'MyBuzzn' }">{{ 'my-buzzn' | translate }}</router-link></li>
-                <li><router-link @click.native="$emit('navigate')" :to="{ name: 'OurBuzzn' }">{{ 'our-buzzn' | translate }}</router-link></li>
+                <li v-if="auth.loggedIn"><router-link @click.native="$emit('navigate')" :to="{ name: 'Profile' }">{{ 'profile' | translate }}</router-link></li>
+                <li v-if="auth.loggedIn"><router-link @click.native="$emit('navigate')" :to="{ name: 'MyBuzzn' }">{{ 'my-buzzn' | translate }}</router-link></li>
+                <li v-if="auth.loggedIn"><router-link @click.native="$emit('navigate')" :to="{ name: 'OurBuzzn' }">{{ 'our-buzzn' | translate }}</router-link></li>
                 <li><router-link @click.native="$emit('navigate')" to="/meta/support">{{ 'support' | translate }}</router-link></li>
-                <li><a href="#" @click.prevent="logout">{{ 'logout' | translate }}</a></li>
+                <li v-if="auth.loggedIn"><a href="#" @click.prevent="logout">{{ 'logout' | translate }}</a></li>
             </ul>
         </nav>
         <nav class="meta">
@@ -20,9 +20,14 @@
 </template>
 
 <script>
+import AuthState from '../states/AuthState';
+
 export default {
   name: 'OffCanvasMenu',
   props: ['open'],
+  data: () => ({
+    auth: AuthState.state,
+  }),
   methods: {
     logout() {
       // do logout call here

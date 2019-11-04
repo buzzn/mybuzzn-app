@@ -4,9 +4,9 @@
     <logo></logo>
     <panel :title="'welcome' | translate">
       <p>{{ 'login-intro' | translate }}</p>
-      <field :label="'email' | translate" type="email" name="email"></field>
+      <field v-model="email" :label="'email' | translate" type="email" name="email"></field>
       <field :label="'password' | translate" type="password" name="password"></field>
-      <field-button :label="'login' | translate"></field-button>
+      <field-button @click="signIn" :label="'login' | translate"></field-button>
     </panel>
 
     <div class="hints wrap">
@@ -28,6 +28,8 @@ import Panel from '@/components/Panel';
 import Field from '@/components/Field';
 import FieldButton from '@/components/FieldButton';
 import VersionBar from '@/components/VersionBar';
+import * as config from '@/config/';
+import AuthState from '../states/AuthState';
 
 export default {
   name: 'Login',
@@ -38,6 +40,21 @@ export default {
     Field,
     FieldButton,
     VersionBar,
+  },
+  data: () => ({
+    email: '',
+    password: '',
+  }),
+  methods: {
+    signIn() {
+      fetch(config.endpoints.signin)
+        .then(response => response.json())
+        .then((json) => {
+          AuthState.set('token', json.data.token);
+          AuthState.set('loggedIn', Boolean(json.data.token));
+          this.$router.push({ name: 'MyBuzzn' });
+        });
+    },
   },
 };
 </script>

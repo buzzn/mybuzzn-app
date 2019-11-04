@@ -6,6 +6,7 @@ import MyBuzzn from '@/pages/MyBuzzn';
 import OurBuzzn from '@/pages/OurBuzzn';
 import Profile from '@/pages/Profile';
 import Register from '@/pages/Register';
+import AuthState from '../states/AuthState';
 
 Vue.use(Router);
 
@@ -61,7 +62,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!localStorage.getItem('token')) {
+    if (!AuthState.get('loggedIn')) {
       // no token found, then redirect to login page
       next({
         name: 'Login',
@@ -71,7 +72,7 @@ router.beforeEach((to, from, next) => {
       next();
     }
   } else if (to.matched.some(record => record.meta.withoutAuth)) {
-    if (!localStorage.getItem('token')) {
+    if (!AuthState.get('loggedIn')) {
       // no token found, then show page
       next();
     } else {

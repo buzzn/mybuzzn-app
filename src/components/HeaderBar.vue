@@ -3,15 +3,20 @@
       <a class="menu-toggle" @click="$emit('menu')">
         <span></span>
       </a>
-      <h1>
+      <h1 @click="setToken('wurstsalat')">
         <slot></slot>
       </h1>
     </header>
 </template>
 
 <script>
+import AuthState from '../states/AuthState';
+
 export default {
   name: 'HeaderBar',
+  data: () => ({
+    auth: AuthState.state,
+  }),
 };
 </script>
 
