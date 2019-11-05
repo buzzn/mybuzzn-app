@@ -1,0 +1,103 @@
+{
+    "code": 200,
+    "data": [
+        {
+            "id": 1,
+            "position": 1,
+            "avatar": "https://api.adorable.io/avatars/285/johndoe@mustermann.net.png",
+            "name": "John Doe",
+            "value": 1234
+        },
+        {
+            "id": 2,
+            "position": 2,
+            "avatar": "https://api.adorable.io/avatars/285/janedoe@mustermann.net.png",
+            "name": "Jane Doe",
+            "value": 1235
+        },
+        {
+            "id": 3,
+            "position": 3,
+            "avatar": "https://api.adorable.io/avatars/285/joandoe@mustermann.net.png",
+            "name": "Joan Doe",
+            "value": 1236
+        },
+        {
+            "id": 4,
+            "position": 4,
+            "avatar": "https://api.adorable.io/avatars/285/josefdoe@mustermann.net.png",
+            "name": "Josef Doe",
+            "value": 1237
+        },
+        {
+            "id": 5,
+            "position": 5,
+            "avatar": "https://api.adorable.io/avatars/285/jolandadoe@mustermann.net.png",
+            "name": "Jolanda Doe",
+            "value": 1238
+        },
+        {
+            "id": 6,
+            "position": 6,
+            "avatar": "https://api.adorable.io/avatars/285/jakobdoe@mustermann.net.png",
+            "name": "Jakob Doe",
+            "value": 1239
+        },
+        {
+            "id": 7,
+            "position": 7,
+            "avatar": "https://api.adorable.io/avatars/285/johannesdoe@mustermann.net.png",
+            "name": "Johannes Doe",
+            "value": 1240
+        },
+        {
+            "id": 8,
+            "position": 8,
+            "avatar": "https://api.adorable.io/avatars/285/johanndoe@mustermann.net.png",
+            "name": "Johann Doe",
+            "value": 1241
+        },
+        {
+            "id": 9,
+            "position": 9,
+            "avatar": "https://api.adorable.io/avatars/285/jeremydoe@mustermann.net.png",
+            "name": "Jeremy Doe",
+            "value": 1242
+        },
+        {
+            "id": 10,
+            "position": 10,
+            "avatar": "https://api.adorable.io/avatars/285/jaydoe@mustermann.net.png",
+            "name": "Jay Doe",
+            "value": 1243
+        },
+        {
+            "id": 11,
+            "position": 11,
+            "avatar": "https://api.adorable.io/avatars/285/jaydoe@mustermann.net.png",
+            "name": "Jay Doe",
+            "value": 1244
+        },
+        {
+            "id": 12,
+            "position": 12,
+            "avatar": "https://api.adorable.io/avatars/285/jasondoe@mustermann.net.png",
+            "name": "Jason Doe",
+            "value": 1245
+        },
+        {
+            "id": 13,
+            "position": 13,
+            "avatar": "https://api.adorable.io/avatars/285/joelinedoe@mustermann.net.png",
+            "name": "Joeline Doe",
+            "value": 1246
+        },
+        {
+            "id": 14,
+            "position": 14,
+            "avatar": "https://api.adorable.io/avatars/285/jaquedoe@mustermann.net.png",
+            "name": "Jaque Doe",
+            "value": 1247
+        }
+    ]
+}

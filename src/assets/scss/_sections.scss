@@ -1,0 +1,18 @@
+section {
+    background: red;
+    padding-bottom: 60px;
+    padding-top: 20px;
+    &.section--nightsky {
+        background: rgb(47,68,71);
+        background: linear-gradient(0deg, rgba(47,68,71,1) 0%, rgba(72,163,181,1) 100%);
+        color: white;
+    }
+
+    &.section--coal {
+        background: $color;
+        color: white;
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+        margin-top: -30px;
+    }
+}
