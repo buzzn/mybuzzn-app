@@ -1,11 +1,15 @@
-const AuthState = () => {
-  const storeKey = 'auth';
-  const initState = {
-    token: null,
-    loggedIn: false,
-    role: null,
+const ProfileState = () => {
+  const storeKey = 'profile';
+
+  let state = {
+    firstname: '',
+    lastname: '',
+    username: '',
+    email: null,
+    avatar: null,
+    flatSize: 0,
+    flatPopulation: 0,
   };
-  let state = initState;
 
   const boot = () => {
     const raw = localStorage.getItem(storeKey);
@@ -27,16 +31,11 @@ const AuthState = () => {
 
   const get = key => state[key];
 
-  const destroy = () => {
-    localStorage.removeItem('auth');
-  };
-
   return {
     state,
     get,
     set,
-    destroy,
   };
 };
 
-export default AuthState();
+export default ProfileState();

@@ -1,7 +1,7 @@
 <template>
   <div id="app" :class="{ 'open-menu': openMenu }">
     <off-canvas-menu :open="openMenu" @navigate="openMenu = false"></off-canvas-menu>
-    <div class="container" >
+    <div class="container" @touchstart="openMenu ? openMenu = false : null">
       <router-view @menu="toggleMenu"/>
     </div>
   </div>
@@ -36,6 +36,13 @@ export default {
     @media #{$mediaMd} {
       transform: translate(450px);
     }
+    .container {
+      opacity: 0.5;
+    }
+  }
+  .container {
+    opacity: 1;
+    transition: opacity 500ms ease;
   }
 }
 </style>

@@ -11,6 +11,7 @@
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <plugin name="cordova-plugin-customurlscheme" spec="4" />
     <plugin name="cordova-plugin-statusbar" spec="2" />
+    <plugin name="cordova-plugin-camera" spec="4" />
     <preference name="BackgroundColor" value="0xfffdd830"/>
     <preference name="Orientation" value="portrait" />
     <preference name="StatusBarOverlaysWebView" value="false" />
@@ -29,6 +30,9 @@
         <variable name="URL_SCHEME" value="mybuzzn" />
     </feature>
     <platform name="android">
+        <feature name="Camera">
+            <param name="android-package" value="org.apache.cordova.CameraLauncher" />
+        </feature>
         <allow-intent href="market:*" />
         <icon src="resources/android/drawable-ldpi/icon.png" density="ldpi" />
         <icon src="resources/android/drawable-mdpi/icon.png" density="mdpi" />
@@ -45,6 +49,15 @@
         <splash src="resources/android/drawable-xxxhdpi/screen.png" density="port-xxxhdpi"/>
     </platform>
     <platform name="ios">
+        <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+            <string>need camera access to take a picture for an avatar</string>
+        </edit-config>
+        <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
+            <string>need photo library access to allow setting a new avatar from there</string>
+        </edit-config>
+        <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
+            <string>need photo library access to save the taken avatar picture there</string>
+        </edit-config>
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <icon src="resources/ios/AppIcon.appiconset/icon-60x60@3x.png" width="180" height="180" />

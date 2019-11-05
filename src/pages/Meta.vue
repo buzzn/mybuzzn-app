@@ -1,7 +1,9 @@
 <template>
   <div class="theme--meta">
     <header-bar @menu="$emit('menu')">{{ $route.params.slug | translate }}</header-bar>
-    <component :is="$route.params.slug"></component>
+    <main>
+      <component :is="$route.params.slug"></component>
+    </main>
     <version-bar></version-bar>
   </div>
 </template>

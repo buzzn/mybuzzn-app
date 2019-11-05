@@ -1,14 +1,47 @@
 body {
-    background: $primary;
+    background: $color;
     font-family: $fontFamily;
     max-width: 100%;
-    overflow-x: hidden;
+    overflow: hidden;
     color: $color;
+    position: relative;
 
     .wrap {
-        margin: 0 20px;
+        margin: 0 40px;
         @media #{$mediaMd} {
+            max-width: 640px;
             margin: 0 auto;
+        }
+    }
+
+    h2 {
+        text-align: center;
+        letter-spacing: 0.03em;
+        margin: 0 0 1.5em;
+    }
+
+    pre {
+        margin: 0;
+    }
+
+    main {
+        height: 100vh;
+        box-sizing: border-box;
+        overflow-y: scroll;
+        padding-top: $headerHeight + 50px;
+        display: block;
+    }
+
+    .row {
+        display: flex;
+        > * {
+            flex: 1;
+            &:first-child {
+                padding-right: 10px;
+            }
+            &:last-child {
+                padding-left: 10px;
+            }
         }
     }
 }

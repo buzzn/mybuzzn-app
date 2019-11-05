@@ -31,6 +31,10 @@ export default {
   methods: {
     logout() {
       // do logout call here
+      AuthState.set('loggedIn', false);
+      AuthState.set('token', null);
+      AuthState.destroy();
+      this.$emit('navigate');
       this.$router.push({ name: 'Login' });
     },
   },
@@ -43,8 +47,8 @@ export default {
 #off-canvas-menu {
     position: fixed;
     top: 0;
-    bottom: 0;
     max-width: 450px;
+    min-height: 100vh;
     width: 80vw;
     z-index: 10;
     background-image: $solarGradient;

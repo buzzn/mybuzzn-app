@@ -20,5 +20,17 @@
     "demo-text": "Du willst erst mal nur kucken?",
     "demo-modus": "Demo Modus",
     "help": "Hilfe",
-    "support": "Support"
+    "support": "Support",
+    "username": "Pseudonym",
+    "avatar": "Profilbild",
+    "profile-intro": "Um dich mit anderen vergleichen zu können, kannst du ein Profilbild und Pseudonym einrichten.",
+    "profile-headline": "Dein öffentlicher Auftritt",
+    "flat-size": "Dein Zuhause in m²",
+    "flat-population": "Anzahl der Bewohner",
+    "firstname": "Vorname",
+    "lastname": "Nachname",
+    "account-settings": "Konto Einstellungen",
+    "save": "Speichern",
+    "not-now": "Nicht jetzt?",
+    "skip": "Überspringen"
 }

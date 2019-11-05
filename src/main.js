@@ -5,22 +5,28 @@ import App from './App';
 import router from './router';
 import i18n from './i18n/de.json';
 
-Vue.config.productionTip = false;
+const startApp = () => {
+  Vue.config.productionTip = false;
 
-Vue.filter('translate', (value) => {
-  if (i18n[value]) {
-    return i18n[value];
-  }
-  return value;
-});
-
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  data: {
-    i18n,
-  },
-  router,
-  components: { App },
-  template: '<App/>',
-});
+  Vue.filter('translate', (value) => {
+    if (i18n[value]) {
+      return i18n[value];
+    }
+    return value;
+  });
+  /* eslint-disable no-new */
+  new Vue({
+    el: '#app',
+    data: {
+      i18n,
+    },
+    router,
+    components: { App },
+    template: '<App/>',
+  });
+};
+if (window.cordova) {
+  document.addEventListener('deviceready', startApp);
+} else {
+  startApp();
+}

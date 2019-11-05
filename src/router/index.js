@@ -33,7 +33,7 @@ const router = new Router({
       name: 'Profile',
       component: Profile,
       meta: {
-        withoutAuth: true,
+        requiresAuth: true,
       },
     },
     {

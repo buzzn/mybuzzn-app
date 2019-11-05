@@ -3,7 +3,7 @@
       <a class="menu-toggle" @click="$emit('menu')">
         <span></span>
       </a>
-      <h1 @click="setToken('wurstsalat')">
+      <h1>
         <slot></slot>
       </h1>
     </header>
@@ -26,15 +26,20 @@ export default {
 
 header {
   background: rgba($white, 0.85);
-  height: 50px;
+  height: $headerHeight;
   border: 1px solid $grey-2;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 50px;
   animation: fadeDown 800ms ease forwards;
   box-sizing: border-box;
-  padding: 0 15px;
+  padding: 0 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  backdrop-filter: blur(5px);
+  z-index: 50;
 
   .menu-toggle {
     width: 20px;
@@ -43,7 +48,7 @@ header {
     position: relative;
     span {
       display: block;
-      height: 1px;
+      height: 2px;
       position: absolute;
       top: 50%;
       width: 100%;
@@ -52,7 +57,7 @@ header {
       &:after {
         content: '';
         display: block;
-        height: 1px;
+        height: 2px;
         position: absolute;
         background: $black;
         width: 100%;

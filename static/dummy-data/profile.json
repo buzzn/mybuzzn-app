@@ -1,7 +1,9 @@
 {
     "code": 200,
     "data": {
-        "name": "Max Mustermann",
+        "firstname": "Max",
+        "lastname": "Mustermann",
+        "username": "MustiBär",
         "avatar": "https://api.adorable.io/avatars/285/max@mustermann.net.png",
         "email": "max@mustermann.net",
         "flatSize": 68.13,

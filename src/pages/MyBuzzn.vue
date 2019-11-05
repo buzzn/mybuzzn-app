@@ -1,10 +1,20 @@
 <template>
-  <div>myBUZZN</div>
+  <div class="theme--buzzn">
+    <header-bar @menu="$emit('menu')">{{ 'myBUZZN' | translate }}</header-bar>
+    <main>
+      mybuzzn content
+    </main>
+  </div>
 </template>
 
 <script>
+import HeaderBar from '@/components/HeaderBar';
+
 export default {
   name: 'MyBuzzn',
+  components: {
+    HeaderBar,
+  },
 };
 </script>
 

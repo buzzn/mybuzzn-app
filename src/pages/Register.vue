@@ -1,24 +1,24 @@
 <template>
   <div class="theme--login">
     <header-bar @menu="$emit('menu')">{{ 'register' | translate }}</header-bar>
-    <logo></logo>
-    <panel :title="'welcome' | translate">
-      <p>{{ 'enter-password' | translate }}</p>
-      <field :label="'password' | translate" type="password" name="password"></field>
-      <field :label="'repeat-password' | translate" type="password" name="repeat-password"></field>
-      <field-button :label="'start' | translate"></field-button>
-    </panel>
-
-    <div class="hints wrap">
-      <p>
-        {{ 'has-already-an-account' | translate }} <router-link :to="{ name: 'Login' }">{{ 'login' | translate }}</router-link>
-      </p>
-      <p>
-        {{ 'demo-text' | translate }} <router-link :to="{ name: 'Login' }">{{ 'demo-modus' | translate }}</router-link>
-      </p>
-    </div>
-
-    <version-bar></version-bar>
+    <main>
+      <logo></logo>
+      <panel :title="'welcome' | translate">
+        <p>{{ 'enter-password' | translate }}</p>
+        <field :label="'password' | translate" type="password" name="password"></field>
+        <field :label="'repeat-password' | translate" type="password" name="repeat-password"></field>
+        <field-button :label="'start' | translate"></field-button>
+      </panel>
+      <div class="hints wrap">
+        <p>
+          {{ 'has-already-an-account' | translate }} <router-link :to="{ name: 'Login' }">{{ 'login' | translate }}</router-link>
+        </p>
+        <p>
+          {{ 'demo-text' | translate }} <router-link :to="{ name: 'Login' }">{{ 'demo-modus' | translate }}</router-link>
+        </p>
+      </div>
+      <version-bar></version-bar>
+    </main>
   </div>
 </template>
 
