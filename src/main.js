@@ -8,9 +8,13 @@ import i18n from './i18n/de.json';
 const startApp = () => {
   Vue.config.productionTip = false;
 
-  Vue.filter('translate', (value) => {
+  Vue.filter('translate', (value, replace) => {
     if (i18n[value]) {
-      return i18n[value];
+      const val = i18n[value];
+      if (replace) {
+        return val.replace(/%s/g, replace);
+      }
+      return val;
     }
     return value;
   });

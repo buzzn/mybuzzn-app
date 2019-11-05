@@ -32,5 +32,9 @@
     "account-settings": "Konto Einstellungen",
     "save": "Speichern",
     "not-now": "Nicht jetzt?",
-    "skip": "Überspringen"
+    "skip": "Überspringen",
+    "self-sufficiency-of-group": "Autarkie in deiner Gruppe",
+    "current-consumption": "Aktuell verbraucht ihr %s Watt",
+    "hitlist-headline": "Suffizienz Charts",
+    "current-position": "Du bist auf Platz %s"
 }

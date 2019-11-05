@@ -12,7 +12,7 @@
           <span></span>
           <div class="image"  @click="takePhoto">
             <div class="mask" :style="{backgroundImage: `url(${profile.avatar})`}"></div>
-            <span></span>
+            <span><img src="/static/img/photo.png" alt=""></span>
           </div>
         </div>
         <div>
@@ -25,8 +25,7 @@
             <field :value="profile.firstname" :disabled="true" :label="'firstname' | translate" type="text" name="firstname"></field>
             <field :value="profile.lastname" :disabled="true" :label="'lastname' | translate" type="text" name="lastname"></field>
           </div>
-          <field class="no-margin" :value="profile.email" :disabled="true" :label="'email' | translate" type="text" name="email"></field>
-          <small><strong>Konto Einstellungen</strong></small>
+          <field :value="profile.email" :disabled="true" :label="'email' | translate" type="text" name="email"></field>
           <field-button :label="'save' | translate"></field-button>
           <div class="hints wrap">
             <p>
@@ -124,6 +123,15 @@ export default {
       border-radius: 50%;
       background-color: $solar-3;
       display: block;
+      box-sizing: border-box;
+      padding: 15px;
+      img {
+        width: 70%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -60%);
+      }
     }
   }
   label {
@@ -136,6 +144,7 @@ export default {
 .field.no-margin {
   margin-bottom: 0;
 }
+
 
 small {
   display: inline-block;

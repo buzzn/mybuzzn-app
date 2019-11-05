@@ -5,3 +5,14 @@
 .theme--meta {
     background: $grey-1;
 }
+
+.theme--buzzn {
+    main {
+        padding-top: 0;
+    }
+    section {
+        &:first-of-type {
+            padding-top: $headerHeight;
+        }
+    }
+}

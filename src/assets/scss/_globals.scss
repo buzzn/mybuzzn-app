@@ -14,10 +14,21 @@ body {
         }
     }
 
+    
     h2 {
         text-align: center;
         letter-spacing: 0.03em;
         margin: 0 0 1.5em;
+    }
+    h3 {
+        text-align: center;
+        letter-spacing: 0.03em;
+        margin: 0 0 0; 
+        font-size: 21px;
+    }
+    .gf {
+        font-size: 36px;
+        line-height: 45px;
     }
 
     pre {
