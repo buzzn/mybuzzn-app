@@ -64,7 +64,10 @@ export default {
   }),
   methods: {
     signIn() {
-      APIService.auth().then(() =>
+      APIService.auth({
+        email: this.email,
+        password: this.password,
+      }).then(() =>
         APIService.profile().then(() =>
           this.$router.push({ name: 'MyBuzzn' })));
     },

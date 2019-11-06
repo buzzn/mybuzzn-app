@@ -1,6 +1,6 @@
 <template>
     <div class="field">
-        <input ref="inpurt" :value="value" @input="update" type="checkbox" :id="name">
+        <input ref="input" :value="value" @input="update" type="checkbox" :id="name">
         <label :for="name">
           <slot></slot>
         </label>
@@ -13,7 +13,7 @@ export default {
   props: ['name', 'value'],
   methods: {
     update() {
-      this.$emit('input', this.$refs.input.value);
+      this.$emit('input', this.$refs.input.checked);
     },
   },
 };

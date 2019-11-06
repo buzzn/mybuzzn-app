@@ -13,7 +13,7 @@ Vue.use(Router);
 const router = new Router({
   routes: [
     {
-      path: '/register',
+      path: '/register/:email',
       name: 'Register',
       component: Register,
       meta: {

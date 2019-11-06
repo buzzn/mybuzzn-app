@@ -5,8 +5,20 @@ import ProfileState from '../states/ProfileState';
 import HitlistState from '../states/HitlistState';
 
 const APIService = () => {
-  const auth = () => new Promise((resolve, reject) => {
-    axios.get(config.endpoints.signin)
+  const auth = postData => new Promise((resolve, reject) => {
+    axios.get(config.endpoints.signin, postData)
+      .then(({ data }) => {
+        AuthState.set('token', data.data.token);
+        AuthState.set('loggedIn', Boolean(data.data.token));
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+
+  const register = postData => new Promise((resolve, reject) => {
+    axios.get(config.endpoints.register, postData)
       .then(({ data }) => {
         AuthState.set('token', data.data.token);
         AuthState.set('loggedIn', Boolean(data.data.token));
@@ -47,6 +59,7 @@ const APIService = () => {
 
   return {
     auth,
+    register,
     profile,
     hitlist,
   };
