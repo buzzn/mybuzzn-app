@@ -5,9 +5,9 @@
       <logo></logo>
       <panel :title="'welcome' | translate">
         <p>{{ 'login-intro' | translate }}</p>
-        <field v-model="email" :label="'email' | translate" type="email" name="email"></field>
-        <field v-model="password" :label="'password' | translate" type="password" name="password"></field>
-        <field-button @click="signIn" :label="'login' | translate"></field-button>
+        <field :error="errorMessage.email" @blur="validate('email')" v-model="email" :label="'email' | translate" type="email" name="email"></field>
+        <field :error="errorMessage.password" v-model="password" @blur="validate('password')" :label="'password' | translate" type="password" name="password"></field>
+        <field-button :disabled="!this.validator.email || !this.validator.password" @click="signIn" :label="'login' | translate"></field-button>
       </panel>
       <div class="hints wrap">
         <p>
@@ -41,7 +41,24 @@ export default {
     FieldButton,
     VersionBar,
   },
+  watch: {
+    email(value) {
+      // eslint-disable-next-line
+      this.validator.email = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value);
+    },
+    password(value) {
+      this.validator.password = value.length >= 8;
+    },
+  },
   data: () => ({
+    errorMessage: {
+      email: '',
+      password: '',
+    },
+    validator: {
+      email: false,
+      password: false,
+    },
     email: '',
     password: '',
   }),
@@ -50,6 +67,18 @@ export default {
       APIService.auth().then(() =>
         APIService.profile().then(() =>
           this.$router.push({ name: 'MyBuzzn' })));
+    },
+    validate(key) {
+      switch (key) {
+        case 'email':
+          this.errorMessage.email = this.email.length && !this.validator.email ? 'not valid' : '';
+          break;
+        case 'password':
+          this.errorMessage.password = this.password.length && !this.validator.password ? 'not valid' : '';
+          break;
+        default:
+          break;
+      }
     },
   },
 };

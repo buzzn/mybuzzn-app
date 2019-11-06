@@ -8,6 +8,7 @@
         <field :label="'password' | translate" type="password" name="password"></field>
         <field :label="'repeat-password' | translate" type="password" name="repeat-password"></field>
         <field-switch :name="'terms-accepted'">Ich habe die <router-link :to="{ path: '/meta/terms' }">Nutzungsbedingungen</router-link> gelesen und stimme zu</field-switch>
+        <field-switch :name="'device-detection-accepted'">Ich stimme zu, dass meine Geräte erkannt werden dürfen</field-switch>
         <field-button :label="'start' | translate"></field-button>
       </panel>
       <div class="hints wrap">

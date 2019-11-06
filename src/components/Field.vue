@@ -1,14 +1,15 @@
 <template>
-    <div class="field">
-        <label :for="name">{{ label }}</label>
-        <input :disabled="disabled" ref="input" @input="update" :value="value" :id="name" :name="name" :type="type || 'text'" :placeholder="label" />
+    <div class="field" :class="{ error: !!error }">
+      <label :for="name">{{ label }}</label>
+      <input :disabled="disabled" ref="input" @input="update" @blur="$emit('blur')" :value="value" :id="name" :name="name" :type="type || 'text'" :placeholder="label" />
+      <small>{{ error }}</small>
     </div>
 </template>
 
 <script>
 export default {
   name: 'Field',
-  props: ['label', 'type', 'name', 'value', 'disabled'],
+  props: ['label', 'type', 'name', 'value', 'disabled', 'error'],
   methods: {
     update() {
       this.$emit('input', this.$refs.input.value);
@@ -24,6 +25,7 @@ export default {
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
+  position: relative;
 
   label {
     font-size: 12px;
@@ -45,6 +47,22 @@ export default {
       background: transparent;
       border: none;
       line-height: 30px
+    }
+  }
+
+  &.error {
+    input {
+      border: 1px solid $error;
+      color: $error;
+    }
+    small {
+      font-size: 11px;
+      color: $error;
+      padding: 0 5px;
+      display: inline-block;
+      position: absolute;
+      top: 100%;
+      left: 0;
     }
   }
 }

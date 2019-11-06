@@ -1,6 +1,6 @@
 <template>
     <div class="field">
-        <input type="checkbox" :id="name">
+        <input ref="inpurt" :value="value" @input="update" type="checkbox" :id="name">
         <label :for="name">
           <slot></slot>
         </label>
@@ -10,7 +10,12 @@
 <script>
 export default {
   name: 'FieldSwitch',
-  props: ['name'],
+  props: ['name', 'value'],
+  methods: {
+    update() {
+      this.$emit('input', this.$refs.input.value);
+    },
+  },
 };
 </script>
 
@@ -18,7 +23,7 @@ export default {
 @import "../assets/scss/variables";
 
 .field {
-  margin: 0 10px 10px;
+  margin: 0 0 20px;
   input {
     position: absolute;
     left: -9999em;
