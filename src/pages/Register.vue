@@ -7,6 +7,7 @@
         <p>{{ 'enter-password' | translate }}</p>
         <field :label="'password' | translate" type="password" name="password"></field>
         <field :label="'repeat-password' | translate" type="password" name="repeat-password"></field>
+        <field-switch :name="'terms-accepted'">Ich habe die <router-link :to="{ path: '/meta/terms' }">Nutzungsbedingungen</router-link> gelesen und stimme zu</field-switch>
         <field-button :label="'start' | translate"></field-button>
       </panel>
       <div class="hints wrap">
@@ -28,6 +29,7 @@ import Logo from '@/components/Logo';
 import Panel from '@/components/Panel';
 import Field from '@/components/Field';
 import FieldButton from '@/components/FieldButton';
+import FieldSwitch from '@/components/FieldSwitch';
 import VersionBar from '@/components/VersionBar';
 
 export default {
@@ -38,6 +40,7 @@ export default {
     Panel,
     Field,
     FieldButton,
+    FieldSwitch,
     VersionBar,
   },
 };
