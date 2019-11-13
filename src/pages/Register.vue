@@ -8,15 +8,11 @@
         <field :error="errorMessage.password" v-model="password" @blur="validate('password')" :label="'password' | translate" type="password" name="password"></field>
         <field :error="errorMessage.passwordRepeat" v-model="passwordRepeat" @blur="validate('passwordRepeat')" :label="'repeat-password' | translate" type="password" name="repeat-password"></field>
         <field-switch v-model="termsAccepted" :name="'terms-accepted'">Ich habe die <router-link :to="{ path: '/meta/terms' }">Nutzungsbedingungen</router-link> gelesen und stimme zu</field-switch>
-        <field-switch v-model="deviceDetectionAccepted" :name="'device-detection-accepted'">Ich stimme zu, dass meine Geräte erkannt werden dürfen</field-switch>
         <field-button @click="register" :disabled="!isValid" :label="'start' | translate"></field-button>
       </panel>
       <div class="hints wrap">
         <p>
           {{ 'has-already-an-account' | translate }} <router-link :to="{ name: 'Login' }">{{ 'login' | translate }}</router-link>
-        </p>
-        <p>
-          {{ 'demo-text' | translate }} <router-link :to="{ name: 'Login' }">{{ 'demo-modus' | translate }}</router-link>
         </p>
       </div>
       <version-bar></version-bar>
@@ -47,7 +43,7 @@ export default {
   },
   computed: {
     isValid() {
-      return Object.values(this.validator).filter(v => !v).length === 0 && this.termsAccepted && this.deviceDetectionAccepted;
+      return Object.values(this.validator).filter(v => !v).length === 0 && this.termsAccepted;
     },
   },
   watch: {
@@ -70,7 +66,6 @@ export default {
     password: '',
     passwordRepeat: '',
     termsAccepted: false,
-    deviceDetectionAccepted: false,
   }),
   methods: {
     register() {
@@ -79,7 +74,6 @@ export default {
         password: this.password,
         passwordRepeat: this.passwordRepeat,
         termsAccepted: this.termsAccepted,
-        deviceDetectionAcccepted: this.deviceDetectionAccepted,
       }).then(() =>
         APIService.auth({
           email: this.$route.params.email,

@@ -4,6 +4,7 @@ const AuthState = () => {
     token: null,
     loggedIn: false,
     role: null,
+    demo: false,
   };
   let state = initState;
 

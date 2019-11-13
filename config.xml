@@ -24,6 +24,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <allow-intent href="mybuzzn:*" />
     <feature name="Custom URL scheme">
         <param name="id" value="cordova-plugin-customurlscheme" />
         <param name="url" value="https://github.com/EddyVerbruggen/Custom-URL-scheme.git" />

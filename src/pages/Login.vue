@@ -14,7 +14,7 @@
           {{ 'has-no-account' | translate }} <router-link :to="{ name: 'Register' }">{{ 'help' | translate }}</router-link>
         </p>
         <p>
-          {{ 'demo-text' | translate }} <router-link :to="{ name: 'Login' }">{{ 'demo-modus' | translate }}</router-link>
+          {{ 'demo-text' | translate }} <strong @click="handleDemoMode">{{ 'demo-modus' | translate }}</strong>
         </p>
       </div>
       <version-bar></version-bar>
@@ -30,6 +30,7 @@ import Field from '@/components/Field';
 import FieldButton from '@/components/FieldButton';
 import VersionBar from '@/components/VersionBar';
 import APIService from '../services/APIService';
+import AuthState from '../states/AuthState';
 
 export default {
   name: 'Login',
@@ -64,6 +65,7 @@ export default {
   }),
   methods: {
     signIn() {
+      AuthState.set('demo', false);
       APIService.auth({
         email: this.email,
         password: this.password,
@@ -82,6 +84,12 @@ export default {
         default:
           break;
       }
+    },
+    handleDemoMode() {
+      AuthState.set('demo', true);
+      APIService.auth().then(() =>
+        APIService.profile().then(() =>
+          this.$router.push({ name: 'MyBuzzn' })));
     },
   },
 };

@@ -1,2 +1,2 @@
 /* eslint-disable */
-export {default as endpoints} from './endpoints';
+export * from './endpoints';

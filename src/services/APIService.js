@@ -5,8 +5,10 @@ import ProfileState from '../states/ProfileState';
 import HitlistState from '../states/HitlistState';
 
 const APIService = () => {
+  const endpoints = (AuthState.get('demo')) ? config.demoEndpoints : config.prodEndpoints;
+
   const auth = postData => new Promise((resolve, reject) => {
-    axios.get(config.endpoints.signin, postData)
+    axios.get(endpoints.signin, postData)
       .then(({ data }) => {
         AuthState.set('token', data.data.token);
         AuthState.set('loggedIn', Boolean(data.data.token));
@@ -18,7 +20,7 @@ const APIService = () => {
   });
 
   const register = postData => new Promise((resolve, reject) => {
-    axios.get(config.endpoints.register, postData)
+    axios.get(endpoints.register, postData)
       .then(({ data }) => {
         AuthState.set('token', data.data.token);
         AuthState.set('loggedIn', Boolean(data.data.token));
@@ -30,7 +32,7 @@ const APIService = () => {
   });
 
   const profile = () => new Promise((resolve, reject) => {
-    axios.get(config.endpoints.profile, {
+    axios.get(endpoints.profile, {
       token: AuthState.get('token'),
     })
       .then(({ data }) => {
@@ -45,7 +47,7 @@ const APIService = () => {
   });
 
   const hitlist = () => new Promise((resolve, reject) => {
-    axios.get(config.endpoints.hitlist, {
+    axios.get(endpoints.hitlist, {
       token: AuthState.get('token'),
     })
       .then(({ data }) => {
