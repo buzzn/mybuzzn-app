@@ -15,7 +15,6 @@ window.handleOpenURL = (url) => {
     document.dispatchEvent(new CustomEvent('redirect', {
       detail: redirectTo,
     }));
-    console.log('redirectTo', redirectTo, url);
   }, 0);
 };
 
@@ -41,11 +40,9 @@ const startApp = () => {
     router,
     mounted() {
       if (redirectTo) {
-        console.log('redirect directly', redirectTo);
         this.$router.push(redirectTo);
       }
       document.addEventListener('redirect', (event) => {
-        console.log('recieved event', event);
         this.$router.push(event.detail);
       });
     },

@@ -16,10 +16,10 @@
           </div>
         </div>
         <div>
-          <field v-model="username" :label="'username' | translate" type="text" name="username"></field>
+          <field :error="errorMessage.username" @blur="validate('username')" v-model="username" :label="'username' | translate" type="text" name="username"></field>
           <div class="row">
-            <field v-model="flatSize" :label="'flat-size' | translate" type="text" name="flatSize"></field>
-            <field v-model="flatPopulation" :label="'flat-population' | translate" type="number" name="flatPopulation"></field>
+            <field :error="errorMessage.flatSize" @blur="validate('flatSize')"  v-model="flatSize" :label="'flat-size' | translate" type="text" name="flatSize"></field>
+            <field :error="errorMessage.flatPopulation" @blur="validate('flatPopulation')" v-model="flatPopulation" :label="'flat-population' | translate" type="number" name="flatPopulation"></field>
           </div>
           <div class="row">
             <field :value="profile.firstname" :disabled="true" :label="'firstname' | translate" type="text" name="firstname"></field>
@@ -27,7 +27,7 @@
           </div>
           <field :value="profile.email" :disabled="true" :label="'email' | translate" type="text" name="email"></field>
           <field-button :label="'save' | translate"></field-button>
-          <div class="hints wrap">
+          <div class="hints wrap" v-if="$route.params.firstView">
             <p>
               {{ 'not-now' | translate }} <router-link :to="{ name: 'MyBuzzn' }">{{ 'skip' | translate }}</router-link>
             </p>
@@ -51,6 +51,17 @@ export default {
     Field,
     FieldButton,
   },
+  watch: {
+    username(value) {
+      this.validator.username = value.length >= 8;
+    },
+    flatSize(value) {
+      this.validator.flatSize = !isNaN(+value);
+    },
+    flatPopulation(value) {
+      this.validator.flatPopulation = !isNaN(+value);
+    },
+  },
   data() {
     return {
       error: '-',
@@ -58,6 +69,16 @@ export default {
       flatPopulation: 0,
       flatSize: 0,
       profile: ProfileState.state,
+      validator: {
+        username: false,
+        flatSize: false,
+        flatPopulation: false,
+      },
+      errorMessage: {
+        username: '',
+        flatSize: '',
+        flatPopulation: '',
+      },
     };
   },
   mounted() {
@@ -89,6 +110,21 @@ export default {
         });
       } else {
         this.error = 'navigator camera error';
+      }
+    },
+    validate(key) {
+      switch (key) {
+        case 'username':
+          this.errorMessage.username = this.username.length && !this.validator.username ? 'not valid' : '';
+          break;
+        case 'flatSize':
+          this.errorMessage.flatSize = this.flatSize.length && !this.validator.flatSize ? 'not valid' : '';
+          break;
+        case 'flatPopulation':
+          this.errorMessage.flatPopulation = this.flatPopulation.length && !this.validator.flatPopulation ? 'not valid' : '';
+          break;
+        default:
+          break;
       }
     },
   },

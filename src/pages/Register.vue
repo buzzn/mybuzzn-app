@@ -80,7 +80,12 @@ export default {
           password: this.password,
         }).then(() =>
           APIService.profile().then(() =>
-            this.$router.push({ name: 'Profile' }))));
+            this.$router.push({
+              name: 'Profile',
+              params: {
+                firstView: true,
+              },
+            }))));
     },
     validate(key) {
       switch (key) {
