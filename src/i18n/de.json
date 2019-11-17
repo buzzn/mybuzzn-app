@@ -36,5 +36,15 @@
     "self-sufficiency-of-group": "Autarkie in deiner Gruppe",
     "current-consumption": "Aktuell verbraucht ihr %s Watt",
     "hitlist-headline": "Suffizienz Charts",
-    "current-position": "Du bist auf Platz %s"
+    "current-position": "Du bist auf Platz %s",
+    "password-reset": "Passwort zurücksetzen",
+    "password-reset-headline": "Du hast dein Passwort vergessen?",
+    "password-reset-content": "Trage Deine E-Mail ein und wir senden dir ein neues Passwort zu.",
+    "cancel": "Abrechen",
+    "not-valid": "Überprüfe bitte die Eingabe",
+    "about": "Über uns",
+    "about-headline": "Über die BUZZN App",
+    "installed-version": "Installierte Version: %s",
+    "licenses-headline": "Bibliotheken, die wir benutzen.",
+    "licenses-content": "Hier findest Du eine Auflistung der Open Source Bibliotheken mit Lizenzbeschreibung, die in Deiner Version zu teilen genutzt wird. Wir danken herzlich der Open Source Community."
 }

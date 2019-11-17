@@ -1,6 +1,6 @@
 <template>
     <div class="field">
-        <button :disabled="disabled" @click.prevent="$emit('click')" :type="type || 'button'">
+        <button :class="{ secondary }" :disabled="disabled" @click.prevent="$emit('click')" :type="type || 'button'">
           {{ label }}
         </button>
     </div>
@@ -9,7 +9,7 @@
 <script>
 export default {
   name: 'FieldButton',
-  props: ['label', 'type', 'disabled'],
+  props: ['label', 'type', 'disabled', 'secondary'],
 };
 </script>
 
@@ -30,6 +30,10 @@ export default {
     }
     &:disabled {
       background: $grey-2;
+    }
+    &.secondary {
+      background: $grey-3;
+      color: white;
     }
   }
 }

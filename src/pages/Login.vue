@@ -11,6 +11,9 @@
       </panel>
       <div class="hints wrap">
         <p>
+          {{ 'password-reset-headline' | translate }} <router-link :to="{ path: '/meta/password-reset' }">{{ 'password-reset' | translate }}</router-link>
+        </p>
+        <p>
           {{ 'has-no-account' | translate }} <router-link :to="{ name: 'Register' }">{{ 'help' | translate }}</router-link>
         </p>
         <p>

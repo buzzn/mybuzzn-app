@@ -1,20 +1,61 @@
 <template>
-  <div class="wrap">
-    <h2>Lorem ipsum dolor sit</h2>
-    <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, in eligendi saepe velit cum ad et autem quas suscipit laboriosam est architecto perspiciatis totam, sit dicta! Minima voluptate quasi modi?
-    </p>
-    <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut earum officia repudiandae. Provident eum distinctio velit ipsam natus, illo pariatur ab, atque autem ducimus aperiam tenetur obcaecati, aliquid sint vel!
-    </p>
-    <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste, repellendus ratione porro hic dicta doloribus possimus, saepe explicabo repudiandae illo nisi, dolor culpa facere vitae dolore officia accusamus id fuga?
-    </p>
+  <div class="wrap stretch">
+    <div>
+      <h2>{{ 'password-reset-headline' | translate }}</h2>
+      <p>
+          {{ 'password-reset-content' | translate }}
+      </p>
+    </div>
+    <div>
+      <field :error="errorMessage.email | translate" v-model="email" @blur="validate('email')" :label="'email' | translate" type="email" name="email"></field>
+    </div>
+    <div>
+      <field-button :disabled="!this.validator.email" @click="resetPassword" :label="'password-reset' | translate"></field-button>
+      <field-button :secondary="true" @click="$router.go(-1)" :label="'cancel' | translate"></field-button>
+    </div>
   </div>
 </template>
 
 <script>
+import Field from '@/components/Field';
+import FieldButton from '@/components/FieldButton';
+
 export default {
   name: 'Terms',
+  components: {
+    Field,
+    FieldButton,
+  },
+  watch: {
+    email(value) {
+      // eslint-disable-next-line
+      this.validator.email = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value);
+    },
+  },
+  data() {
+    return {
+      errorMessage: {
+        email: '',
+      },
+      email: '',
+      validator: {
+        email: false,
+      },
+    };
+  },
+  methods: {
+    resetPassword() {
+      // TODO: Whenever the API is ready do something
+    },
+    validate(key) {
+      switch (key) {
+        case 'email':
+          this.errorMessage.email = this.email.length && !this.validator.email ? 'not-valid' : '';
+          break;
+        default:
+          break;
+      }
+    },
+  },
 };
 </script>

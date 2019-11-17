@@ -14,6 +14,7 @@
                 <li><router-link @click.native="$emit('navigate')" :to="{ path: '/meta/privacy-policy' }">{{ 'privacy-policy' | translate }}</router-link></li>
                 <li><router-link @click.native="$emit('navigate')" :to="{ path: '/meta/imprint' }">{{ 'imprint' | translate }}</router-link></li>
                 <li><router-link @click.native="$emit('navigate')" :to="{ path: '/meta/terms' }">{{ 'terms' | translate }}</router-link></li>
+                <li><router-link @click.native="$emit('navigate')" :to="{ path: '/meta/about' }">{{ 'about' | translate }}</router-link></li>
             </ul>
         </nav>
     </div>

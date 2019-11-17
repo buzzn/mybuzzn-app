@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <h2>Lorem ipsum dolor sit</h2>
+    <h2>Datenschutz Lorem</h2>
     <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, in eligendi saepe velit cum ad et autem quas suscipit laboriosam est architecto perspiciatis totam, sit dicta! Minima voluptate quasi modi?
     </p>

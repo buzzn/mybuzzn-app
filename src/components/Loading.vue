@@ -66,8 +66,10 @@ export default {
   bottom: 0;
   opacity: 0;
   background-image: $solarGradient;
+  visibility: hidden;
   &.show {
     opacity: 1;
+    visibility: visible;
   }
   &.appear {
     opacity: 0;

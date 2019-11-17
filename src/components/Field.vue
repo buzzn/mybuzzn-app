@@ -51,6 +51,9 @@ export default {
   }
 
   &.error {
+    label {
+      color: rgba($error, 0.7);
+    }
     input {
       border: 1px solid $error;
       color: $error;
@@ -58,7 +61,7 @@ export default {
     small {
       font-size: 11px;
       color: $error;
-      padding: 0 5px;
+      padding: 2px 5px;
       display: inline-block;
       position: absolute;
       top: 100%;

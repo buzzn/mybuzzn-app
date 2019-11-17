@@ -36,7 +36,7 @@ const startApp = () => {
     el: '#app',
     data: {
       i18n,
-      appLoading: true,
+      appLoading: false,
     },
     router,
     mounted() {

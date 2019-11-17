@@ -16,6 +16,7 @@ import Imprint from '@/pages/meta/Imprint';
 import Terms from '@/pages/meta/Terms';
 import PrivacyPolicy from '@/pages/meta/PrivacyPolicy';
 import PasswordReset from '@/pages/meta/PasswordReset';
+import About from '@/pages/meta/About';
 
 export default {
   name: 'Meta',
@@ -27,6 +28,7 @@ export default {
     Terms,
     PrivacyPolicy,
     PasswordReset,
+    About,
   },
 };
 </script>

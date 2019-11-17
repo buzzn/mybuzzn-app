@@ -15,7 +15,7 @@ import Loading from '@/components/Loading';
 export default {
   name: 'App',
   props: {
-    loading: true,
+    loading: false,
   },
   components: {
     OffCanvasMenu,
