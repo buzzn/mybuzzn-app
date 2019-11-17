@@ -4,7 +4,7 @@
         "firstname": "Max",
         "lastname": "Mustermann",
         "username": "MustiBär",
-        "avatar": "https://api.adorable.io/avatars/285/max@mustermann.net.png",
+        "avatar": null,
         "email": "max@mustermann.net",
         "flatSize": 68.13,
         "flatPopulation": 2

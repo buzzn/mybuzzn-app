@@ -8,6 +8,7 @@ yarn-error.log*
 /plugins/
 /platforms/
 /www/
+/icons
 
 # Editor directories and files
 .idea

@@ -4,19 +4,23 @@
     <div class="container" @touchstart="openMenu ? openMenu = false : null">
       <router-view @menu="toggleMenu"/>
     </div>
+    <loading :show="appLoading"></loading>
   </div>
 </template>
 
 <script>
-import OffCanvasMenu from './components/OffCanvasMenu';
+import OffCanvasMenu from '@/components/OffCanvasMenu';
+import Loading from '@/components/Loading';
 
 export default {
   name: 'App',
   components: {
     OffCanvasMenu,
+    Loading,
   },
   data: () => ({
     openMenu: false,
+    appLoading: false,
   }),
   methods: {
     toggleMenu() {

@@ -1,6 +1,6 @@
 <template>
   <div class="theme--meta">
-    <header-bar @menu="$emit('menu')">{{ $route.params.slug | translate }}</header-bar>
+    <header-bar @menu="$emit('menu')" :backButton="true">{{ $route.params.slug | translate }}</header-bar>
     <main>
       <component :is="$route.params.slug"></component>
     </main>
