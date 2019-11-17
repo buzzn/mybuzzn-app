@@ -36,6 +36,7 @@ const startApp = () => {
     el: '#app',
     data: {
       i18n,
+      appLoading: true,
     },
     router,
     mounted() {
@@ -47,7 +48,7 @@ const startApp = () => {
       });
     },
     components: { App },
-    template: '<App/>',
+    template: '<App :loading="appLoading" />',
   });
 };
 if (window.cordova) {

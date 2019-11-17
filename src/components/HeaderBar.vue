@@ -1,6 +1,6 @@
 <template>
     <header>
-      <a class="menu-toggle" @click="$emit('menu')">
+      <a v-if="!backButton" class="menu-toggle" @click="$emit('menu')">
         <span></span>
       </a>
       <h1>
@@ -20,6 +20,9 @@ import AuthState from '../states/AuthState';
 
 export default {
   name: 'HeaderBar',
+  props: {
+    backButton: false,
+  },
   data: () => ({
     auth: AuthState.state,
   }),

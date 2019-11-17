@@ -4,7 +4,7 @@
     <div class="container" @touchstart="openMenu ? openMenu = false : null">
       <router-view @menu="toggleMenu"/>
     </div>
-    <loading :show="appLoading"></loading>
+    <loading :show="loading"></loading>
   </div>
 </template>
 
@@ -14,13 +14,15 @@ import Loading from '@/components/Loading';
 
 export default {
   name: 'App',
+  props: {
+    loading: true,
+  },
   components: {
     OffCanvasMenu,
     Loading,
   },
   data: () => ({
     openMenu: false,
-    appLoading: false,
   }),
   methods: {
     toggleMenu() {

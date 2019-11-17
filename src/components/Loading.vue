@@ -1,5 +1,9 @@
 <template>
-    <div class="loading-container">
+    <div :class="{
+      appear,
+      show: internShow,
+      disappear,
+    }" class="loading-container">
       <div class="loader">
         <span></span>
         <span></span>
@@ -13,11 +17,39 @@
 export default {
   name: 'Loading',
   props: ['show'],
-  watch() {
-    show: (value) => {
-      
-    }
-  }
+  data() {
+    return {
+      appear: false,
+      disappear: false,
+    };
+  },
+  computed: {
+    isAnimating() {
+      return this.appear || this.disappear;
+    },
+    internShow() {
+      return this.show || this.appear || this.disappear;
+    },
+  },
+  mounted() {
+    this.$watch(() => this.show, this.showAndHide);
+    this.showAndHide(this.show);
+  },
+  methods: {
+    showAndHide(value) {
+      if (value) {
+        this.appear = true;
+        setTimeout(() => {
+          this.appear = false;
+        }, 200);
+      } else {
+        this.disappear = true;
+        setTimeout(() => {
+          this.disappear = false;
+        }, 200);
+      }
+    },
+  },
 };
 </script>
 
@@ -34,13 +66,16 @@ export default {
   bottom: 0;
   opacity: 0;
   background-image: $solarGradient;
+  &.show {
+    opacity: 1;
+  }
   &.appear {
     opacity: 0;
-    animation: appear 300ms ease-out forwards;
+    animation: appear 200ms ease forwards;
   }
   &.disappear {
     opacity: 0;
-    animation: disappear 500ms ease-out forwards;
+    animation: disappear 200ms ease forwards;
   }
   .loader {
     position: absolute;
