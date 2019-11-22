@@ -3,6 +3,9 @@ import AuthState from '../states/AuthState';
 import * as config from '../config';
 import ProfileState from '../states/ProfileState';
 import HitlistState from '../states/HitlistState';
+import DevicelistState from '../states/DevicelistState';
+import AdvicesState from '../states/AdvicesState';
+import ChallengesState from '../states/ChallengesState';
 
 const APIService = () => {
   const endpoints = (AuthState.get('demo')) ? config.demoEndpoints : config.prodEndpoints;
@@ -59,11 +62,67 @@ const APIService = () => {
       });
   });
 
+  const devicelist = () => new Promise((resolve, reject) => {
+    axios.get(endpoints.devicelist, {
+      token: AuthState.get('token'),
+    })
+      .then(({ data }) => {
+        DevicelistState.set('data', data.data);
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+
+  const advices = () => new Promise((resolve, reject) => {
+    axios.get(endpoints.advices, {
+      token: AuthState.get('token'),
+    })
+      .then(({ data }) => {
+        AdvicesState.set('data', data.data);
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+
+  const challenges = () => new Promise((resolve, reject) => {
+    axios.get(endpoints.challenges, {
+      token: AuthState.get('token'),
+    })
+      .then(({ data }) => {
+        ChallengesState.set('available', data.data);
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+
+  const currentChallenge = () => new Promise((resolve, reject) => {
+    axios.get(endpoints.challengeStatus, {
+      token: AuthState.get('token'),
+    })
+      .then(({ data }) => {
+        ChallengesState.set('active', data.data);
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+
   return {
     auth,
     register,
     profile,
     hitlist,
+    devicelist,
+    advices,
+    challenges,
+    currentChallenge,
   };
 };
 

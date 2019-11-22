@@ -4,6 +4,10 @@ export const demoEndpoints = {
   signin: './static/dummy-data/signin.json',
   profile: './static/dummy-data/profile.json',
   hitlist: './static/dummy-data/hitlist.json',
+  devicelist: './static/dummy-data/devicelist.json',
+  advices: './static/dummy-data/advices.json',
+  challenges: './static/dummy-data/challenges.json',
+  challengeStatus: './static/dummy-data/challengeStatus.json',
 };
 
 export const prodEndpoints = {
@@ -12,4 +16,8 @@ export const prodEndpoints = {
   signin: './static/dummy-data/signin.json',
   profile: './static/dummy-data/profile.json',
   hitlist: './static/dummy-data/hitlist.json',
+  devicelist: './static/dummy-data/devicelist.json',
+  advices: './static/dummy-data/advices.json',
+  challenges: './static/dummy-data/challenges.json',
+  challengeStatus: './static/dummy-data/challengeStatus.json',
 };

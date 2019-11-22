@@ -8,7 +8,7 @@
           <great-number unit="%">42</great-number>
           <p>
             <strong>{{ 'self-sufficiency-of-group' | translate }}</strong><br>
-            {{ 'current-consumption' | translate(123456789) }}
+            {{ 'current-consumption-group' | translate('46.234') }}
           </p>
         </div>
       </section>
@@ -17,6 +17,16 @@
           <h3>{{ 'hitlist-headline' | translate }}</h3>
           <p class="gf">{{ 'current-position' | translate(12) }}</p>
           <hit-list></hit-list>
+        </div>
+      </section>
+      <section class="section--lavendel">
+        <div class="wrap">
+          <h3>{{ 'consumption-headline' | translate }}</h3>
+        </div>
+      </section>
+      <section class="section--snow">
+        <div class="wrap">
+          <h3>{{ 'general-consumption-headline' | translate }}</h3>
         </div>
       </section>
     </main>
@@ -45,6 +55,7 @@ export default {
     text-align: center;
     strong {
       font-size: 21px;
+      line-height: 30px;
     }
   }
 </style>

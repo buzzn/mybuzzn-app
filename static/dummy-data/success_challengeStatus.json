@@ -1,0 +1,10 @@
+{
+    "code": 200,
+    "data": {
+        "id": 1, 
+        "progress": 0.8,
+        "status": "passed",
+        "message": "Gut gemacht! Du hast 7 Tage lang im Schnitt nur 0,6 kWh pro Nacht verbraucht!",
+        "expire_at": 1577022326
+    }
+}

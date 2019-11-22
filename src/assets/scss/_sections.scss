@@ -2,17 +2,38 @@ section {
     background: red;
     padding-bottom: 60px;
     padding-top: 20px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    margin-top: -30px;
+    position: relative;
+    &:first-of-type {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        margin-top: 0;
+    }
     &.section--nightsky {
         background: rgb(47,68,71);
         background: linear-gradient(0deg, rgba(47,68,71,1) 0%, rgba(72,163,181,1) 100%);
         color: white;
     }
-
+    &.section--grass {
+        background: #baca56;
+        background: linear-gradient(0deg, #baca56 0%, #e5f679 100%);
+    }
+    &.section--gold {
+        background: #fbac2b;
+        background: linear-gradient(0deg, #fbac2b 0%, #dbd337 100%);
+    }
+    &.section--snow {
+        background: #f0f0f0;
+        overflow: hidden;
+    }
+    &.section--lavendel {
+        background: #6462e4;
+        color: white;
+    }
     &.section--coal {
         background: $color;
         color: white;
-        border-top-left-radius: 30px;
-        border-top-right-radius: 30px;
-        margin-top: -30px;
     }
 }
