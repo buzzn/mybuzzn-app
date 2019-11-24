@@ -8,6 +8,7 @@ export const demoEndpoints = {
   advices: './static/dummy-data/advices.json',
   challenges: './static/dummy-data/challenges.json',
   challengeStatus: './static/dummy-data/challengeStatus.json',
+  consumptionHistory: './static/dummy-data/consumptionHistory.json',
 };
 
 export const prodEndpoints = {
@@ -20,4 +21,5 @@ export const prodEndpoints = {
   advices: './static/dummy-data/advices.json',
   challenges: './static/dummy-data/challenges.json',
   challengeStatus: './static/dummy-data/challengeStatus.json',
+  consumptionHistory: './static/dummy-data/consumptionHistory.json',
 };

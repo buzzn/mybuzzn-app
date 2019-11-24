@@ -6,6 +6,7 @@ import HitlistState from '../states/HitlistState';
 import DevicelistState from '../states/DevicelistState';
 import AdvicesState from '../states/AdvicesState';
 import ChallengesState from '../states/ChallengesState';
+import ConsumptionHistoryState from '../states/ConsumptionHistoryState';
 
 const APIService = () => {
   const endpoints = (AuthState.get('demo')) ? config.demoEndpoints : config.prodEndpoints;
@@ -114,6 +115,19 @@ const APIService = () => {
       });
   });
 
+  const consumptionHistory = () => new Promise((resolve, reject) => {
+    axios.get(endpoints.consumptionHistory, {
+      token: AuthState.get('token'),
+    })
+      .then(({ data }) => {
+        ConsumptionHistoryState.set('data', data.data);
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+
   return {
     auth,
     register,
@@ -123,6 +137,7 @@ const APIService = () => {
     advices,
     challenges,
     currentChallenge,
+    consumptionHistory,
   };
 };
 

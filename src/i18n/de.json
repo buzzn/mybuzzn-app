@@ -63,5 +63,8 @@
     "just-day": "Nur noch einen Tag",
     "challenge-passed": "Challenge bestanden",
     "choose-new-challenge": "Neue Challenge wählen",
-    "challenge-failed": "Challenge verloren"
+    "challenge-failed": "Challenge verloren",
+    "consumption": "Verbrauch",
+    "yield": "Ertrag",
+    "self-sufficiency": "Autarkie"
 }
