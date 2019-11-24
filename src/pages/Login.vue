@@ -66,6 +66,12 @@ export default {
     email: '',
     password: '',
   }),
+  mounted() {
+    // TODO: make it real
+    setTimeout(() => {
+      this.$root.appLoading = false;
+    }, 2000);
+  },
   methods: {
     signIn() {
       AuthState.set('demo', false);

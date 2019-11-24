@@ -96,7 +96,7 @@
     "plugins": {
       "cordova-plugin-whitelist": {},
       "cordova-plugin-customurlscheme": {
-        "URL_SCHEME": "mybuzzn"
+        "URL_SCHEME": "buzzn"
       },
       "cordova-plugin-statusbar": {},
       "cordova-plugin-camera": {

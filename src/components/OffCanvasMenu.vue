@@ -60,14 +60,14 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transform: translate(-100%);
-    transition: transform 500ms ease, box-shadow 700ms ease;
+    transform: translate3D(-100%, 0, 1px);
+    transition: transform 500ms ease;
     &.open {
         box-shadow: 0 0 10px rgba($black, 0.4);
         nav {
             ul {
                 li {
-                    transform: translate(0);
+                    transform: translate3D(0, 0, 1px);;
                 }
             }
         }

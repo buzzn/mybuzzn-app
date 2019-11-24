@@ -4,7 +4,7 @@
     <div class="container" @touchstart="openMenu ? openMenu = false : null">
       <router-view @menu="toggleMenu"/>
     </div>
-    <loading :show="loading"></loading>
+    <loading :show="loading" :forceShow="true"></loading>
   </div>
 </template>
 
@@ -21,8 +21,14 @@ export default {
     OffCanvasMenu,
     Loading,
   },
+  created() {
+    if (this.loading) {
+      this.forceLoading = true;
+    }
+  },
   data: () => ({
     openMenu: false,
+    forceLoading: false,
   }),
   methods: {
     toggleMenu() {

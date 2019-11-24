@@ -1,6 +1,6 @@
 <template>
-  <div ref="list" class="slider-container" >
-    <div :style="{ height: listHeight + 'px' }">
+  <div ref="list" class="slider-container" :class="{'release': release}" @touchstart="startDragging($event)" @touchmove="dragging($event)" @touchend="endDragging($event)" >
+    <div :style="{ height: listHeight + 'px', transform: 'translate(' + this.delta + 'px)' }">
       <slot></slot>
     </div>
     <div class="dots" ref="dots">
@@ -10,8 +10,6 @@
 </template>
 
 <script>
-import Hammer from 'hammerjs';
-
 export default {
   name: 'SliderContainer',
   data() {
@@ -20,6 +18,9 @@ export default {
       currentIndex: 0,
       listHeight: 0,
       forceDir: null,
+      startPoint: null,
+      delta: null,
+      release: false,
     };
   },
   watch: {
@@ -33,7 +34,6 @@ export default {
       this.$nextTick(() => {
         this.switchItem();
       });
-      this.addTouchEvents();
     }
   },
   methods: {
@@ -53,24 +53,26 @@ export default {
       }
       this.forceDir = 'prev';
     },
-    addTouchEvents() {
-      const hammertime = new Hammer(this.$el);
-      let recognized = false;
-      hammertime.on('panleft', () => {
-        if (!recognized) {
-          recognized = true;
-          this.next();
-        }
-      });
-      hammertime.on('panright', () => {
-        if (!recognized) {
-          recognized = true;
-          this.prev();
-        }
-      });
-      hammertime.on('panend', () => {
-        recognized = false;
-      });
+    startDragging(event) {
+      this.startPoint = event.touches[0].clientX;
+    },
+    dragging(event) {
+      this.delta = (event.touches[0].clientX - this.startPoint) * 0.2;
+    },
+    endDragging() {
+      if (this.delta < -30) {
+        this.next();
+      } else if (this.delta > 30) {
+        this.prev();
+      }
+      this.release = true;
+
+      setTimeout(() => {
+        this.delta = 0;
+      }, 100);
+      setTimeout(() => {
+        this.release = false;
+      }, 620);
     },
     calculateMaxItems() {
       this.maxItems = this.$refs.list.querySelectorAll('.slider-item').length;
@@ -134,6 +136,9 @@ export default {
   position: relative;
   > div {
     transition: height 500ms ease;
+  }
+  &.release {
+    transition: transform 500ms ease;
   }
   .dots {
     display: flex;

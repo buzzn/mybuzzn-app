@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="net.buzzn.mybuzzn" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>myBUZZN</name>
+<widget id="net.buzzn.buzzn" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>BUZZN</name>
     <description>
         Gemeinschaftlich, dezentral und fair produzierter Strom aus Deutschland.
     </description>
@@ -12,10 +12,12 @@
     <plugin name="cordova-plugin-customurlscheme" spec="4" />
     <plugin name="cordova-plugin-statusbar" spec="2" />
     <plugin name="cordova-plugin-camera" spec="4" />
-    <preference name="BackgroundColor" value="0xfffdd830"/>
+
+    <preference name="DisallowOverscroll" value="true"/>
+    <preference name="BackgroundColor" value="0xfffbc020"/>
     <preference name="Orientation" value="portrait" />
     <preference name="StatusBarOverlaysWebView" value="false" />
-    <preference name="StatusBarBackgroundColor" value="#fffce1" />
+    <preference name="StatusBarBackgroundColor" value="#ffffff" />
     <preference name="StatusBarStyle" value="default" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -24,11 +26,11 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <allow-intent href="mybuzzn:*" />
+    <allow-intent href="buzzn:*" />
     <feature name="Custom URL scheme">
         <param name="id" value="cordova-plugin-customurlscheme" />
         <param name="url" value="https://github.com/EddyVerbruggen/Custom-URL-scheme.git" />
-        <variable name="URL_SCHEME" value="mybuzzn" />
+        <variable name="URL_SCHEME" value="buzzn" />
     </feature>
     <platform name="android">
         <feature name="Camera">

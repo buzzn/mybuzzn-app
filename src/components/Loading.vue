@@ -16,7 +16,7 @@ export default {
   components: {
     LoadingIcon,
   },
-  props: ['show'],
+  props: ['show', 'forceShow'],
   data() {
     return {
       appear: false,
@@ -38,7 +38,7 @@ export default {
   methods: {
     showAndHide(value) {
       if (value) {
-        this.appear = true;
+        this.appear = !this.forceShow;
         setTimeout(() => {
           this.appear = false;
         }, 200);
@@ -67,15 +67,19 @@ export default {
   opacity: 0;
   background-image: $solarGradient;
   visibility: hidden;
+  display: none;
   &.show {
+    display: block;
     opacity: 1;
     visibility: visible;
   }
   &.appear {
+    display: block;
     opacity: 0;
     animation: appear 200ms ease forwards;
   }
   &.disappear {
+    display: block;
     opacity: 0;
     animation: disappear 200ms ease forwards;
   }

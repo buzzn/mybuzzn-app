@@ -49,6 +49,7 @@
       <section class="section--lavendel">
         <div class="wrap">
           <h3>{{ 'consumption-headline' | translate }}</h3>
+          <consumption-history></consumption-history>
         </div>
       </section>
     </main>
@@ -61,6 +62,7 @@ import GreatNumber from '@/components/GreatNumber';
 import DeviceList from '@/components/DeviceList';
 import Advices from '@/components/Advices';
 import Challenges from '@/components/Challenges';
+import ConsumptionHistory from '@/components/ConsumptionHistory';
 import ProfileState from '../states/ProfileState';
 
 
@@ -72,6 +74,13 @@ export default {
     DeviceList,
     Advices,
     Challenges,
+    ConsumptionHistory,
+  },
+  mounted() {
+    // TODO: make it real
+    setTimeout(() => {
+      this.$root.appLoading = false;
+    }, 2000);
   },
   data() {
     return {

@@ -67,6 +67,12 @@ export default {
     passwordRepeat: '',
     termsAccepted: false,
   }),
+  mounted() {
+    // TODO: make it real
+    setTimeout(() => {
+      this.$root.appLoading = false;
+    }, 2000);
+  },
   methods: {
     register() {
       APIService.register({
