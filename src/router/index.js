@@ -6,6 +6,7 @@ import MyBuzzn from '@/pages/MyBuzzn';
 import OurBuzzn from '@/pages/OurBuzzn';
 import Profile from '@/pages/Profile';
 import Register from '@/pages/Register';
+import Error from '@/pages/Error';
 import AuthState from '../states/AuthState';
 
 Vue.use(Router);
@@ -56,6 +57,11 @@ const router = new Router({
       path: '/meta/:slug',
       name: 'Meta',
       component: Meta,
+    },
+    {
+      path: '/error/:number',
+      name: 'Error',
+      component: Error,
     },
   ],
 });

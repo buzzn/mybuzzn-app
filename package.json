@@ -1,6 +1,6 @@
 {
   "name": "mybuzzn",
-  "version": "0.0.7-dev",
+  "version": "0.0.8-dev",
   "description": "Buzzn",
   "author": "BUZZN",
   "private": true,
@@ -101,7 +101,8 @@
       "cordova-plugin-statusbar": {},
       "cordova-plugin-camera": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
-      }
+      },
+      "cordova-plugin-network-information": {}
     },
     "platforms": [
       "android",

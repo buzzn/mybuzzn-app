@@ -34,6 +34,7 @@ import FieldButton from '@/components/FieldButton';
 import VersionBar from '@/components/VersionBar';
 import APIService from '../services/APIService';
 import AuthState from '../states/AuthState';
+import AppState from '../states/AppState';
 
 export default {
   name: 'Login',
@@ -69,18 +70,28 @@ export default {
   mounted() {
     // TODO: make it real
     setTimeout(() => {
-      this.$root.appLoading = false;
+      AppState.set('loading', false);
     }, 2000);
   },
   methods: {
-    signIn() {
-      AuthState.set('demo', false);
+    signIn(demo = false) {
+      AuthState.set('demo', demo);
+      const errorHandling = () => {
+        AuthState.set('loggedIn', false);
+        AuthState.set('token', null);
+        AuthState.destroy();
+        this.$router.push({ path: '/error/400' });
+      };
       APIService.auth({
         email: this.email,
         password: this.password,
-      }).then(() =>
-        APIService.profile().then(() =>
-          this.$router.push({ name: 'MyBuzzn' })));
+      })
+        .then(() =>
+          APIService.profile()
+            .then(() => this.$router.push({ name: 'MyBuzzn' }))
+            .catch(() => errorHandling()),
+        )
+        .catch(() => errorHandling());
     },
     validate(key) {
       switch (key) {
@@ -95,10 +106,9 @@ export default {
       }
     },
     handleDemoMode() {
-      AuthState.set('demo', true);
-      APIService.auth().then(() =>
-        APIService.profile().then(() =>
-          this.$router.push({ name: 'MyBuzzn' })));
+      this.email = 'demo@buzzn.net';
+      this.password = '';
+      this.signIn(true);
     },
   },
 };

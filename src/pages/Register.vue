@@ -29,6 +29,7 @@ import FieldButton from '@/components/FieldButton';
 import FieldSwitch from '@/components/FieldSwitch';
 import VersionBar from '@/components/VersionBar';
 import APIService from '../services/APIService';
+import AppState from '../states/AppState';
 
 export default {
   name: 'Register',
@@ -70,7 +71,7 @@ export default {
   mounted() {
     // TODO: make it real
     setTimeout(() => {
-      this.$root.appLoading = false;
+      AppState.set('loading', false);
     }, 2000);
   },
   methods: {

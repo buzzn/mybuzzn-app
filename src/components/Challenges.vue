@@ -57,7 +57,7 @@
         <loading-icon></loading-icon>
       </div>
       <div v-if="isError" class="section-loader">
-        <error-icon :message="errorMessage"></error-icon>
+        <error-icon :message="'error-400' | translate"></error-icon>
       </div>
     </div>
 </template>
@@ -101,7 +101,6 @@ export default {
       challenge: null,
       isLoading: true,
       isError: false,
-      errorMessage: 'Ups, irgend etwas ist schief gelaufen. Versuch es später einfach nochmal oder überprüfe deine Netwerkverbindung.',
     };
   },
   mounted() {

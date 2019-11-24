@@ -4,6 +4,7 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 import i18n from './i18n/de.json';
+import AppState from './states/AppState';
 
 // custom URL Schema
 let redirectTo = null;
@@ -36,7 +37,7 @@ const startApp = () => {
     el: '#app',
     data: {
       i18n,
-      appLoading: true,
+      app: AppState.state,
     },
     router,
     mounted() {
@@ -46,9 +47,27 @@ const startApp = () => {
       document.addEventListener('redirect', (event) => {
         this.$router.push(event.detail);
       });
+
+      // check if app is offline
+      if (navigator.connection) {
+        AppState.set('offline', navigator.connection.type === 'none');
+        document.addEventListener('online', () => {
+          AppState.set('offline', false);
+        });
+        document.addEventListener('offline', () => {
+          AppState.set('offline', true);
+        });
+      }
     },
     components: { App },
-    template: '<App :loading="appLoading" />',
+    template: `
+    <div>
+      <div class="offline-hint" :class="{ show: app.offline }">
+        {{ 'no-internet' | translate }}
+      </div>
+      <App :loading="app.loading" :offline="app.offline" />
+    </div>
+    `,
   });
 };
 if (window.cordova) {

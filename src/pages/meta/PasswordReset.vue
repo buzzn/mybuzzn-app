@@ -21,7 +21,7 @@ import Field from '@/components/Field';
 import FieldButton from '@/components/FieldButton';
 
 export default {
-  name: 'Terms',
+  name: 'PasswordReset',
   components: {
     Field,
     FieldButton,

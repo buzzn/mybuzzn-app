@@ -66,5 +66,10 @@
     "challenge-failed": "Challenge verloren",
     "consumption": "Verbrauch",
     "yield": "Ertrag",
-    "self-sufficiency": "Autarkie"
+    "self-sufficiency": "Autarkie",
+    "no-internet": "Kein Internet",
+    "error-headline-400": "Oh Oh!",
+    "error-400": "Ups, irgend etwas ist schief gelaufen. Versuch es später einfach nochmal oder überprüfe deine Netwerkverbindung.",
+    "try-again": "Nochmal versuchen"
+
 }

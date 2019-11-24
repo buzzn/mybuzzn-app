@@ -21,11 +21,18 @@ export default {
 .error {
   text-align: center;
   .icon {
-    background: $grey-2;
+    background: white;
     border-radius: 50%;
     width: 200px;
+    height: 200px;
     margin: 30px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     svg {
+      width: 120px;
+      height: 120px;
+
       * {
         fill: $color;
       }

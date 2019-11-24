@@ -7,6 +7,25 @@ body {
     color: $color;
     position: relative;
 
+    .offline-hint {
+        background: $color;
+        color: white;
+        padding: 0 10px;
+        display: block;
+        z-index: 1000;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        transform: translate(0, -100%);
+        line-height: 30px;
+        transition: transform 500ms ease;
+        &.show {
+            transform: translate(0,0);
+        }
+    }
+
     .wrap {
         margin: 0 40px;
         @media #{$mediaMd} {

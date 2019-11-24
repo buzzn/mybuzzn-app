@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="{ 'open-menu': openMenu }">
+  <div id="app" :class="{ 'open-menu': openMenu, offline: offline }">
     <off-canvas-menu :open="openMenu" @navigate="openMenu = false"></off-canvas-menu>
     <div class="container" @touchstart="openMenu ? openMenu = false : null">
       <router-view @menu="toggleMenu"/>
@@ -16,6 +16,7 @@ export default {
   name: 'App',
   props: {
     loading: false,
+    offline: false,
   },
   components: {
     OffCanvasMenu,
@@ -43,10 +44,19 @@ export default {
 
 #app {
   transition: transform 500ms ease;
+  &.offline {
+    transform: translateY(30px);
+  }
   &.open-menu {
     transform: translate(80vw);
     @media #{$mediaMd} {
       transform: translate(450px);
+    }
+    &.offline {
+      transform: translate(80vw, 30px);
+      @media #{$mediaMd} {
+        transform: translate(450px, 30px);
+      }
     }
     .container {
       opacity: 0.5;

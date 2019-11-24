@@ -64,7 +64,7 @@ import Advices from '@/components/Advices';
 import Challenges from '@/components/Challenges';
 import ConsumptionHistory from '@/components/ConsumptionHistory';
 import ProfileState from '../states/ProfileState';
-
+import AppState from '../states/AppState';
 
 export default {
   name: 'MyBuzzn',
@@ -79,7 +79,7 @@ export default {
   mounted() {
     // TODO: make it real
     setTimeout(() => {
-      this.$root.appLoading = false;
+      AppState.set('loading', false);
     }, 2000);
   },
   data() {
