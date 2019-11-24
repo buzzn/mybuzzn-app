@@ -50,7 +50,7 @@ export default {
     validate(key) {
       switch (key) {
         case 'email':
-          this.errorMessage.email = this.email.length && !this.validator.email ? 'not-valid' : '';
+          this.errorMessage.email = this.email.length && !this.validator.email ? 'not-valid-email' : '';
           break;
         default:
           break;

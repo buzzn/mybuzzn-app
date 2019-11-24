@@ -19,17 +19,18 @@
           </div>
         </div>
         <div>
-          <field :error="errorMessage.username" @blur="validate('username')" v-model="username" :label="'username' | translate" type="text" name="username"></field>
+          <field :error="errorMessage.username | translate" @blur="validate('username')" v-model="username" :label="'username' | translate" type="text" name="username"></field>
           <div class="row">
-            <field :error="errorMessage.flatSize" @blur="validate('flatSize')"  v-model="flatSize" :label="'flat-size' | translate" type="text" name="flatSize"></field>
-            <field :error="errorMessage.flatPopulation" @blur="validate('flatPopulation')" v-model="flatPopulation" :label="'flat-population' | translate" type="number" name="flatPopulation"></field>
+            <field :error="errorMessage.flatSize | translate" @blur="validate('flatSize')"  v-model="flatSize" :label="'flat-size' | translate" type="text" name="flatSize"></field>
+            <field :error="errorMessage.flatPopulation | translate" @blur="validate('flatPopulation')" v-model="flatPopulation" :label="'flat-population' | translate" type="number" name="flatPopulation"></field>
           </div>
           <div class="row">
             <field :value="profile.firstname" :disabled="true" :label="'firstname' | translate" type="text" name="firstname"></field>
             <field :value="profile.lastname" :disabled="true" :label="'lastname' | translate" type="text" name="lastname"></field>
           </div>
           <field :value="profile.email" :disabled="true" :label="'email' | translate" type="text" name="email"></field>
-          <field-button :label="'save' | translate"></field-button>
+          <div class="success" :class="{ show: complete }" >{{ 'data-saved' | translate }}</div>
+          <field-button @click="submit" :label="'save' | translate"></field-button>
           <div class="hints wrap" v-if="$route.params.firstView">
             <p>
               {{ 'not-now' | translate }} <router-link :to="{ name: 'MyBuzzn' }">{{ 'skip' | translate }}</router-link>
@@ -72,6 +73,7 @@ export default {
       flatPopulation: 0,
       flatSize: 0,
       profile: ProfileState.state,
+      complete: false,
       validator: {
         username: false,
         flatSize: false,
@@ -90,6 +92,13 @@ export default {
     this.username = this.profile.username;
   },
   methods: {
+    submit() {
+      // TODO: submit
+      this.complete = true;
+      setTimeout(() => {
+        this.complete = false;
+      }, 3000);
+    },
     takePhoto() {
       if (navigator.camera) {
         navigator.camera.getPicture((imageData) => {
@@ -118,13 +127,13 @@ export default {
     validate(key) {
       switch (key) {
         case 'username':
-          this.errorMessage.username = this.username.length && !this.validator.username ? 'not valid' : '';
+          this.errorMessage.username = this.username.length && !this.validator.username ? 'not-valid' : '';
           break;
         case 'flatSize':
-          this.errorMessage.flatSize = this.flatSize.length && !this.validator.flatSize ? 'not valid' : '';
+          this.errorMessage.flatSize = this.flatSize.length && !this.validator.flatSize ? 'not-valid' : '';
           break;
         case 'flatPopulation':
-          this.errorMessage.flatPopulation = this.flatPopulation.length && !this.validator.flatPopulation ? 'not valid' : '';
+          this.errorMessage.flatPopulation = this.flatPopulation.length && !this.validator.flatPopulation ? 'not-valid' : '';
           break;
         default:
           break;
@@ -135,6 +144,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../assets/scss/animations";
 @import "../assets/scss/variables";
 
 .avatar {
@@ -188,6 +198,36 @@ export default {
     padding: 2px 5px;
   }
 }
+
+.success {
+  background: $success;
+  color: white;
+  text-align: center;
+  line-height: 40px;
+  margin: 0 0 1em;
+  border: 1px solid $success;
+  border-radius: 20px;
+  opacity: 0;
+  transform: translate(0, 40px);
+  transition: opacity 500ms ease, transform 500ms ease,visibility 500ms ease 500ms;
+  width: 230px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 0;
+  visibility: hidden;
+  &.show {
+    visibility: visible;
+    transform: translate(0,-10px);
+    opacity: 1;
+    transition: opacity 500ms ease, transform 500ms ease;
+  }
+}
+
+button {
+  position: relative;
+  z-index: 10;
+}
+
 .field.no-margin {
   margin-bottom: 0;
 }

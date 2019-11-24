@@ -5,8 +5,8 @@
       <logo></logo>
       <panel :title="'welcome' | translate">
         <p>{{ 'login-intro' | translate }}</p>
-        <field :error="errorMessage.email" @blur="validate('email')" v-model="email" :label="'email' | translate" type="email" name="email"></field>
-        <field :error="errorMessage.password" v-model="password" @blur="validate('password')" :label="'password' | translate" type="password" name="password"></field>
+        <field :error="errorMessage.email | translate" @blur="validate('email')" v-model="email" :label="'email' | translate" type="email" name="email"></field>
+        <field :error="errorMessage.password | translate" v-model="password" @blur="validate('password')" :label="'password' | translate" type="password" name="password"></field>
         <field-button :disabled="!this.validator.email || !this.validator.password" @click="signIn" :label="'login' | translate"></field-button>
       </panel>
       <div class="hints wrap">
@@ -96,10 +96,10 @@ export default {
     validate(key) {
       switch (key) {
         case 'email':
-          this.errorMessage.email = this.email.length && !this.validator.email ? 'not valid' : '';
+          this.errorMessage.email = this.email.length && !this.validator.email ? 'not-valid-email' : '';
           break;
         case 'password':
-          this.errorMessage.password = this.password.length && !this.validator.password ? 'not valid' : '';
+          this.errorMessage.password = this.password.length && !this.validator.password ? 'not-valid-password' : '';
           break;
         default:
           break;

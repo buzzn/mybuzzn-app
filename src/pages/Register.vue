@@ -5,8 +5,8 @@
       <logo></logo>
       <panel :title="'welcome' | translate">
         <p>{{ 'enter-password' | translate }}</p>
-        <field :error="errorMessage.password" v-model="password" @blur="validate('password')" :label="'password' | translate" type="password" name="password"></field>
-        <field :error="errorMessage.passwordRepeat" v-model="passwordRepeat" @blur="validate('passwordRepeat')" :label="'repeat-password' | translate" type="password" name="repeat-password"></field>
+        <field :error="errorMessage.password | translate" v-model="password" @blur="validate('password')" :label="'password' | translate" type="password" name="password"></field>
+        <field :error="errorMessage.passwordRepeat | translate" v-model="passwordRepeat" @blur="validate('passwordRepeat')" :label="'repeat-password' | translate" type="password" name="repeat-password"></field>
         <field-switch v-model="termsAccepted" :name="'terms-accepted'">Ich habe die <router-link :to="{ path: '/meta/terms' }">Nutzungsbedingungen</router-link> gelesen und stimme zu</field-switch>
         <field-button @click="register" :disabled="!isValid" :label="'start' | translate"></field-button>
       </panel>
@@ -97,10 +97,10 @@ export default {
     validate(key) {
       switch (key) {
         case 'password':
-          this.errorMessage.password = this.password.length && !this.validator.password ? 'not valid' : '';
+          this.errorMessage.password = this.password.length && !this.validator.password ? 'not-valid-password' : '';
           break;
         case 'passwordRepeat':
-          this.errorMessage.passwordRepeat = this.passwordRepeat.length && !this.validator.passwordRepeat ? 'not valid' : '';
+          this.errorMessage.passwordRepeat = this.passwordRepeat.length && !this.validator.passwordRepeat ? 'not-valid-repeat' : '';
           break;
         default:
           break;
