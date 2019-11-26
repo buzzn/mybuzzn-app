@@ -53,8 +53,8 @@
         {
             "id": 8,
             "position": 8,
-            "avatar": "https://api.adorable.io/avatars/285/johanndoe@mustermann.net.png",
-            "name": "Johann Doe",
+            "avatar": null,
+            "name": "MustiBär",
             "value": 1241
         },
         {

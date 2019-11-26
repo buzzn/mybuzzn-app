@@ -15,7 +15,6 @@
       <section class="section--coal">
         <div class="wrap">
           <h3>{{ 'hitlist-headline' | translate }}</h3>
-          <p class="gf">{{ 'current-position' | translate(12) }}</p>
           <hit-list></hit-list>
         </div>
       </section>

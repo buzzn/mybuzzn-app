@@ -2,6 +2,7 @@ const ProfileState = () => {
   const storeKey = 'profile';
 
   let state = {
+    id: 0,
     firstname: '',
     lastname: '',
     username: '',
