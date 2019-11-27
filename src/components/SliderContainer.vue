@@ -60,9 +60,9 @@ export default {
       this.delta = (event.touches[0].clientX - this.startPoint) * 0.2;
     },
     endDragging() {
-      if (this.delta < -30) {
+      if (this.delta < -15) {
         this.next();
-      } else if (this.delta > 30) {
+      } else if (this.delta > 15) {
         this.prev();
       }
       this.release = true;

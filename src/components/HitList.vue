@@ -171,7 +171,6 @@ export default {
           }
         }
       }
-      
     }
     .name {
       display: flex;

@@ -51,8 +51,9 @@ export default {
       const [marginTop, marginRight, marginLeft, marginBottom] = [10, 0, 0, 30];
       const graphHeight = height - marginTop - marginBottom;
       const graphWidth = width - marginLeft - marginRight;
-      const data = this.data.data.map(d => Object.values(d));
-      const xLabels = Object.keys(this.data.data[0]);
+      const arrayData = Object.values(this.data.data);
+      const data = arrayData.map(d => Object.values(d));
+      const xLabels = Object.keys(arrayData[0]);
 
       const svg = d3.select(this.$refs.graph)
         .append('svg')

@@ -34,6 +34,9 @@ export default {
     padding: 2px 5px;
   }
   input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     background: $white;
     box-shadow: none;
     outline: none;
