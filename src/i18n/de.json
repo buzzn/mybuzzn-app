@@ -52,7 +52,7 @@
     "licenses-content": "Hier findest Du eine Auflistung der Open Source Bibliotheken mit Lizenzbeschreibung, die in Deiner Version zu teilen genutzt wird. Wir danken herzlich der Open Source Community.",
     "current-consumption": "Du verbrauchst gerade",
     "hello-name": "Hallo %s!",
-    "devices-headline": "Das sind:",
+    "devices-headline": "Du hast diese Geräte genutzt",
     "hints-headline": "Spar-Tipps",
     "challenge-headline": "Challenges",
     "consumption-headline": "Verbrauchshistorie",
@@ -73,5 +73,6 @@
     "error-headline-400": "Oh Oh!",
     "error-400": "Ups, irgend etwas ist schief gelaufen. Versuch es später einfach nochmal oder überprüfe deine Netwerkverbindung.",
     "try-again": "Nochmal versuchen",
-    "data-saved": "Daten wurden gespeichert!"
+    "data-saved": "Daten wurden gespeichert!",
+    "current-sufficiency": "Deine aktuelle Suffizienz ist"
 }

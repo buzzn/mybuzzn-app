@@ -21,5 +21,10 @@ export default {
     font-size: 72px;
     font-weight: 500;
   }
+  &.smaller {
+    .number {
+      font-size: 54px;
+    }
+  }
 }
 </style>

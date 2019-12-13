@@ -1,11 +1,15 @@
+html {
+    overflow: hidden;
+}
+
 body {
-    background: $solar-3;
-    background-image: $solarGradient;
+    background: $color;
     font-family: $fontFamily;
     max-width: 100%;
     overflow: hidden;
     color: $color;
     position: relative;
+    -webkit-overflow-scrolling: touch;
 
     .offline-hint {
         background: $color;
@@ -89,9 +93,9 @@ body {
         max-width: 100vw;
         overflow-x: hidden;
         box-sizing: border-box;
-        overflow-y: scroll;
         padding-top: $headerHeight + 50px;
         display: block;
+        -webkit-overflow-scrolling: touch;
     }
 
     .row {

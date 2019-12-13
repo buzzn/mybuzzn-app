@@ -58,6 +58,10 @@ const startApp = () => {
           AppState.set('offline', true);
         });
       }
+
+      if (typeof cordova !== 'undefined' && cordova.platformId) {
+        document.body.classList.add(cordova.platformId);
+      }
     },
     components: { App },
     template: `

@@ -47,7 +47,7 @@ header {
   animation: fadeDown 800ms ease forwards;
   box-sizing: border-box;
   padding: 0 15px 0 20px;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;

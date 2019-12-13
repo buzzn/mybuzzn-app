@@ -27,3 +27,17 @@ cordova run android
 cordova run ios
 ```
 
+
+# Build for release
+
+```bash
+sudo sh ./prepare.sh
+nvm use 10
+cordova build ios # open in xcode 
+```
+
+- in xcode set the build target to generic IOS Device
+- then click on `Archive`
+- Validate and Distribute your new App
+- Check that you increased the version number
+

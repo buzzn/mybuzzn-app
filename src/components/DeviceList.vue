@@ -39,6 +39,7 @@ export default {
 @import "../assets/scss/animations";
 
 .devicelist {
+  margin: 2em 0;
   ul {
     margin: 0;
     padding: 0;

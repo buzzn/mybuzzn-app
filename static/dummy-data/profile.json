@@ -5,7 +5,7 @@
         "firstname": "Max",
         "lastname": "Mustermann",
         "username": "MustiBär",
-        "avatar": null,
+        "avatar": "",
         "email": "max@mustermann.net",
         "flatSize": 68.13,
         "flatPopulation": 2

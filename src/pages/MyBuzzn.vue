@@ -24,9 +24,11 @@
           </div>
           <p class="labels">
             <strong>{{ 'hello-name' | translate(profile.firstname + ' ' + profile.lastname) }}</strong><br>
-            {{ 'current-consumption' | translate }}
+            {{ 'current-sufficiency' | translate }}
           </p>
-          <great-number class="number" unit="Watt">1.432</great-number>
+          <great-number class="number" unit="kWh">432</great-number>
+          <p class="labels">{{ 'current-consumption' | translate }}</p>
+          <great-number class="smaller number" unit="Watt">3.324</great-number>
         </div>
       </section>
       <section class="section--coal">
@@ -154,6 +156,7 @@ p {
 .labels {
   opacity: 0;
   animation: fadeUp 800ms ease 1100ms forwards;
+  margin-bottom: 0.5em;
 }
 
 .number {

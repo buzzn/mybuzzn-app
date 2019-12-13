@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="net.buzzn.buzzn" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="net.buzzn.buzzn" version="1.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>BUZZN</name>
     <description>
         Gemeinschaftlich, dezentral und fair produzierter Strom aus Deutschland.
@@ -54,14 +54,19 @@
         <splash density="port-xxxhdpi" src="res/screen/android/splash-port-xxxhdpi.png"/>
     </platform>
     <platform name="ios">
+        
+        <feature name="CDVWKWebViewEngine">
+            <param name="ios-package" value="CDVWKWebViewEngine" />
+        </feature>
+        <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
         <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
-            <string>need camera access to take a picture for an avatar</string>
+            <string>Der Zugriff auf die Kamera wird benötigt, damit du ein Foto für deinen Avatar aufnehmen kannst.</string>
         </edit-config>
         <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
-            <string>need photo library access to allow setting a new avatar from there</string>
+            <string>Der Zugriff auf die Bibliothek wird benötigt, damit auch Bilder von dort als Avatar gesetzt werden kann.</string>
         </edit-config>
         <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
-            <string>need photo library access to save the taken avatar picture there</string>
+            <string>Die Erlaubnis Bilder in der Bibliothek anzulegen wird benötigt, damit wir die aufgenommenen Fotos dort sichern können.</string>
         </edit-config>
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />

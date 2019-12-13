@@ -50,6 +50,9 @@ export default {
     top: 0;
     max-width: 450px;
     min-height: 100vh;
+    .ios & {
+        min-height: 105vh;
+    }
     width: 80vw;
     z-index: 10;
     background-image: $solarGradient;
