@@ -8,11 +8,14 @@
         <field :error="errorMessage.password | translate" v-model="password" @blur="validate('password')" :label="'password' | translate" type="password" name="password"></field>
         <field :error="errorMessage.passwordRepeat | translate" v-model="passwordRepeat" @blur="validate('passwordRepeat')" :label="'repeat-password' | translate" type="password" name="repeat-password"></field>
         <field-switch v-model="termsAccepted" :name="'terms-accepted'">Ich habe die <router-link :to="{ path: '/meta/terms' }">Nutzungsbedingungen</router-link> gelesen und stimme zu</field-switch>
-        <field-button @click="register" :disabled="!isValid" :label="'start' | translate"></field-button>
+        <field-button @click="register" :disabled="!isValid" :label="'register' | translate"></field-button>
       </panel>
       <div class="hints wrap">
         <p>
           {{ 'has-already-an-account' | translate }} <router-link :to="{ name: 'Login' }">{{ 'login' | translate }}</router-link>
+        </p>
+        <p>
+          {{ 'demo-text' | translate }} <strong @click="handleDemoMode">{{ 'demo-modus' | translate }}</strong>
         </p>
       </div>
       <version-bar></version-bar>

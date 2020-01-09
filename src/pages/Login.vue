@@ -83,7 +83,7 @@ export default {
         this.$router.push({ path: '/error/400' });
       };
       APIService.auth({
-        email: this.email,
+        user: this.email,
         password: this.password,
       })
         .then(() =>

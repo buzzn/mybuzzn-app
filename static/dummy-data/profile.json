@@ -1,13 +1,7 @@
 {
-    "code": 200,
-    "data": {
-        "id": 8,
-        "firstname": "Max",
-        "lastname": "Mustermann",
-        "username": "MustiBär",
-        "avatar": "",
-        "email": "max@mustermann.net",
-        "flatSize": 68.13,
-        "flatPopulation": 2
-    }
+    "group_id": 1, 
+    "inhabitants": null, 
+    "name": "danny", 
+    "flat_size": null, 
+    "mail": "danny@buzzn.net"
 }

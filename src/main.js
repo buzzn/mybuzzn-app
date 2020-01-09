@@ -59,7 +59,9 @@ const startApp = () => {
         });
       }
 
+      // eslint-disable-next-line
       if (typeof cordova !== 'undefined' && cordova.platformId) {
+        // eslint-disable-next-line
         document.body.classList.add(cordova.platformId);
       }
     },

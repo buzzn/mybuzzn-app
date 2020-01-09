@@ -9,15 +9,22 @@ import ChallengesState from '../states/ChallengesState';
 import ConsumptionHistoryState from '../states/ConsumptionHistoryState';
 
 const APIService = () => {
-  const endpoints = (AuthState.get('demo')) ? config.demoEndpoints : config.prodEndpoints;
+  const endpoints = () => {
+    if (AuthState.get('demo')) {
+      return config.demoEndpoints;
+    }
+    return config.prodEndpoints;
+  };
 
   const auth = postData => new Promise((resolve, reject) => {
     const success = ({ data }) => {
-      AuthState.set('token', data.data.token);
-      AuthState.set('loggedIn', Boolean(data.data.token));
+      AuthState.set('token', data.sessionToken);
+      AuthState.set('loggedIn', Boolean(data.sessionToken));
+      // set Bearer Token
+      axios.defaults.headers.common.Authorization = `Bearer ${data.sessionToken}`;
       resolve(data);
     };
-    axios.get(endpoints.signin, postData)
+    axios.post(endpoints().signin, postData)
       .then(success)
       .catch((error) => {
         if (error.response && error.response.status === 0) {
@@ -30,11 +37,11 @@ const APIService = () => {
 
   const register = postData => new Promise((resolve, reject) => {
     const success = ({ data }) => {
-      AuthState.set('token', data.data.token);
-      AuthState.set('loggedIn', Boolean(data.data.token));
+      AuthState.set('token', data.sessionToken);
+      AuthState.set('loggedIn', Boolean(data.sessionToken));
       resolve(data);
     };
-    axios.get(endpoints.register, postData)
+    axios.get(endpoints().register, postData)
       .then(success)
       .catch((error) => {
         if (error.response && error.response.status === 0) {
@@ -47,14 +54,39 @@ const APIService = () => {
 
   const profile = () => new Promise((resolve, reject) => {
     const success = ({ data }) => {
-      Object.keys(data.data).forEach((key) => {
-        ProfileState.set(key, data.data[key]);
+      Object.keys(data).forEach((key) => {
+        switch(key) {
+          case 'id':
+            ProfileState.set('id', data[key]);
+            break;
+          case 'mail':
+            ProfileState.set('email', data[key]);
+            break;
+          case 'name':
+            ProfileState.set('lastname', data[key]);
+            break;
+          case 'first_name':
+          case 'firstName':
+            ProfileState.set('firstname', data[key]);
+            break;
+          case 'nick':
+            ProfileState.set('username', data[key]);
+            break;
+          case 'avatar':
+            ProfileState.set('avatar', data[key]);
+            break;
+          case 'flat_size':
+          case 'flatSize':
+            ProfileState.set('flatSize', data[key]);
+            break;
+          case 'inhabitants':
+            ProfileState.set('flatPopulation', data[key]);
+            break;
+        }
       });
       resolve(data);
     };
-    axios.get(endpoints.profile, {
-      token: AuthState.get('token'),
-    })
+    axios.get(endpoints().profile)
       .then(success)
       .catch((error) => {
         if (error.response && error.response.status === 0) {
@@ -70,7 +102,7 @@ const APIService = () => {
       HitlistState.set('data', data.data);
       resolve(data);
     };
-    axios.get(endpoints.hitlist, {
+    axios.get(endpoints().hitlist, {
       token: AuthState.get('token'),
     })
       .then(success)
@@ -88,7 +120,7 @@ const APIService = () => {
       DevicelistState.set('data', data.data);
       resolve(data);
     };
-    axios.get(endpoints.devicelist, {
+    axios.get(endpoints().devicelist, {
       token: AuthState.get('token'),
     })
       .then(success)
@@ -106,7 +138,7 @@ const APIService = () => {
       AdvicesState.set('data', data.data);
       resolve(data);
     };
-    axios.get(endpoints.advices, {
+    axios.get(endpoints().advices, {
       token: AuthState.get('token'),
     })
       .then(success)
@@ -124,7 +156,7 @@ const APIService = () => {
       ChallengesState.set('available', data.data);
       resolve(data);
     };
-    axios.get(endpoints.challenges, {
+    axios.get(endpoints().challenges, {
       token: AuthState.get('token'),
     })
       .then(success)
@@ -142,7 +174,7 @@ const APIService = () => {
       ChallengesState.set('active', data.data);
       resolve(data);
     };
-    axios.get(endpoints.challengeStatus, {
+    axios.get(endpoints().challengeStatus, {
       token: AuthState.get('token'),
     })
       .then(success)
@@ -160,7 +192,7 @@ const APIService = () => {
       ConsumptionHistoryState.set('data', data.data);
       resolve(data);
     };
-    axios.get(endpoints.consumptionHistory, {
+    axios.get(endpoints().consumptionHistory, {
       token: AuthState.get('token'),
     })
       .then(success)

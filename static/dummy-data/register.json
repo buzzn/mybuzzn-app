@@ -1,6 +1,3 @@
 {
-    "code": 200,
-    "data": {
-        "token": "123456"
-    }
+    "sessionToken": "demoToken"
 }
