@@ -35,6 +35,7 @@ import VersionBar from '@/components/VersionBar';
 import APIService from '../services/APIService';
 import AuthState from '../states/AuthState';
 import AppState from '../states/AppState';
+import { errorHandling } from '../services/ErrorService';
 
 export default {
   name: 'Login',
@@ -52,7 +53,7 @@ export default {
       this.validator.email = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value);
     },
     password(value) {
-      this.validator.password = value.length >= 8;
+      this.validator.password = value.length; // value.length >= 8;
     },
   },
   data: () => ({
@@ -76,12 +77,6 @@ export default {
   methods: {
     signIn(demo = false) {
       AuthState.set('demo', demo);
-      const errorHandling = () => {
-        AuthState.set('loggedIn', false);
-        AuthState.set('token', null);
-        AuthState.destroy();
-        this.$router.push({ path: '/error/400' });
-      };
       APIService.auth({
         user: this.email,
         password: this.password,
@@ -89,9 +84,21 @@ export default {
         .then(() =>
           APIService.profile()
             .then(() => this.$router.push({ name: 'MyBuzzn' }))
-            .catch(() => errorHandling()),
+            .catch(error => errorHandling(error.response.status, this.$router)),
         )
-        .catch(() => errorHandling());
+        .catch((error) => {
+          if (error && error.response && error.response.status === 401) {
+            // validation fails
+            this.errorMessage.email = 'unauthorized-email';
+            this.errorMessage.password = 'unauthorized-password';
+          } else {
+            if (error && error.response && error.response.status) {
+              errorHandling(error.response.status, this.$router);
+            }
+            // eslint-disable-next-line
+            console.error(error);
+          }
+        });
     },
     validate(key) {
       switch (key) {

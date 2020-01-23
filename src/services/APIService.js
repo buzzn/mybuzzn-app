@@ -7,6 +7,7 @@ import DevicelistState from '../states/DevicelistState';
 import AdvicesState from '../states/AdvicesState';
 import ChallengesState from '../states/ChallengesState';
 import ConsumptionHistoryState from '../states/ConsumptionHistoryState';
+import GlobalChallengeState from '../states/GlobalChallengeState';
 
 const APIService = () => {
   const endpoints = () => {
@@ -18,21 +19,25 @@ const APIService = () => {
 
   const auth = postData => new Promise((resolve, reject) => {
     const success = ({ data }) => {
+      AuthState.set('user', postData.user);
+      AuthState.set('password', postData.password);
       AuthState.set('token', data.sessionToken);
       AuthState.set('loggedIn', Boolean(data.sessionToken));
       // set Bearer Token
       axios.defaults.headers.common.Authorization = `Bearer ${data.sessionToken}`;
       resolve(data);
     };
+    const catchCase = (error) => {
+      if (error.response && error.response.status === 0) {
+        success(error.response);
+      } else {
+        reject(error);
+      }
+    };
+
     axios.post(endpoints().signin, postData)
       .then(success)
-      .catch((error) => {
-        if (error.response && error.response.status === 0) {
-          success(error.response);
-        } else {
-          reject(error);
-        }
-      });
+      .catch(catchCase);
   });
 
   const register = postData => new Promise((resolve, reject) => {
@@ -55,7 +60,7 @@ const APIService = () => {
   const profile = () => new Promise((resolve, reject) => {
     const success = ({ data }) => {
       Object.keys(data).forEach((key) => {
-        switch(key) {
+        switch (key) {
           case 'id':
             ProfileState.set('id', data[key]);
             break;
@@ -82,11 +87,29 @@ const APIService = () => {
           case 'inhabitants':
             ProfileState.set('flatPopulation', data[key]);
             break;
+          default:
+            break;
         }
       });
       resolve(data);
     };
     axios.get(endpoints().profile)
+      .then(success)
+      .catch((error) => {
+        if (error.response && error.response.status === 0) {
+          success(error.response);
+        } else {
+          reject(error);
+        }
+      });
+  });
+
+  const postProfile = postData => new Promise((resolve, reject) => {
+    axios.defaults.headers.common.Authorization = `Bearer ${AuthState.get('token')}`;
+    const success = ({ data }) => {
+      resolve(data);
+    };
+    axios.put(endpoints().profile, postData)
       .then(success)
       .catch((error) => {
         if (error.response && error.response.status === 0) {
@@ -169,6 +192,26 @@ const APIService = () => {
       });
   });
 
+  const globalChallenge = () => new Promise((resolve, reject) => {
+    const success = ({ data }) => {
+      GlobalChallengeState.set('totalPrognose', data.totalPrognose);
+      GlobalChallengeState.set('benchmark', data.benchmark);
+      GlobalChallengeState.set('prognose', data.prognose);
+      resolve(data);
+    };
+    axios.get(endpoints().globalChallenge, {
+      token: AuthState.get('token'),
+    })
+      .then(success)
+      .catch((error) => {
+        if (error.response && error.response.status === 0) {
+          success(error.response);
+        } else {
+          reject(error);
+        }
+      });
+  });
+
   const currentChallenge = () => new Promise((resolve, reject) => {
     const success = ({ data }) => {
       ChallengesState.set('active', data.data);
@@ -215,6 +258,8 @@ const APIService = () => {
     challenges,
     currentChallenge,
     consumptionHistory,
+    globalChallenge,
+    postProfile,
   };
 };
 

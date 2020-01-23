@@ -43,7 +43,9 @@
     "cancel": "Abrechen",
     "not-valid": "Überprüfe bitte deine Eingabe",
     "not-valid-email": "Das ist keine gültige E-Mail Adresse",
+    "unauthorized-email": "Deine E-Mail Adresse ist möglicherweise falsch",
     "not-valid-password": "Dein Passwort muss mindestens 8 Zeichen lang sein.",
+    "unauthorized-password": "Oder dein Passwort stimmt nicht",
     "not-valid-repeat": "Dein Passwort stimmt nicht überein.",
     "about": "Über uns",
     "about-headline": "Über die BUZZN App",
@@ -74,5 +76,17 @@
     "error-400": "Ups, irgend etwas ist schief gelaufen. Versuch es später einfach nochmal oder überprüfe deine Netwerkverbindung.",
     "try-again": "Nochmal versuchen",
     "data-saved": "Daten wurden gespeichert!",
-    "current-sufficiency": "Deine aktuelle Suffizienz ist"
+    "current-sufficiency": "Deine aktuelle Suffizienz ist",
+    "global-challenge-headline": "Global Challenge",
+    "global-challenge-claim": "Ein Planet.<br>Ein Ziel.",
+    "global-challenge-subline": "<strong>1.000</strong> Münchner Haushalte sparen <br><strong>1.000.000</strong> Kilowattstunden Strom. *",
+    "benchmark-text": "Um unserer gemeinsames Ziel zu erreichen unterbiete deinen Jahresverbrauch** von ",
+    "prognose-text": "Wenn Du so weitermachst wie bisher, liegt dein aktueller geschätzter Jahresverbrauch** bei",
+    "saving-prognose": "Du sparst im Jahr",
+    "positive-savings-text": "<strong>Super!</strong> Deine Ersparnis ist Teil unseres Ziels. Mit Dir ist die Einsparprognose für <strong>1.000 Haushalte</strong> in München aktuell bei",
+    "negative-savings-text": "<strong>Oh Oh!</strong> Du hast noch keine Ersparnis, die Teil unseres Ziels sein kann. Die Einsparprognose für <strong>1.000 Haushalte</strong> in München aktuell bei",
+    "your-contribution": "Dein Beitrag",
+    "your-savings": "Deine Einsparung",
+    "term-hint": "* Laufzeit vom 12. März 2020 bis 11. März 2023",
+    "year-hint": "** Das Jahr startet vom 12. März bis 11. März des Folgejahres"
 }

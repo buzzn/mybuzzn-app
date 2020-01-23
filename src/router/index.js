@@ -8,6 +8,7 @@ import Profile from '@/pages/Profile';
 import Register from '@/pages/Register';
 import Error from '@/pages/Error';
 import AuthState from '../states/AuthState';
+import APIService from '../services/APIService';
 
 Vue.use(Router);
 
@@ -75,16 +76,15 @@ router.beforeEach((to, from, next) => {
         params: { nextUrl: to.fullPath },
       });
     } else {
-      next();
-    }
-  } else if (to.matched.some(record => record.meta.withoutAuth)) {
-    if (!AuthState.get('loggedIn')) {
-      // no token found, then show page
-      next();
-    } else {
-      next({
-        name: 'MyBuzzn',
-      });
+      APIService.auth({
+        user: AuthState.get('user'),
+        password: AuthState.get('password'),
+      })
+        .then(() => next())
+        .catch(() => next({
+          name: 'Login',
+          params: { nextUrl: to.fullPath },
+        }));
     }
   } else {
     next();

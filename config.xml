@@ -1,5 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="net.buzzn.buzzn" version="1.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget 
+    id="net.buzzn.buzzn" 
+    version="1.0.4" 
+    xmlns="http://www.w3.org/ns/widgets"
+    xmlns:android="http://schemas.android.com/apk/res/android"  
+    xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>BUZZN</name>
     <description>
         Gemeinschaftlich, dezentral und fair produzierter Strom aus Deutschland.
@@ -33,6 +38,9 @@
         <variable name="URL_SCHEME" value="buzzn" />
     </feature>
     <platform name="android">
+        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+            <application android:usesCleartextTraffic="true" />
+        </edit-config>
         <feature name="Camera">
             <param name="android-package" value="org.apache.cordova.CameraLauncher" />
         </feature>
@@ -54,7 +62,6 @@
         <splash density="port-xxxhdpi" src="res/screen/android/splash-port-xxxhdpi.png"/>
     </platform>
     <platform name="ios">
-        
         <feature name="CDVWKWebViewEngine">
             <param name="ios-package" value="CDVWKWebViewEngine" />
         </feature>

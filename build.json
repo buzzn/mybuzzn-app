@@ -1,18 +1,18 @@
 {
   "android": {
       "debug": {
-          "keystore": "../android.keystore",
-          "storePassword": "android",
-          "alias": "mykey1",
-          "password" : "password",
-          "keystoreType": ""
+        "keystore": "/Users/danny/Workspace/mybuzzn-app/platforms/android/BUZZN_1.keystore",
+        "storePassword": "dhAvYHRmsxF2BmaRdAYwpmDf",
+        "alias": "buzzn1",
+        "password" : "dhAvYHRmsxF2BmaRdAYwpmDf",
+        "keystoreType": ""
       },
       "release": {
-          "keystore": "/Users/danny/Workspace/mybuzzn-app/platforms/android/BUZZN_1.keystore",
-          "storePassword": "dhAvYHRmsxF2BmaRdAYwpmDf",
-          "alias": "buzzn1",
-          "password" : "dhAvYHRmsxF2BmaRdAYwpmDf",
-          "keystoreType": ""
+        "keystore": "/Users/danny/Workspace/mybuzzn-app/platforms/android/BUZZN_1.keystore",
+        "storePassword": "dhAvYHRmsxF2BmaRdAYwpmDf",
+        "alias": "buzzn1",
+        "password" : "dhAvYHRmsxF2BmaRdAYwpmDf",
+        "keystoreType": ""
       }
   }
 }

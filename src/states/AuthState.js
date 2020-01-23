@@ -1,6 +1,8 @@
 const AuthState = () => {
   const storeKey = 'auth';
   const initState = {
+    user: null,
+    password: null,
     token: null,
     loggedIn: false,
     role: null,

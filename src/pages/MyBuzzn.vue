@@ -17,7 +17,7 @@
             </svg>
           </div>
           <div class="avatar image">
-            <div class="mask" v-if="profile.avatar" :style="{backgroundImage: `url(${profile.avatar})`}"></div>
+            <div class="mask" v-if="profile.avatar" :style="{backgroundImage: `url(data:image/jpeg;base64,${profile.avatar})`}"></div>
             <div class="mask" v-if="!profile.avatar">
               <svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><title>icon_default_avatar</title><path d="M19,22.4h-.72V21.13a3.4,3.4,0,0,0,0-.45,6.82,6.82,0,0,0,3.6-5.82,3.39,3.39,0,0,0,1.95-3.07v-.73a1.83,1.83,0,0,0-1.83-1.83h-.11V8a5,5,0,0,0-5-5H13.23a5,5,0,0,0-5,5V9.23H8.08a1.83,1.83,0,0,0-1.83,1.83v.73A3.39,3.39,0,0,0,8.2,14.86a6.8,6.8,0,0,0,3.6,5.82,3.42,3.42,0,0,0,0,.45V22.4h-.71A7.61,7.61,0,0,0,3.45,30h1a6.61,6.61,0,0,1,6.6-6.6h.77a3.22,3.22,0,0,0,6.36,0H19a6.61,6.61,0,0,1,6.6,6.6h1A7.61,7.61,0,0,0,19,22.4Zm3-12.17a.83.83,0,0,1,.83.83v.73a2.42,2.42,0,0,1-.94,1.91V10.23ZM7.25,11.79v-.73a.83.83,0,0,1,.83-.83h.11V13.7A2.42,2.42,0,0,1,7.25,11.79Zm1.94,2.88V8a4,4,0,0,1,4-4h3.54a4,4,0,0,1,4,4v6.69a5.81,5.81,0,0,1-11.62,0Zm8,8.19a2.24,2.24,0,0,1-4.47,0V21.1a6.73,6.73,0,0,0,4.46,0v1.76Z"/></svg>
             </div>
@@ -29,6 +29,12 @@
           <great-number class="number" unit="kWh">432</great-number>
           <p class="labels">{{ 'current-consumption' | translate }}</p>
           <great-number class="smaller number" unit="Watt">3.324</great-number>
+        </div>
+      </section>
+      <section class="section--universe">
+        <div class="wrap">
+          <h3>{{ 'global-challenge-headline' | translate }}</h3>
+          <global-challenge></global-challenge>
         </div>
       </section>
       <section class="section--coal">
@@ -61,6 +67,7 @@
 <script>
 import HeaderBar from '@/components/HeaderBar';
 import GreatNumber from '@/components/GreatNumber';
+import GlobalChallenge from '@/components/GlobalChallenge';
 import DeviceList from '@/components/DeviceList';
 import Advices from '@/components/Advices';
 import Challenges from '@/components/Challenges';
@@ -73,6 +80,7 @@ export default {
   components: {
     HeaderBar,
     GreatNumber,
+    GlobalChallenge,
     DeviceList,
     Advices,
     Challenges,
