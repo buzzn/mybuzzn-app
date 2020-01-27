@@ -43,17 +43,6 @@
           <device-list></device-list>
         </div>
       </section>
-      <section class="section--gold">
-        <div class="wrap">
-          <h3>{{ 'hints-headline' | translate }}</h3>
-          <advices></advices>
-        </div>
-      </section>
-      <section class="section--snow">
-        <div class="wrap">
-          <challenges></challenges>
-        </div>
-      </section>
       <section class="section--lavendel">
         <div class="wrap">
           <h3>{{ 'consumption-headline' | translate }}</h3>
@@ -69,8 +58,6 @@ import HeaderBar from '@/components/HeaderBar';
 import GreatNumber from '@/components/GreatNumber';
 import GlobalChallenge from '@/components/GlobalChallenge';
 import DeviceList from '@/components/DeviceList';
-import Advices from '@/components/Advices';
-import Challenges from '@/components/Challenges';
 import ConsumptionHistory from '@/components/ConsumptionHistory';
 import ProfileState from '../states/ProfileState';
 import AppState from '../states/AppState';
@@ -82,8 +69,6 @@ export default {
     GreatNumber,
     GlobalChallenge,
     DeviceList,
-    Advices,
-    Challenges,
     ConsumptionHistory,
   },
   mounted() {

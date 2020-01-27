@@ -10,6 +10,7 @@ export const demoEndpoints = {
   challengeStatus: './static/dummy-data/challengeStatus.json',
   consumptionHistory: './static/dummy-data/consumptionHistory.json',
   globalChallenge: './static/dummy-data/globalChallenge.json',
+  ourConsumptionHistroy: './static/dummy-data/ourConsumptionHistroy.json',
 };
 
 const apiBase = 'http://mybuzzn-backend.buzzn.net';
@@ -23,6 +24,7 @@ export const prodEndpoints = {
   advices: './static/dummy-data/advices.json',
   challenges: './static/dummy-data/challenges.json',
   challengeStatus: './static/dummy-data/challengeStatus.json',
-  consumptionHistory: './static/dummy-data/consumptionHistory.json',
+  consumptionHistory: `${apiBase}/individual-consumption-history`,
   globalChallenge: './static/dummy-data/globalChallenge.json',
+  ourConsumptionHistory: `${apiBase}/group-consumption-history`,
 };

@@ -2,15 +2,15 @@
     <div class='consumption-history'>
         <div class='graph' ref='graph'></div>
         <div class="legend">
-          <div class="row">
+          <div class="row" v-if="consumption">
             <label class="red">{{ 'consumption' | translate}}</label>
-            <strong>{{ consumption }} Watt</strong>
+            <strong>{{ consumption }} kWh</strong>
           </div>
-          <div class="row">
+          <div class="row" v-if="production">
             <label>{{ 'yield' | translate}}</label>
-            <strong>{{ production }} Watt</strong>
+            <strong>{{ production }} kWh</strong>
           </div>
-          <div class="row">
+          <div class="row" v-if="consumption">
             <label class="none">{{ 'self-sufficiency' | translate}}</label>
             <strong>{{ selfSufficiency }} %</strong>
           </div>
@@ -25,34 +25,45 @@ import ConsumptionHistoryState from '../states/ConsumptionHistoryState';
 
 export default {
   name: 'ConsumptionHistory',
+  props: ['type'],
   components: {
   },
   data() {
     return {
       data: ConsumptionHistoryState.state,
-      consumption: 423,
-      production: 320,
+      consumption: null,
+      production: null,
     };
   },
   computed: {
     selfSufficiency() {
+      if (this.consumption === null) {
+        return 0;
+      }
       return Math.round((this.production / this.consumption) * 100);
     },
   },
   mounted() {
-    APIService.consumptionHistory().then(() => {
-      this.createGraph();
-    });
+    if (this.type === 'our') {
+      APIService.ourConsumptionHistory().then(() => {
+        this.createGraph();
+      });
+    } else {
+      APIService.consumptionHistory().then(() => {
+        this.createGraph();
+      });
+    }
   },
   methods: {
     createGraph() {
       const width = this.$refs.graph.offsetWidth;
       const height = this.$refs.graph.offsetHeight;
-      const [marginTop, marginRight, marginLeft, marginBottom] = [10, 0, 0, 30];
+      const [marginTop, marginRight, marginLeft, marginBottom] = [10, 0, 40, 30];
       const graphHeight = height - marginTop - marginBottom;
       const graphWidth = width - marginLeft - marginRight;
       const arrayData = Object.values(this.data.data);
-      const data = arrayData.map(d => Object.values(d));
+      const data = arrayData.map(d => Object.values(d).map(a => a / 1000 / 1000));
+      console.log(arrayData);
       const xLabels = Object.keys(arrayData[0]);
 
       const svg = d3.select(this.$refs.graph)
@@ -67,9 +78,12 @@ export default {
         .range([0, graphWidth]);
 
       const maxValues = data.map(dat => d3.max(dat, d => parseInt(d, 10)));
+      const minValues = data.map(dat => d3.min(dat, d => parseInt(d, 10)));
+
+      console.log(data);
 
       const y = d3.scaleLinear()
-        .domain([0, d3.max(maxValues) * 1.25])
+        .domain([d3.min(minValues), d3.max(maxValues) * 1.02])
         .range([graphHeight, 0]);
 
       const customXAxis = (g) => {
@@ -87,10 +101,12 @@ export default {
       const customYAxis = (g) => {
         const axisRight = d3
           .axisLeft(y)
-          .tickSize(graphWidth);
+          .tickSize(5);
         g.call(axisRight);
         g.selectAll('.tick').select('line').remove();
-        g.selectAll('.tick text').remove();
+        g.selectAll('.tick text')
+          .attr('fill', 'white')
+          .attr('fill-opacity', '0.5');
       };
       svg.append('g')
         .attr('transform', `translate(0, ${graphHeight})`)

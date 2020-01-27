@@ -21,7 +21,7 @@
       <section class="section--lavendel">
         <div class="wrap">
           <h3>{{ 'consumption-headline' | translate }}</h3>
-          <consumption-history></consumption-history>
+          <consumption-history type="our"></consumption-history>
         </div>
       </section>
       <section class="section--snow">

@@ -232,10 +232,41 @@ const APIService = () => {
 
   const consumptionHistory = () => new Promise((resolve, reject) => {
     const success = ({ data }) => {
-      ConsumptionHistoryState.set('data', data.data);
+      const temp = {};
+      const dataKeys = Object.keys(data);
+      dataKeys.forEach((index) => {
+        temp[(Date.parse(index) / 1000).toString()] = data[index];
+      });
+      ConsumptionHistoryState.set('data', { temp });
       resolve(data);
     };
-    axios.get(endpoints().consumptionHistory, {
+    axios.get(endpoints().consumptionHistory + `?begin=` + ((new Date()).getTime() / 1000 - (24 * 60 * 60)), {
+      token: AuthState.get('token'),
+    })
+      .then(success)
+      .catch((error) => {
+        if (error.response && error.response.status === 0) {
+          success(error.response);
+        } else {
+          reject(error);
+        }
+      });
+  });
+
+  const ourConsumptionHistory = () => new Promise((resolve, reject) => {
+    const success = ({ data }) => {
+      const transformData = (dataSet) => {
+        const temp = {};
+        const dataKeys = Object.keys(dataSet);
+        dataKeys.forEach((index) => {
+          temp[(Date.parse(index) / 1000).toString()] = dataSet[index];
+        });
+        return temp;
+      };
+      ConsumptionHistoryState.set('data', { consumed: transformData(data.consumed), produced: transformData(data.produced) });
+      resolve(data);
+    };
+    axios.get(endpoints().ourConsumptionHistory + `?begin=` + ((new Date()).getTime() / 1000 - (24 * 60 * 60)), {
       token: AuthState.get('token'),
     })
       .then(success)
@@ -258,6 +289,7 @@ const APIService = () => {
     challenges,
     currentChallenge,
     consumptionHistory,
+    ourConsumptionHistory,
     globalChallenge,
     postProfile,
   };
