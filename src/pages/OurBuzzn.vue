@@ -12,22 +12,10 @@
           </p>
         </div>
       </section>
-      <section class="section--coal">
-        <div class="wrap">
-          <h3>{{ 'hitlist-headline' | translate }}</h3>
-          <hit-list></hit-list>
-        </div>
-      </section>
       <section class="section--lavendel">
         <div class="wrap">
           <h3>{{ 'consumption-headline' | translate }}</h3>
           <consumption-history type="our"></consumption-history>
-        </div>
-      </section>
-      <section class="section--snow">
-        <div class="wrap">
-          <h3>{{ 'general-consumption-headline' | translate }}</h3>
-          <consumption-list :data='{"1574101800000": {"Waschmaschine-1": 0, "Spülmaschine-1": 0, "Durchlauferhitzer-2": 0, "Durchlauferhitzer-3": 0, "Grundlast-1": 2500000, "Durchlauferhitzer-1": 0}}'></consumption-list>
         </div>
       </section>
     </main>
