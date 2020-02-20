@@ -29,6 +29,8 @@ import GreatNumber from '@/components/GreatNumber';
 import HitList from '@/components/HitList';
 import ConsumptionHistory from '@/components/ConsumptionHistory';
 import ConsumptionList from '@/components/ConsumptionList';
+import WebSocketService from '../services/WebSocketService';
+import ProfileState from '../states/ProfileState';
 
 export default {
   name: 'OurBuzzn',
@@ -39,6 +41,14 @@ export default {
     HitList,
     ConsumptionHistory,
     ConsumptionList,
+  },
+  data() {
+    return {
+      profile: ProfileState.state,
+    };
+  },
+  mounted() {
+    WebSocketService.connect(this.profile.meterId);
   },
 };
 </script>

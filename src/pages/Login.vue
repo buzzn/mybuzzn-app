@@ -83,7 +83,9 @@ export default {
       })
         .then(() =>
           APIService.profile()
-            .then(() => this.$router.push({ name: 'MyBuzzn' }))
+            .then(() => {
+              this.$router.push({ name: 'MyBuzzn' });
+            })
             .catch(error => errorHandling(error.response.status, this.$router)),
         )
         .catch((error) => {

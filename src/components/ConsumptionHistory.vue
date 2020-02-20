@@ -61,9 +61,8 @@ export default {
       const [marginTop, marginRight, marginLeft, marginBottom] = [10, 0, 40, 30];
       const graphHeight = height - marginTop - marginBottom;
       const graphWidth = width - marginLeft - marginRight;
-      const arrayData = Object.values(this.data.data);
+      const arrayData = Object.values(this.data.data).filter((value, key) => key % 2 === 0);
       const data = arrayData.map(d => Object.values(d).map(a => a / 1000 / 1000));
-      console.log(arrayData);
       const xLabels = Object.keys(arrayData[0]);
 
       const svg = d3.select(this.$refs.graph)
@@ -79,8 +78,6 @@ export default {
 
       const maxValues = data.map(dat => d3.max(dat, d => parseInt(d, 10)));
       const minValues = data.map(dat => d3.min(dat, d => parseInt(d, 10)));
-
-      console.log(data);
 
       const y = d3.scaleLinear()
         .domain([d3.min(minValues), d3.max(maxValues) * 1.02])
@@ -116,7 +113,7 @@ export default {
 
       const colors = [
         '#99e9b1',
-        '#ffadad',
+        '#d4e157',
       ];
 
       svg

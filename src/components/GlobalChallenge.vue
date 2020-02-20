@@ -10,14 +10,14 @@
         </div>
         <div class="personal">
           <p>{{ 'benchmark-text' | translate }}<strong>{{ Intl.NumberFormat('de-DE').format(globalChallenge.benchmark) }} kWh</strong>.</p>
-          <p>{{ 'prognose-text' | translate }} <strong>{{ Intl.NumberFormat('de-DE').format(globalChallenge.prognose) }} kWh</strong>
+          <p>{{ 'prognose-text' | translate }} <strong>{{ Intl.NumberFormat('de-DE').format((globalChallenge.prognose/1000/1000/1000).toFixed(2)) }} kWh</strong>
           <p>{{ 'saving-prognose' | translate }}</p>
           <counter unit="kWh" :number="(globalChallenge.benchmark - globalChallenge.prognose) || 0"></counter>
         </div>
         <div class="amount">
           <p v-if="(globalChallenge.benchmark - globalChallenge.prognose) > 0"  v-html="$options.filters.translate('positive-savings-text')"></p>
           <p v-if="(globalChallenge.benchmark - globalChallenge.prognose) <= 0" v-html="$options.filters.translate('negative-savings-text')"></p>
-          <counter unit="kWh" :number="globalChallenge.totalPrognose || 0"></counter>
+          <counter unit="kWh" :number="Math.round(globalChallenge.totalPrognose/1000/1000/1000) || 0"></counter>
         </div>
         <div class="button">
           <field-button @click="openLandingpage" :label="'Mehr erfahren'"></field-button>
@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     openLandingpage() {
-      window.open('https://samwaikiki.de/einemillionsparen');
+      window.open('https://einemillionsparen.de');
     },
   },
 };

@@ -1,16 +1,10 @@
-const ProfileState = () => {
-  const storeKey = 'profile';
+const SocketState = () => {
+  const storeKey = 'socket';
 
   let state = {
-    id: 0,
-    firstname: '',
-    lastname: '',
-    username: '',
-    email: null,
-    avatar: null,
-    flatSize: 0,
-    flatPopulation: 0,
-    meterId: '',
+    group_consumption: null,
+    group_production: null,
+    group_users: [],
   };
 
   const boot = () => {
@@ -40,4 +34,4 @@ const ProfileState = () => {
   };
 };
 
-export default ProfileState();
+export default SocketState();

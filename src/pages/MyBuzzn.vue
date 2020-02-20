@@ -26,9 +26,9 @@
             <strong>{{ 'hello-name' | translate(profile.firstname + ' ' + profile.lastname) }}</strong><br>
             {{ 'current-sufficiency' | translate }}
           </p>
-          <great-number class="number" unit="kWh">432</great-number>
+          <great-number class="number" unit="kWh">{{usersValues.self_sufficiency}}</great-number>
           <p class="labels">{{ 'current-consumption' | translate }}</p>
-          <great-number class="smaller number" unit="Watt">3.324</great-number>
+          <great-number class="smaller number" unit="Watt">{{ (usersValues.consumption/1000/1000/1000).toFixed(2) }}</great-number>
         </div>
       </section>
       <section class="section--universe">
@@ -61,6 +61,8 @@ import DeviceList from '@/components/DeviceList';
 import ConsumptionHistory from '@/components/ConsumptionHistory';
 import ProfileState from '../states/ProfileState';
 import AppState from '../states/AppState';
+import WebSocketService from '../services/WebSocketService';
+import SocketState from '../states/SocketState';
 
 export default {
   name: 'MyBuzzn',
@@ -76,12 +78,20 @@ export default {
     setTimeout(() => {
       AppState.set('loading', false);
     }, 2000);
+
+    WebSocketService.connect(this.profile.meterId);
   },
   data() {
     return {
       profile: ProfileState.state,
+      socket: SocketState.state,
     };
   },
+  computed: {
+    usersValues() {
+      return this.socket.group_users.find(user => user.id === this.profile.id);
+    }
+  }
 };
 </script>
 

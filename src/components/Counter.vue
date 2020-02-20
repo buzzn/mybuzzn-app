@@ -1,7 +1,7 @@
 <template>
     <div class="counter">
         <span class="number">
-          <span v-for="(num, index) in numberArray" :key="index" :class="{devide: index === 0 || index === 3, zero: num == 0}">{{num}}</span>
+          <span v-for="(num, index) in numberArray" :key="index" :class="{devide: index === 0 || index === 3, zero: num.isZero}">{{num.value}}</span>
         </span>
         <span class="unit">{{ unit }}</span>
     </div>
@@ -24,7 +24,10 @@ export default {
       const numberArray = this.number.toString().split('').reverse();
       const temp = [];
       for (let i = 6; i >= 0; i -= 1) {
-        temp.push(numberArray[i] || 0);
+        temp.push({
+          isZero: (!numberArray[i]),
+          value: numberArray[i] || 0,
+        });
       }
       this.numberArray = temp;
     },

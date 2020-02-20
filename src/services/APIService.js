@@ -87,6 +87,9 @@ const APIService = () => {
           case 'inhabitants':
             ProfileState.set('flatPopulation', data[key]);
             break;
+          case 'meterId':
+            ProfileState.set('meterId', data[key]);
+            break;
           default:
             break;
         }
@@ -140,10 +143,17 @@ const APIService = () => {
 
   const devicelist = () => new Promise((resolve, reject) => {
     const success = ({ data }) => {
-      DevicelistState.set('data', data.data);
-      resolve(data);
+      const reducedObject = {};
+      Object.values(data).forEach((dat) => {
+        Object.entries(dat).forEach(([key, value]) => {
+          if (!reducedObject[key]) reducedObject[key] = 0;
+          reducedObject[key] += value;
+        });
+      });
+      DevicelistState.set('data', reducedObject);
+      resolve(reducedObject);
     };
-    axios.get(endpoints().devicelist, {
+    axios.get(`${endpoints().devicelist}?begin=${(((new Date()).getTime() / 1000) - (24 * 60 * 60))}`, {
       token: AuthState.get('token'),
     })
       .then(success)
@@ -193,19 +203,29 @@ const APIService = () => {
   });
 
   const globalChallenge = () => new Promise((resolve, reject) => {
-    const success = ({ data }) => {
-      GlobalChallengeState.set('totalPrognose', data.totalPrognose);
-      GlobalChallengeState.set('benchmark', data.benchmark);
-      GlobalChallengeState.set('prognose', data.prognose);
-      resolve(data);
-    };
     axios.get(endpoints().globalChallenge, {
       token: AuthState.get('token'),
     })
-      .then(success)
+      .then((community) => {
+        GlobalChallengeState.set('totalPrognose', Object.values(community.data)[0]);
+
+        axios.get(endpoints().individualChallenge, {
+          token: AuthState.get('token'),
+        }).then((individual) => {
+          GlobalChallengeState.set('prognose', Object.values(individual.data)[0]);
+          resolve();
+        }).catch((error) => {
+          if (error.response && error.response.status === 0) {
+            GlobalChallengeState.set('prognose', Object.values(error.response.data)[0]);
+            resolve();
+          } else {
+            reject(error);
+          }
+        });
+      })
       .catch((error) => {
         if (error.response && error.response.status === 0) {
-          success(error.response);
+          GlobalChallengeState.set('totalPrognose', Object.values(error.response.data)[0]);
         } else {
           reject(error);
         }
@@ -240,7 +260,7 @@ const APIService = () => {
       ConsumptionHistoryState.set('data', { temp });
       resolve(data);
     };
-    axios.get(endpoints().consumptionHistory + `?begin=` + ((new Date()).getTime() / 1000 - (24 * 60 * 60)), {
+    axios.get(`${endpoints().consumptionHistory}?begin=${(((new Date()).getTime() / 1000) - (24 * 60 * 60))}`, {
       token: AuthState.get('token'),
     })
       .then(success)
@@ -266,7 +286,7 @@ const APIService = () => {
       ConsumptionHistoryState.set('data', { consumed: transformData(data.consumed), produced: transformData(data.produced) });
       resolve(data);
     };
-    axios.get(endpoints().ourConsumptionHistory + `?begin=` + ((new Date()).getTime() / 1000 - (24 * 60 * 60)), {
+    axios.get(`${endpoints().ourConsumptionHistory}?begin=${(((new Date()).getTime() / 1000) - (24 * 60 * 60))}`, {
       token: AuthState.get('token'),
     })
       .then(success)

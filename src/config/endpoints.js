@@ -10,21 +10,23 @@ export const demoEndpoints = {
   challengeStatus: './static/dummy-data/challengeStatus.json',
   consumptionHistory: './static/dummy-data/consumptionHistory.json',
   globalChallenge: './static/dummy-data/globalChallenge.json',
+  individualChallenge: './static/dummy-data/individualChallenge.json',
   ourConsumptionHistroy: './static/dummy-data/ourConsumptionHistroy.json',
 };
 
 const apiBase = 'http://mybuzzn-backend.buzzn.net';
 export const prodEndpoints = {
-  register: './static/dummy-data/register.json',
+  register: `${apiBase}/set-password`,
   demo: './static/dummy-data/signin.json',
   signin: `${apiBase}/login`,
   profile: `${apiBase}/profile`,
   hitlist: './static/dummy-data/hitlist.json',
-  devicelist: './static/dummy-data/devicelist.json',
+  devicelist: `${apiBase}/individual-disaggregation`,
   advices: './static/dummy-data/advices.json',
   challenges: './static/dummy-data/challenges.json',
   challengeStatus: './static/dummy-data/challengeStatus.json',
   consumptionHistory: `${apiBase}/individual-consumption-history`,
-  globalChallenge: './static/dummy-data/globalChallenge.json',
+  globalChallenge: `${apiBase}/community-global-challenge`,
+  individualChallenge: `${apiBase}/individual-global-challenge`,
   ourConsumptionHistory: `${apiBase}/group-consumption-history`,
 };
