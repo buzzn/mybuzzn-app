@@ -4,42 +4,42 @@
         {
             "id": 1,
             "position": 1,
-            "avatar": "https://api.adorable.io/avatars/285/johndoe@mustermann.net.png",
+            "avatar": null,
             "name": "John Doe",
             "value": 1234
         },
         {
             "id": 2,
             "position": 2,
-            "avatar": "https://api.adorable.io/avatars/285/janedoe@mustermann.net.png",
+            "avatar": null,
             "name": "Jane Doe",
             "value": 1235
         },
         {
-            "id": 3,
+            "id": 4,
             "position": 3,
-            "avatar": "https://api.adorable.io/avatars/285/joandoe@mustermann.net.png",
-            "name": "Joan Doe",
+            "avatar": null,
+            "name": "Justus Schütze",
             "value": 1236
         },
         {
-            "id": 4,
+            "id": 3,
             "position": 4,
-            "avatar": "https://api.adorable.io/avatars/285/josefdoe@mustermann.net.png",
+            "avatar": null,
             "name": "Josef Doe",
             "value": 1237
         },
         {
             "id": 5,
             "position": 5,
-            "avatar": "https://api.adorable.io/avatars/285/jolandadoe@mustermann.net.png",
+            "avatar": null,
             "name": "Jolanda Doe",
             "value": 1238
         },
         {
             "id": 6,
             "position": 6,
-            "avatar": "https://api.adorable.io/avatars/285/jakobdoe@mustermann.net.png",
+            "avatar": null,
             "name": "Jakob Doe",
             "value": 1239
         },

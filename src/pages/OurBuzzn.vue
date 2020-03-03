@@ -5,11 +5,18 @@
       <section class="section--nightsky">
         <div class="wrap">
           <bubble-chart></bubble-chart>
+          <p><strong>{{ 'self-sufficiency-of-group' | translate }}</strong></p>
           <great-number unit="%">42</great-number>
           <p>
-            <strong>{{ 'self-sufficiency-of-group' | translate }}</strong><br>
-            {{ 'current-consumption-group' | translate('46.234') }}
+            {{ 'current-production-group' | translate('7,24') }}<br>
+            {{ 'current-consumption-group' | translate('17,23') }}
           </p>
+        </div>
+      </section>
+      <section class="section--coal">
+        <div class="wrap">
+          <h3>{{ 'hitlist-headline' | translate }}</h3>
+          <hit-list></hit-list>
         </div>
       </section>
       <section class="section--lavendel">

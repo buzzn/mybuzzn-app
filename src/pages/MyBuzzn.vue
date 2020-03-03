@@ -26,9 +26,9 @@
             <strong>{{ 'hello-name' | translate(profile.firstname + ' ' + profile.lastname) }}</strong><br>
             {{ 'current-sufficiency' | translate }}
           </p>
-          <great-number class="number" unit="kWh">{{usersValues.self_sufficiency}}</great-number>
+          <great-number class="number" unit="kWh pro Jahr">432</great-number>
           <p class="labels">{{ 'current-consumption' | translate }}</p>
-          <great-number class="smaller number" unit="Watt">{{ (usersValues.consumption/1000/1000/1000).toFixed(2) }}</great-number>
+          <great-number class="smaller number" unit="Watt">3.287</great-number>
         </div>
       </section>
       <section class="section--universe">
@@ -37,10 +37,21 @@
           <global-challenge></global-challenge>
         </div>
       </section>
+      <section class="section--snow">
+        <div class="wrap">
+          <challenges></challenges>
+        </div>
+      </section>
       <section class="section--coal">
         <div class="wrap">
           <h3>{{ 'devices-headline' | translate }}</h3>
           <device-list></device-list>
+        </div>
+      </section>
+      <section class="section--gold">
+        <div class="wrap">
+          <h3>{{ 'hints-headline' | translate }}</h3>
+          <advices></advices>
         </div>
       </section>
       <section class="section--lavendel">
@@ -57,6 +68,8 @@
 import HeaderBar from '@/components/HeaderBar';
 import GreatNumber from '@/components/GreatNumber';
 import GlobalChallenge from '@/components/GlobalChallenge';
+import Challenges from '@/components/Challenges';
+import Advices from '@/components/Advices';
 import DeviceList from '@/components/DeviceList';
 import ConsumptionHistory from '@/components/ConsumptionHistory';
 import ProfileState from '../states/ProfileState';
@@ -72,6 +85,8 @@ export default {
     GlobalChallenge,
     DeviceList,
     ConsumptionHistory,
+    Advices,
+    Challenges,
   },
   mounted() {
     // TODO: make it real
@@ -90,8 +105,8 @@ export default {
   computed: {
     usersValues() {
       return this.socket.group_users.find(user => user.id === this.profile.id);
-    }
-  }
+    },
+  },
 };
 </script>
 

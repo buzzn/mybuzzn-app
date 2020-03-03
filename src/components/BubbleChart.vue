@@ -6,15 +6,11 @@
 
 <script>
 import * as d3 from 'd3';
-import SocketState from '../states/SocketState';
-import ProfileState from '../states/ProfileState';
 
 export default {
   name: 'Bubblechart',
   data() {
     return {
-      socket: SocketState.state,
-      profile: ProfileState.state,
       svg: null,
       force: null,
       forceStrength: 0.06,
@@ -22,29 +18,24 @@ export default {
       forceCollide: null,
       dataSet: {
         groupProduction: 200,
-        groupUsers: [],
+        usersConsumptions: [
+          { id: 1, value: 60 },
+          { id: 2, value: 50 },
+          { id: 3, value: 12 },
+          { id: 4, value: 30 },
+          { id: 5, value: 14 },
+          { id: 6, value: 22 },
+          { id: 7, value: 32 },
+          { id: 8, value: 19 },
+          { id: 9, value: 5 },
+        ],
       },
     };
   },
-  watch: {
-    socket() {
-      this.socket.group_users.forEach((user) => {
-        this.dataSet.groupUsers = this.dataSet.groupUsers.map((us) => {
-          if (user.id === us.id) {
-            // eslint-disable-next-line
-            us.consumption = user.consumption;
-          }
-          return us;
-        });
-      });
-    },
-  },
   computed: {
     allValues() {
-      // const all = this.dataSet.usersConsumptions.map(d => d.value);
-      // all.push(this.dataSet.groupProduction);
-      const all = this.socket.group_users.map(user => user.consumption);
-      all.push(this.socket.group_production);
+      const all = this.dataSet.usersConsumptions.map(d => d.value);
+      all.push(this.dataSet.groupProduction);
       return all;
     },
   },
@@ -53,6 +44,15 @@ export default {
   },
   methods: {
     updateValues() {
+      this.dataSet.usersConsumptions = this.dataSet.usersConsumptions.map((d) => {
+        // eslint-disable-next-line
+        d.oldValue = d.value;
+        // eslint-disable-next-line
+        d.value += (Math.random() - 0.5) * 4;
+        // eslint-disable-next-line
+        d.value = d.value < 0 ? 0 : d.value;
+        return d;
+      });
       this.updateChart();
     },
 
@@ -74,14 +74,13 @@ export default {
         .tween('radius', function (d) {
           if (!d) return;
           const that = d3.select(this);
-          const i = d3.interpolate(d.radius, circleRadiusScale(d.consumption));
+          const i = d3.interpolate(d.radius, circleRadiusScale(d.value));
           // eslint-disable-next-line
           return function (t) {
             // eslint-disable-next-line
             d.radius = i(t);
             that.attr('r', dat => dat.radius);
-
-            self.forceSimulation.nodes(self.dataSet.groupUsers);
+            self.forceSimulation.nodes(self.dataSet.usersConsumptions);
           };
         });
       this.forceSimulation.alpha(0.2).restart();
@@ -92,12 +91,12 @@ export default {
         .range([0, 80]);
 
       const [width, height] = [this.$refs.chart.offsetWidth, this.$refs.chart.offsetHeight];
-      this.dataSet.groupUsers = this.socket.group_users.map(consumption => ({
+      this.dataSet.usersConsumptions = this.dataSet.usersConsumptions.map(consumption => ({
         ...consumption,
-        oldValue: consumption.consumption,
+        oldValue: consumption.value,
         x: width / 2,
         y: height / 2,
-        radius: circleRadiusScale(consumption.consumption),
+        radius: circleRadiusScale(consumption.value),
       }));
 
       // create svg
@@ -116,7 +115,7 @@ export default {
 
       // draw production circle
       productionGroup.selectAll('circle.production')
-        .data([this.socket.group_production])
+        .data([this.dataSet.groupProduction])
         .enter()
         .append('circle')
         .attr('class', 'production')
@@ -128,14 +127,14 @@ export default {
 
       // draw circles
       consumptionGroup.selectAll('circle.consumption')
-        .data(this.dataSet.groupUsers)
+        .data(this.dataSet.usersConsumptions)
         .enter()
         .append('circle')
         .attr('class', 'consumption')
         .attr('cx', d => d.x)
         .attr('cy', d => d.y)
         .attr('r', d => d.radius)
-        .attr('fill', d => (d.id === this.profile.id ? '#d4e157' : '#80deea'));
+        .attr('fill', d => (d.id === 3 ? '#d4e157' : '#80deea'));
 
       this.forceSimulation = d3.forceSimulation()
         .force('x', d3.forceX(width / 2).strength(this.forceStrength))
@@ -143,7 +142,7 @@ export default {
         .force('center', d3.forceCenter(width / 2, height / 2))
         .force('collide', d3.forceCollide(d => d.radius + 1));
 
-      this.forceSimulation.nodes(this.dataSet.groupUsers)
+      this.forceSimulation.nodes(this.dataSet.usersConsumptions)
         .on('tick', this.tick);
       setInterval(this.updateValues, 5000);
     },

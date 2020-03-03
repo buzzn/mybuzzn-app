@@ -1,9 +1,9 @@
 {
     "code": 200,
     "data": {
-        "id": 1, 
+        "id": 1,
         "progress": 0.3,
-        "status": "running",
+        "status": "failed",
         "message": "Schade! Du hast 7 Tage lang im Schnitt nur 3,2 kWh pro Nacht verbraucht!",
         "expire_at": 1579824000
     }

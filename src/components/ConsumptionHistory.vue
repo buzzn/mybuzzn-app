@@ -4,13 +4,13 @@
         <div class="legend">
           <div class="row" v-if="consumption">
             <label class="red">{{ 'consumption' | translate}}</label>
-            <strong>{{ consumption }} kWh</strong>
+            <strong>{{ new Intl.NumberFormat('de-DE').format(consumption) }} kWh</strong>
           </div>
-          <div class="row" v-if="production">
+          <div class="row" v-if="production && type == 'our'">
             <label>{{ 'yield' | translate}}</label>
-            <strong>{{ production }} kWh</strong>
+            <strong>{{ new Intl.NumberFormat('de-DE').format(production) }} kWh</strong>
           </div>
-          <div class="row" v-if="consumption">
+          <div class="row" v-if="consumption && type == 'our'">
             <label class="none">{{ 'self-sufficiency' | translate}}</label>
             <strong>{{ selfSufficiency }} %</strong>
           </div>
@@ -31,8 +31,8 @@ export default {
   data() {
     return {
       data: ConsumptionHistoryState.state,
-      consumption: null,
-      production: null,
+      consumption: 4.8,
+      production: 2.2,
     };
   },
   computed: {
@@ -58,12 +58,14 @@ export default {
     createGraph() {
       const width = this.$refs.graph.offsetWidth;
       const height = this.$refs.graph.offsetHeight;
-      const [marginTop, marginRight, marginLeft, marginBottom] = [10, 0, 40, 30];
+      const [marginTop, marginRight, marginLeft, marginBottom] = [10, 0, 0, 30];
       const graphHeight = height - marginTop - marginBottom;
       const graphWidth = width - marginLeft - marginRight;
-      const arrayData = Object.values(this.data.data).filter((value, key) => key % 2 === 0);
-      const data = arrayData.map(d => Object.values(d).map(a => a / 1000 / 1000));
+
+      const arrayData = Object.keys(this.data.data).map(key => this.data.data[key]);
+      const data = arrayData.map(d => Object.keys(d).map(key => d[key]).map(a => a));
       const xLabels = Object.keys(arrayData[0]);
+
 
       const svg = d3.select(this.$refs.graph)
         .append('svg')
@@ -159,7 +161,7 @@ export default {
         display: block;
         width: 20px;
         height: 4px;
-        background: #99e9b1;
+        background: $production;
         border-radius: 2px;
         position: absolute;
         left: 0;
@@ -168,7 +170,7 @@ export default {
       }
       &.red {
         &:before {
-          background: #ffadad;
+          background: #99e9b1;
         }
       }
       &.none {

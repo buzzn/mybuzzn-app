@@ -38,7 +38,7 @@
               <p v-if="!isFailed && !isPassed">{{ challenge.description }}</p>
               <p v-if="isFailed || isPassed">{{ challenges.active.message }}</p>
               <div v-if="!challenges.active">
-                <field-button @click="start(challenge)" :label="'start-challenge' | translate"></field-button>
+                <field-button @click="start(challenge)" :label="'start-challenge-button' | translate"></field-button>
               </div>
               <div v-if="isFailed || isPassed">
                 <field-button @click="cancel" :label="'choose-new-challenge' | translate"></field-button>

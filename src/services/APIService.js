@@ -212,11 +212,13 @@ const APIService = () => {
         axios.get(endpoints().individualChallenge, {
           token: AuthState.get('token'),
         }).then((individual) => {
-          GlobalChallengeState.set('prognose', Object.values(individual.data)[0]);
+          GlobalChallengeState.set('prognose', Object.values(individual.data.saving)[0]);
+          GlobalChallengeState.set('benchmark', Object.values(individual.data.baseline)[0]);
           resolve();
         }).catch((error) => {
           if (error.response && error.response.status === 0) {
-            GlobalChallengeState.set('prognose', Object.values(error.response.data)[0]);
+            GlobalChallengeState.set('prognose', Object.values(error.response.data.saving)[0]);
+            GlobalChallengeState.set('prognose', Object.values(error.response.data.baseline)[0]);
             resolve();
           } else {
             reject(error);
@@ -234,7 +236,7 @@ const APIService = () => {
 
   const currentChallenge = () => new Promise((resolve, reject) => {
     const success = ({ data }) => {
-      ChallengesState.set('active', data.data);
+      ChallengesState.set('active', null);
       resolve(data);
     };
     axios.get(endpoints().challengeStatus, {
@@ -255,12 +257,14 @@ const APIService = () => {
       const temp = {};
       const dataKeys = Object.keys(data);
       dataKeys.forEach((index) => {
-        temp[(Date.parse(index) / 1000).toString()] = data[index];
+        const a = index.split(/[^0-9]/);
+        const d = new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
+        temp[(d / 1000).toString()] = data[index] * 1000;
       });
       ConsumptionHistoryState.set('data', { temp });
       resolve(data);
     };
-    axios.get(`${endpoints().consumptionHistory}?begin=${(((new Date()).getTime() / 1000) - (24 * 60 * 60))}`, {
+    axios.get(endpoints().consumptionHistory, {
       token: AuthState.get('token'),
     })
       .then(success)
@@ -279,14 +283,16 @@ const APIService = () => {
         const temp = {};
         const dataKeys = Object.keys(dataSet);
         dataKeys.forEach((index) => {
-          temp[(Date.parse(index) / 1000).toString()] = dataSet[index];
+          const a = index.split(/[^0-9]/);
+          const d = new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
+          temp[(d / 1000).toString()] = dataSet[index];
         });
         return temp;
       };
       ConsumptionHistoryState.set('data', { consumed: transformData(data.consumed), produced: transformData(data.produced) });
       resolve(data);
     };
-    axios.get(`${endpoints().ourConsumptionHistory}?begin=${(((new Date()).getTime() / 1000) - (24 * 60 * 60))}`, {
+    axios.get(endpoints().ourConsumptionHistory, {
       token: AuthState.get('token'),
     })
       .then(success)

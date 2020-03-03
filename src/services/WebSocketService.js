@@ -6,7 +6,7 @@ const WebSocketService = () => {
   const connect = (meterId) => {
     axios.get(`http://mybuzzn-backend.buzzn.net/live?meter_id=${meterId}`);
     const socket = io('mybuzzn-backend.buzzn.net/live', {
-      transports: ['websocket'],
+      transports: ['polling'],
       transportOptions: {
         polling: {
           withCredentials: false,

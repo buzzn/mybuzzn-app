@@ -25,8 +25,8 @@ export const prodEndpoints = {
   advices: './static/dummy-data/advices.json',
   challenges: './static/dummy-data/challenges.json',
   challengeStatus: './static/dummy-data/challengeStatus.json',
-  consumptionHistory: `${apiBase}/individual-consumption-history`,
+  consumptionHistory: './static/dummy-data/consumptionHistory.json',
   globalChallenge: `${apiBase}/community-global-challenge`,
   individualChallenge: `${apiBase}/individual-global-challenge`,
-  ourConsumptionHistory: `${apiBase}/group-consumption-history`,
+  ourConsumptionHistory: './static/dummy-data/ourConsumptionHistory.json',
 };
