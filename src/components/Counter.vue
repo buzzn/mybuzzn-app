@@ -16,6 +16,11 @@ export default {
       numberArray: [],
     };
   },
+  watch: {
+    number() {
+      this.spreadNumber();
+    },
+  },
   mounted() {
     this.$nextTick(() => this.spreadNumber());
   },

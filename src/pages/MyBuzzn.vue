@@ -37,23 +37,23 @@
           <global-challenge></global-challenge>
         </div>
       </section>
-      <section class="section--snow">
+      <!--section class="section--snow">
         <div class="wrap">
           <challenges></challenges>
         </div>
-      </section>
+      </section -->
       <section class="section--coal">
         <div class="wrap">
           <h3>{{ 'devices-headline' | translate }}</h3>
           <device-list></device-list>
         </div>
       </section>
-      <section class="section--gold">
+      <!-- section class="section--gold">
         <div class="wrap">
           <h3>{{ 'hints-headline' | translate }}</h3>
           <advices></advices>
         </div>
-      </section>
+      </section-->
       <section class="section--lavendel">
         <div class="wrap">
           <h3>{{ 'consumption-headline' | translate }}</h3>

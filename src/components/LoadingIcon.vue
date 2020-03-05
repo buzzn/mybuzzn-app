@@ -1,5 +1,5 @@
 <template>
-    <div class="loader">
+    <div class="loader" :class="{ white: white }">
       <span></span>
       <span></span>
       <span></span>
@@ -10,6 +10,7 @@
 <script>
 export default {
   name: 'LoadingIcon',
+  props: ['white'],
 };
 </script>
 
@@ -70,6 +71,12 @@ export default {
         transform: translate(-50%, -50%) scale(1.25);
         opacity: 0;
       }
+    }
+  }
+
+  &.white {
+    span {
+      background: white;
     }
   }
 }

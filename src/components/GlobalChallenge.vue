@@ -1,5 +1,17 @@
 <template>
     <div class="globalChallenge">
+      <div v-if="!isLoading && !globalChallenge.benchmark">
+        <h3 v-html="$options.filters.translate('global-challenge-claim')"></h3>
+        <h6 v-html="$options.filters.translate('global-challenge-subline')"></h6>
+        <div class="amount">
+          <p v-html="$options.filters.translate('neutral-savings-text')"></p>
+          <counter unit="kWh" :number="Math.round(globalChallenge.totalPrognose/1000/1000/1000) || 0"></counter>
+        </div>
+        <div class="personal">
+          <p v-html="$options.filters.translate('global-challenge-no-benchmark')"></p>
+        </div>
+      </div>
+      <div v-if="!isLoading && globalChallenge.benchmark">
         <h3 v-html="$options.filters.translate('global-challenge-claim')"></h3>
         <h6 v-html="$options.filters.translate('global-challenge-subline')"></h6>
         <div class="earth">
@@ -26,7 +38,12 @@
           <small>{{ 'term-hint' | translate }}</small>
           <small>{{ 'year-hint' | translate }}</small>
         </div>
+      </div>
+      <div v-if="isLoading" class="section-loader">
+        <loading-icon :white="true"></loading-icon>
+      </div>
     </div>
+
 </template>
 
 <script>
@@ -35,6 +52,7 @@ import Counter from '@/components/Counter';
 import FieldButton from '@/components/FieldButton';
 import APIService from '../services/APIService';
 import GlobalChallengeState from '../states/GlobalChallengeState';
+import LoadingIcon from './LoadingIcon';
 
 
 export default {
@@ -43,14 +61,16 @@ export default {
     GreatNumber,
     Counter,
     FieldButton,
+    LoadingIcon,
   },
   data() {
     return {
+      isLoading: true,
       globalChallenge: GlobalChallengeState.state,
     };
   },
   mounted() {
-    APIService.globalChallenge();
+    APIService.globalChallenge().then(() => { this.isLoading = false; });
   },
   methods: {
     openLandingpage() {
@@ -73,6 +93,11 @@ export default {
   p {
     text-align: center;
     strong {
+      font-size: 120%;
+    }
+    a {
+      color: white;
+      font-weight: bold;
       font-size: 120%;
     }
   }

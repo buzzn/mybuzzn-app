@@ -1,7 +1,7 @@
 <template>
     <div class="field" :class="{ error: !!error }">
       <label :for="name">{{ label }}</label>
-      <input :disabled="disabled" ref="input" @input="update" @blur="$emit('blur')" :value="value" :id="name" :name="name" :type="type || 'text'" :placeholder="label" />
+      <input :disabled="disabled" ref="input" @input="update" @blur="$emit('blur')" :value="value" :id="name" :name="name" :type="type || 'text'" :placeholder="placeholder || label" />
       <small>{{ error }}</small>
     </div>
 </template>
@@ -9,7 +9,7 @@
 <script>
 export default {
   name: 'Field',
-  props: ['label', 'type', 'name', 'value', 'disabled', 'error'],
+  props: ['label', 'type', 'name', 'value', 'disabled', 'error', 'placeholder'],
   methods: {
     update() {
       this.$emit('input', this.$refs.input.value);
@@ -49,7 +49,8 @@ export default {
     &:disabled {
       background: transparent;
       border: none;
-      line-height: 30px
+      line-height: 40px;
+      padding: 0 5px;
     }
   }
 

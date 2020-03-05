@@ -123,6 +123,22 @@ const APIService = () => {
       });
   });
 
+  const updatePassword = postData => new Promise((resolve, reject) => {
+    axios.defaults.headers.common.Authorization = `Bearer ${AuthState.get('token')}`;
+    const success = ({ data }) => {
+      resolve(data);
+    };
+    axios.put(endpoints().updatePassword, postData)
+      .then(success)
+      .catch((error) => {
+        if (error.response && error.response.status === 0) {
+          success(error.response);
+        } else {
+          reject(error);
+        }
+      });
+  });
+
   const hitlist = () => new Promise((resolve, reject) => {
     const success = ({ data }) => {
       HitlistState.set('data', data.data);
@@ -256,15 +272,32 @@ const APIService = () => {
     const success = ({ data }) => {
       const temp = {};
       const dataKeys = Object.keys(data);
-      dataKeys.forEach((index) => {
-        const a = index.split(/[^0-9]/);
-        const d = new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
-        temp[(d / 1000).toString()] = data[index] * 1000;
-      });
+      const length = dataKeys.length;
+      const step = 15;
+      for (let s = 0; s <= length; s += step) {
+        const times = dataKeys.slice(s, s + step).map((index) => {
+          const a = index.split(/[^0-9]/);
+          const d = new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
+          return { t: Math.round(d), v: data[index] * 1000 };
+        });
+
+        const time = times.reduce((a, b) => ({
+          t: a.t + b.t,
+          v: a.v + b.v,
+        }));
+
+        temp[Math.round(time.t / times.length / 1000)] = time.v / times.length;
+      }
+      // dataKeys.forEach((index) => {
+      //   const a = index.split(/[^0-9]/);
+      //   const d = new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
+
+      //   temp[(d / 1000).toString()] = data[index] * 1000;
+      // });
       ConsumptionHistoryState.set('data', { temp });
       resolve(data);
     };
-    axios.get(endpoints().consumptionHistory, {
+    axios.get(`${endpoints().consumptionHistory}?begin=${(Date.now() / 1000) - (24 * 60 * 60)}`, {
       token: AuthState.get('token'),
     })
       .then(success)
@@ -282,17 +315,33 @@ const APIService = () => {
       const transformData = (dataSet) => {
         const temp = {};
         const dataKeys = Object.keys(dataSet);
-        dataKeys.forEach((index) => {
-          const a = index.split(/[^0-9]/);
-          const d = new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
-          temp[(d / 1000).toString()] = dataSet[index];
-        });
+        const length = dataKeys.length;
+        const step = 15;
+        for (let s = 0; s <= length; s += step) {
+          const times = dataKeys.slice(s, s + step).map((index) => {
+            const a = index.split(/[^0-9]/);
+            const d = new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
+            return { t: Math.round(d), v: dataSet[index] * 1000 };
+          });
+
+          const time = times.reduce((a, b) => ({
+            t: a.t + b.t,
+            v: a.v + b.v,
+          }));
+
+          temp[Math.round(time.t / times.length / 1000)] = time.v / times.length;
+        }
+        // dataKeys.forEach((index) => {
+        //   const a = index.split(/[^0-9]/);
+        //   const d = new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
+        //   temp[(d / 1000).toString()] = dataSet[index];
+        // });
         return temp;
       };
       ConsumptionHistoryState.set('data', { consumed: transformData(data.consumed), produced: transformData(data.produced) });
       resolve(data);
     };
-    axios.get(endpoints().ourConsumptionHistory, {
+    axios.get(`${endpoints().ourConsumptionHistory}?begin=${(Date.now() / 1000) - (24 * 60 * 60)}`, {
       token: AuthState.get('token'),
     })
       .then(success)
@@ -318,6 +367,7 @@ const APIService = () => {
     ourConsumptionHistory,
     globalChallenge,
     postProfile,
+    updatePassword,
   };
 };
 

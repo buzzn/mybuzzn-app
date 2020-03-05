@@ -1,5 +1,6 @@
 <template>
     <div class="devicelist">
+      <div v-if="!isLoading">
         <ul>
           <li v-for="(value, key) in groupedDeviceList" :key="key">
             <div class="item">
@@ -23,22 +24,49 @@
             </div>
           </li>
         </ul>
+      </div>
+      <div v-if="isLoading" class="section-loader">
+        <loading-icon :white="true"></loading-icon>
+      </div>
     </div>
 </template>
 
 <script>
 import APIService from '../services/APIService';
 import DevicelistState from '../states/DevicelistState';
+import LoadingIcon from './LoadingIcon';
 
 export default {
   name: 'DeviceList',
+  components: {
+    LoadingIcon,
+  },
   data() {
     return {
       devicelist: DevicelistState.state.data,
+      isLoading: true,
+      groupedDeviceList: {},
     };
   },
-  computed: {
-    groupedDeviceList() {
+  watch: {
+    devicelist() {
+      // eslint-disable-next-line
+      this.groupDeviceList();
+    },
+  },
+  mounted() {
+    APIService.devicelist().then(() => {
+      this.isLoading = false;
+      this.groupDeviceList();
+    });
+  },
+  methods: {
+    deviceIsA(compare, key) {
+      return (key.indexOf(compare) !== -1);
+    },
+    groupDeviceList() {
+      // eslint-disable-next-line
+      console.log('got here');
       const result = {};
       const result2 = {};
       Object.entries(this.devicelist).forEach(([key, value]) => {
@@ -57,15 +85,7 @@ export default {
         result2[key] = value;
       });
 
-      return result2;
-    },
-  },
-  mounted() {
-    APIService.devicelist();
-  },
-  methods: {
-    deviceIsA(compare, key) {
-      return (key.indexOf(compare) !== -1);
+      this.groupedDeviceList = result2;
     },
   },
 };

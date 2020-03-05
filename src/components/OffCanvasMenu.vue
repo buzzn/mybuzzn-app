@@ -3,16 +3,16 @@
         <nav>
             <ul>
                 <li v-if="auth.loggedIn"><router-link @click.native="$emit('navigate')" :to="{ name: 'Profile' }">{{ 'profile' | translate }}</router-link></li>
-                <li v-if="auth.loggedIn"><router-link @click.native="$emit('navigate')" :to="{ name: 'MyBuzzn' }">{{ 'my-buzzn' | translate }}</router-link></li>
-                <li v-if="auth.loggedIn"><router-link @click.native="$emit('navigate')" :to="{ name: 'OurBuzzn' }">{{ 'our-buzzn' | translate }}</router-link></li>
-                <li><router-link @click.native="$emit('navigate')" to="/meta/support">{{ 'support' | translate }}</router-link></li>
+                <li v-if="auth.loggedIn && profile.flatPopulation"><router-link @click.native="$emit('navigate')" :to="{ name: 'MyBuzzn' }">{{ 'my-buzzn' | translate }}</router-link></li>
+                <li v-if="auth.loggedIn && profile.flatPopulation"><router-link @click.native="$emit('navigate')" :to="{ name: 'OurBuzzn' }">{{ 'our-buzzn' | translate }}</router-link></li>
+                <li><a href="https://www.buzzn.net/support/" target="_blank">{{ 'support' | translate }}</a></li>
                 <li v-if="auth.loggedIn"><a href="#" @click.prevent="logout">{{ 'logout' | translate }}</a></li>
             </ul>
         </nav>
         <nav class="meta">
             <ul>
-                <li><router-link @click.native="$emit('navigate')" :to="{ path: '/meta/privacy-policy' }">{{ 'privacy-policy' | translate }}</router-link></li>
-                <li><router-link @click.native="$emit('navigate')" :to="{ path: '/meta/imprint' }">{{ 'imprint' | translate }}</router-link></li>
+                <li><a href="https://www.buzzn.net/datenschutz/" target="_blank">{{ 'privacy-policy' | translate }}</a></li>
+                <li><a href="https://www.buzzn.net/impressum/" target="_blank">{{ 'imprint' | translate }}</a></li>
                 <li><router-link @click.native="$emit('navigate')" :to="{ path: '/meta/terms' }">{{ 'terms' | translate }}</router-link></li>
                 <li><router-link @click.native="$emit('navigate')" :to="{ path: '/meta/about' }">{{ 'about' | translate }}</router-link></li>
             </ul>
@@ -22,12 +22,14 @@
 
 <script>
 import AuthState from '../states/AuthState';
+import ProfileState from '../states/ProfileState';
 
 export default {
   name: 'OffCanvasMenu',
   props: ['open'],
   data: () => ({
     auth: AuthState.state,
+    profile: ProfileState.state,
   }),
   methods: {
     logout() {

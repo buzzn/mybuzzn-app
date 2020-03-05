@@ -21,21 +21,21 @@
         <div>
           <field :error="errorMessage.username | translate" @blur="validate('username')" v-model="username" :label="'username' | translate" type="text" name="username"></field>
           <div class="row">
-            <field :error="errorMessage.flatSize | translate" @blur="validate('flatSize')"  v-model="flatSize" :label="'flat-size' | translate" type="text" name="flatSize"></field>
-            <field :error="errorMessage.flatPopulation | translate" @blur="validate('flatPopulation')" v-model="flatPopulation" :label="'flat-population' | translate" type="number" name="flatPopulation"></field>
+            <field :error="errorMessage.flatPopulation | translate" @blur="validate('flatPopulation')" v-model="flatPopulation" :label="'flat-population' | translate" type="number" name="flatPopulation" placeholder="3"></field>
+            <field :value="profile.email" :disabled="true" :label="'email' | translate" type="text" name="email"></field>
+            <!-- field :error="errorMessage.flatSize | translate" @blur="validate('flatSize')"  v-model="flatSize" :label="'flat-size' | translate" type="text" name="flatSize"></field -->
           </div>
           <div class="row">
             <field :value="profile.firstname" :disabled="true" :label="'firstname' | translate" type="text" name="firstname"></field>
             <field :value="profile.lastname" :disabled="true" :label="'lastname' | translate" type="text" name="lastname"></field>
           </div>
-          <field :value="profile.email" :disabled="true" :label="'email' | translate" type="text" name="email"></field>
           <div class="success" :class="{ show: complete }" >{{ 'data-saved' | translate }}</div>
-          <field-button @click="submit" :label="'save' | translate"></field-button>
-          <div class="hints wrap" v-if="$route.params.firstView">
+          <field-button @click="submit" :label="'save' | translate" :disabled="!isValid"></field-button>
+          <!-- div class="hints wrap" v-if="$route.params.firstView">
             <p>
               {{ 'not-now' | translate }} <router-link :to="{ name: 'MyBuzzn' }">{{ 'skip' | translate }}</router-link>
             </p>
-          </div>
+          </div -->
         </div>
       </div>
       <div class="overlay" :class="{ open: openOverlay }" @click="openOverlay = false">
@@ -82,13 +82,19 @@ export default {
   },
   watch: {
     username(value) {
-      this.validator.username = value.length >= 8;
+      this.validator.username = value ? value.length >= 4 : true;
     },
     flatSize(value) {
       this.validator.flatSize = !isNaN(+value);
     },
     flatPopulation(value) {
-      this.validator.flatPopulation = !isNaN(+value);
+      // eslint-disable-next-line
+      this.validator.flatPopulation = !!(!isNaN(+value) && value != false && (value >= 1 && value <= 12));
+    },
+  },
+  computed: {
+    isValid() {
+      return !Object.values(this.validator).filter(v => v === false).length;
     },
   },
   data() {

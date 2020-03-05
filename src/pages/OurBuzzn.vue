@@ -13,12 +13,12 @@
           </p>
         </div>
       </section>
-      <section class="section--coal">
+      <!-- section class="section--coal">
         <div class="wrap">
           <h3>{{ 'hitlist-headline' | translate }}</h3>
           <hit-list></hit-list>
         </div>
-      </section>
+      </section -->
       <section class="section--lavendel">
         <div class="wrap">
           <h3>{{ 'consumption-headline' | translate }}</h3>

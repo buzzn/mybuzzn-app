@@ -1,5 +1,6 @@
 <template>
     <div class='consumption-history'>
+      <div v-if="!isLoading">
         <div class='graph' ref='graph'></div>
         <div class="legend">
           <div class="row" v-if="consumption">
@@ -15,6 +16,10 @@
             <strong>{{ selfSufficiency }} %</strong>
           </div>
         </div>
+      </div>
+      <div v-if="isLoading" class="section-loader">
+        <loading-icon :white="true"></loading-icon>
+      </div>
     </div>
 </template>
 
@@ -22,17 +27,20 @@
 import * as d3 from 'd3';
 import APIService from '../services/APIService';
 import ConsumptionHistoryState from '../states/ConsumptionHistoryState';
+import LoadingIcon from './LoadingIcon';
 
 export default {
   name: 'ConsumptionHistory',
   props: ['type'],
   components: {
+    LoadingIcon,
   },
   data() {
     return {
       data: ConsumptionHistoryState.state,
       consumption: 4.8,
       production: 2.2,
+      isLoading: true,
     };
   },
   computed: {
@@ -46,11 +54,13 @@ export default {
   mounted() {
     if (this.type === 'our') {
       APIService.ourConsumptionHistory().then(() => {
-        this.createGraph();
+        this.isLoading = false;
+        this.$nextTick(() => this.createGraph());
       });
     } else {
       APIService.consumptionHistory().then(() => {
-        this.createGraph();
+        this.isLoading = false;
+        this.$nextTick(() => this.createGraph());
       });
     }
   },
@@ -63,9 +73,13 @@ export default {
       const graphWidth = width - marginLeft - marginRight;
 
       const arrayData = Object.keys(this.data.data).map(key => this.data.data[key]);
-      const data = arrayData.map(d => Object.keys(d).map(key => d[key]).map(a => a));
+      const data = arrayData.map((d, index) => Object.keys(d).map((key) => {
+        if (index === 1) {
+          return d[key] - d[Object.keys(d)[0]];
+        }
+        return d[key];
+      }).map(a => a));
       const xLabels = Object.keys(arrayData[0]);
-
 
       const svg = d3.select(this.$refs.graph)
         .append('svg')
