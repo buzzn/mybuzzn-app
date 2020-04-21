@@ -5,13 +5,13 @@
         <div class="legend">
           <div class="row" v-if="consumption">
             <label class="red">{{ 'consumption' | translate}}</label>
-            <strong>{{ new Intl.NumberFormat('de-DE').format(consumption) }} kWh</strong>
+            <strong>{{ new Intl.NumberFormat('de-DE').format((data.consumption/1000/1000/10000).toFixed(2)) }} kWh</strong>
           </div>
           <div class="row" v-if="production && type == 'our'">
             <label>{{ 'yield' | translate}}</label>
-            <strong>{{ new Intl.NumberFormat('de-DE').format(production) }} kWh</strong>
+            <strong>{{ new Intl.NumberFormat('de-DE').format((data.production/1000/1000/10000).toFixed(2)) }} kWh</strong>
           </div>
-          <div class="row" v-if="consumption && type == 'our'">
+          <div class="row" v-if="data.consumption && type == 'our'">
             <label class="none">{{ 'self-sufficiency' | translate}}</label>
             <strong>{{ selfSufficiency }} %</strong>
           </div>
@@ -45,10 +45,10 @@ export default {
   },
   computed: {
     selfSufficiency() {
-      if (this.consumption === null) {
+      if (!this.data || !this.data.consumption) {
         return 0;
       }
-      return Math.round((this.production / this.consumption) * 100);
+      return Math.round((this.data.production / this.data.consumption) * 100);
     },
   },
   mounted() {
@@ -102,7 +102,7 @@ export default {
       const customXAxis = (g) => {
         const axisBottom = d3
           .axisBottom(x)
-          .tickFormat(d => `${new Date(d * 1000).getHours()}:00`);
+          .tickFormat(d => `${new Date(d * 1000).getHours()}:${(`000${new Date(d * 1000).getMinutes()}`).slice(-2)}`);
         g.call(axisBottom);
         g.selectAll('.tick').select('line').remove();
         g.selectAll('.tick text')
@@ -129,6 +129,7 @@ export default {
 
       const colors = [
         '#99e9b1',
+        '#d4e157',
         '#d4e157',
       ];
 

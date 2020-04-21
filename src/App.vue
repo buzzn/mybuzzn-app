@@ -11,6 +11,7 @@
 <script>
 import OffCanvasMenu from '@/components/OffCanvasMenu';
 import Loading from '@/components/Loading';
+import SocketState from './states/SocketState';
 
 export default {
   name: 'App',
@@ -26,10 +27,12 @@ export default {
     if (this.loading) {
       this.forceLoading = true;
     }
+    this.socket.status = 'idle';
   },
   data: () => ({
     openMenu: false,
     forceLoading: false,
+    socket: SocketState.state,
   }),
   methods: {
     toggleMenu() {

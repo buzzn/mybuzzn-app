@@ -70,13 +70,12 @@ export default {
   }),
   mounted() {
     // TODO: make it real
-    setTimeout(() => {
-      AppState.set('loading', false);
-    }, 2000);
+    AppState.set('loading', false);
   },
   methods: {
     signIn(demo = false) {
       AuthState.set('demo', demo);
+      AppState.set('loading', true);
       APIService.auth({
         user: this.email,
         password: this.password,
@@ -85,6 +84,7 @@ export default {
           APIService.profile()
             .then(() => {
               this.$router.push({ name: 'MyBuzzn' });
+              setTimeout(() => AppState.set('loading', false), 100);
             })
             .catch(error => errorHandling(error.response.status, this.$router)),
         )

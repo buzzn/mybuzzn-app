@@ -5,6 +5,7 @@ const GlobalChallengeState = () => {
     totalPrognose: 0,
     benchmark: 0,
     prognose: 0,
+    pending: false,
   };
 
   const boot = () => {

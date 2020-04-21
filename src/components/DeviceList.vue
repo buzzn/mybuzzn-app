@@ -50,7 +50,6 @@ export default {
   },
   watch: {
     devicelist() {
-      // eslint-disable-next-line
       this.groupDeviceList();
     },
   },
@@ -65,8 +64,6 @@ export default {
       return (key.indexOf(compare) !== -1);
     },
     groupDeviceList() {
-      // eslint-disable-next-line
-      console.log('got here');
       const result = {};
       const result2 = {};
       Object.entries(this.devicelist).forEach(([key, value]) => {

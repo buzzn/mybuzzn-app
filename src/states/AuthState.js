@@ -5,6 +5,8 @@ const AuthState = () => {
     password: null,
     token: null,
     loggedIn: false,
+    loggedInAt: null,
+    expired: null,
     role: null,
     demo: false,
   };

@@ -26,9 +26,9 @@
             <strong>{{ 'hello-name' | translate(profile.firstname + ' ' + profile.lastname) }}</strong><br>
             {{ 'current-sufficiency' | translate }}
           </p>
-          <great-number class="number" unit="kWh pro Jahr">432</great-number>
+          <great-number class="number" unit="kWh pro Jahr">{{ Intl.NumberFormat('de-DE').format(+Object.values(perPersonConsumption.data).join(), 'de-de') }}</great-number>
           <p class="labels">{{ 'current-consumption' | translate }}</p>
-          <great-number class="smaller number" unit="Watt">3.287</great-number>
+          <great-number class="smaller number" unit="Watt">{{ Intl.NumberFormat('de-DE').format((usersValues.power/1000).toFixed(2), 'de-de') }}</great-number>
         </div>
       </section>
       <section class="section--universe">
@@ -76,6 +76,8 @@ import ProfileState from '../states/ProfileState';
 import AppState from '../states/AppState';
 import WebSocketService from '../services/WebSocketService';
 import SocketState from '../states/SocketState';
+import PerPersonConsumptionState from '../states/PerPersonConsumptionState';
+import APIService from '../services/APIService';
 
 export default {
   name: 'MyBuzzn',
@@ -89,17 +91,24 @@ export default {
     Challenges,
   },
   mounted() {
+    if (this.socket.status === 'idle') {
+      WebSocketService.connect(this.profile.meterId);
+    }
     // TODO: make it real
     setTimeout(() => {
       AppState.set('loading', false);
     }, 2000);
 
-    WebSocketService.connect(this.profile.meterId);
+    APIService.perPersonConsumption().then(() => {
+      this.isLoading = false;
+    });
   },
   data() {
     return {
+      perPersonConsumption: PerPersonConsumptionState.state,
       profile: ProfileState.state,
       socket: SocketState.state,
+      isLoading: false,
     };
   },
   computed: {

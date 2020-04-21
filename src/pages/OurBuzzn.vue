@@ -6,10 +6,10 @@
         <div class="wrap">
           <bubble-chart></bubble-chart>
           <p><strong>{{ 'self-sufficiency-of-group' | translate }}</strong></p>
-          <great-number unit="%">42</great-number>
+          <great-number unit="%">{{ Math.round(socket.group_production/socket.group_consumption * 100) }}</great-number>
           <p>
-            {{ 'current-production-group' | translate('7,24') }}<br>
-            {{ 'current-consumption-group' | translate('17,23') }}
+            {{ 'current-production-group' | translate(new Intl.NumberFormat('de-DE').format((socket.group_production/1000/1000).toFixed(2))) }}<br>
+            {{ 'current-consumption-group' | translate(new Intl.NumberFormat('de-DE').format((socket.group_consumption/1000/1000).toFixed(2))) }}
           </p>
         </div>
       </section>
@@ -38,6 +38,7 @@ import ConsumptionHistory from '@/components/ConsumptionHistory';
 import ConsumptionList from '@/components/ConsumptionList';
 import WebSocketService from '../services/WebSocketService';
 import ProfileState from '../states/ProfileState';
+import SocketState from '../states/SocketState';
 
 export default {
   name: 'OurBuzzn',
@@ -52,10 +53,13 @@ export default {
   data() {
     return {
       profile: ProfileState.state,
+      socket: SocketState.state,
     };
   },
-  mounted() {
-    WebSocketService.connect(this.profile.meterId);
+  created() {
+    if (this.socket.status === 'idle') {
+      WebSocketService.connect(this.profile.meterId);
+    }
   },
 };
 </script>

@@ -7,6 +7,8 @@ const ConsumptionHistoryState = () => {
       x: null,
     },
     data: [],
+    consumption: 0,
+    production: 0,
   };
 
   const boot = () => {

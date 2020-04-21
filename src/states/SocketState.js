@@ -5,6 +5,7 @@ const SocketState = () => {
     group_consumption: null,
     group_production: null,
     group_users: [],
+    status: 'idle',
   };
 
   const boot = () => {

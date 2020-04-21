@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import axios from 'axios';
 import AuthState from '../states/AuthState';
 import * as config from '../config';
@@ -8,6 +9,7 @@ import AdvicesState from '../states/AdvicesState';
 import ChallengesState from '../states/ChallengesState';
 import ConsumptionHistoryState from '../states/ConsumptionHistoryState';
 import GlobalChallengeState from '../states/GlobalChallengeState';
+import PerPersonConsumptionState from '../states/PerPersonConsumptionState';
 
 const APIService = () => {
   const endpoints = () => {
@@ -23,6 +25,8 @@ const APIService = () => {
       AuthState.set('password', postData.password);
       AuthState.set('token', data.sessionToken);
       AuthState.set('loggedIn', Boolean(data.sessionToken));
+      AuthState.set('loggedInAt', Date.now());
+      AuthState.set('expired', +(new Date(data.expiredTimestamp * 1000)));
       // set Bearer Token
       axios.defaults.headers.common.Authorization = `Bearer ${data.sessionToken}`;
       resolve(data);
@@ -169,7 +173,25 @@ const APIService = () => {
       DevicelistState.set('data', reducedObject);
       resolve(reducedObject);
     };
-    axios.get(`${endpoints().devicelist}?begin=${(((new Date()).getTime() / 1000) - (24 * 60 * 60))}`, {
+    axios.get(`${endpoints().devicelist}`, {
+      token: AuthState.get('token'),
+    })
+      .then(success)
+      .catch((error) => {
+        if (error.response && error.response.status === 0) {
+          success(error.response);
+        } else {
+          reject(error);
+        }
+      });
+  });
+
+  const perPersonConsumption = () => new Promise((resolve, reject) => {
+    const success = ({ data }) => {
+      PerPersonConsumptionState.set('data', data);
+      resolve(data);
+    };
+    axios.get(`${endpoints().perPersonConsumption}`, {
       token: AuthState.get('token'),
     })
       .then(success)
@@ -268,36 +290,44 @@ const APIService = () => {
       });
   });
 
+  const prepareHistoryData = (rawData, startTime) => {
+    const steps = 0.25; // of an hour - 0.25 = every 15min
+    const data = {};
+    const stepInSec = 60 * 60 * steps;
+
+    const times = Object.keys(rawData).map((index) => {
+      const a = index.split(/[^0-9]/);
+      const d = new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
+      return { index, timestamp: d / 1000 };
+    });
+
+    let timeIndex = startTime;
+    for (let i = 0; i < 24 / steps; i += 1) {
+      // eslint-disable-next-line no-loop-func
+      const timeSpace = times.filter(ts => timeIndex < ts.timestamp && (timeIndex + stepInSec) > ts.timestamp);
+
+      if (timeSpace.length) {
+        let value = 0;
+        timeSpace.forEach(({ index }) => {
+          value += rawData[index];
+        });
+        data[timeSpace[0].timestamp] = value / timeSpace.length;
+      }
+      timeIndex += stepInSec;
+    }
+    return data;
+  };
+
   const consumptionHistory = () => new Promise((resolve, reject) => {
     const success = ({ data }) => {
-      const temp = {};
-      const dataKeys = Object.keys(data);
-      const length = dataKeys.length;
-      const step = 15;
-      for (let s = 0; s <= length; s += step) {
-        const times = dataKeys.slice(s, s + step).map((index) => {
-          const a = index.split(/[^0-9]/);
-          const d = new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
-          return { t: Math.round(d), v: data[index] * 1000 };
-        });
-
-        const time = times.reduce((a, b) => ({
-          t: a.t + b.t,
-          v: a.v + b.v,
-        }));
-
-        temp[Math.round(time.t / times.length / 1000)] = time.v / times.length;
-      }
-      // dataKeys.forEach((index) => {
-      //   const a = index.split(/[^0-9]/);
-      //   const d = new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
-
-      //   temp[(d / 1000).toString()] = data[index] * 1000;
-      // });
-      ConsumptionHistoryState.set('data', { temp });
+      const startTime = (Date.now() / 1000) - (24 * 60 * 60);
+      ConsumptionHistoryState.set('data', { temp: prepareHistoryData(data.power, startTime) });
+      // energy
+      const energyValues = Object.keys(data.energy).map(key => data.energy[key]);
+      ConsumptionHistoryState.set('consumption', Math.abs(energyValues[0] - energyValues[energyValues.length - 1]));
       resolve(data);
     };
-    axios.get(`${endpoints().consumptionHistory}?begin=${(Date.now() / 1000) - (24 * 60 * 60)}`, {
+    axios.get(`${endpoints().consumptionHistory}`, {
       token: AuthState.get('token'),
     })
       .then(success)
@@ -311,37 +341,24 @@ const APIService = () => {
   });
 
   const ourConsumptionHistory = () => new Promise((resolve, reject) => {
+    const startTime = (Date.now() / 1000) - (24 * 60 * 60);
     const success = ({ data }) => {
-      const transformData = (dataSet) => {
-        const temp = {};
-        const dataKeys = Object.keys(dataSet);
-        const length = dataKeys.length;
-        const step = 15;
-        for (let s = 0; s <= length; s += step) {
-          const times = dataKeys.slice(s, s + step).map((index) => {
-            const a = index.split(/[^0-9]/);
-            const d = new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
-            return { t: Math.round(d), v: dataSet[index] * 1000 };
-          });
+      const consumedPower = prepareHistoryData(data.consumed_power, startTime);
+      const firstProducedPower = prepareHistoryData(data.produced_first_meter_power, startTime);
+      const secondProducedPower = prepareHistoryData(data.produced_second_meter_power, startTime);
 
-          const time = times.reduce((a, b) => ({
-            t: a.t + b.t,
-            v: a.v + b.v,
-          }));
-
-          temp[Math.round(time.t / times.length / 1000)] = time.v / times.length;
-        }
-        // dataKeys.forEach((index) => {
-        //   const a = index.split(/[^0-9]/);
-        //   const d = new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
-        //   temp[(d / 1000).toString()] = dataSet[index];
-        // });
-        return temp;
-      };
-      ConsumptionHistoryState.set('data', { consumed: transformData(data.consumed), produced: transformData(data.produced) });
+      const consumedEnergyValues = Object.keys(data.consumed_energy).map(key => data.consumed_energy[key]);
+      const firstProductionEnergy = Object.keys(data.produced_first_meter_power).map(key => data.produced_first_meter_power[key]);
+      const secondProductionEnergy = Object.keys(data.produced_second_meter_power).map(key => data.produced_second_meter_power[key]);
+      ConsumptionHistoryState.set('consumption', consumedEnergyValues[consumedEnergyValues.length - 1] - consumedEnergyValues[0]);
+      ConsumptionHistoryState.set('production',
+        (firstProductionEnergy[firstProductionEnergy.length - 1] - firstProductionEnergy[0]) +
+        (secondProductionEnergy[secondProductionEnergy.length - 1] - secondProductionEnergy[0]));
+      ConsumptionHistoryState.set('data', { consumed: consumedPower, produced: firstProducedPower, second: secondProducedPower });
       resolve(data);
     };
-    axios.get(`${endpoints().ourConsumptionHistory}?begin=${(Date.now() / 1000) - (24 * 60 * 60)}`, {
+
+    axios.get(`${endpoints().ourConsumptionHistory}`, {
       token: AuthState.get('token'),
     })
       .then(success)
@@ -368,6 +385,7 @@ const APIService = () => {
     globalChallenge,
     postProfile,
     updatePassword,
+    perPersonConsumption,
   };
 };
 

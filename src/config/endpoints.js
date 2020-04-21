@@ -1,4 +1,4 @@
-const apiBase = 'http://mybuzzn-backend.buzzn.net';
+const apiBase = 'https://mybuzzn-backend.buzzn.net';
 
 export const demoEndpoints = {
   register: './static/dummy-data/register.json',
@@ -32,4 +32,5 @@ export const prodEndpoints = {
   individualChallenge: `${apiBase}/individual-global-challenge`,
   consumptionHistory: `${apiBase}/individual-consumption-history`,
   ourConsumptionHistory: `${apiBase}/group-consumption-history`,
+  perPersonConsumption: `${apiBase}/per-capita-consumption`,
 };

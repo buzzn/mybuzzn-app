@@ -6,6 +6,7 @@
 
 <script>
 import * as d3 from 'd3';
+import SocketState from '../states/SocketState';
 
 export default {
   name: 'Bubblechart',
@@ -16,43 +17,38 @@ export default {
       forceStrength: 0.06,
       forceSimulation: null,
       forceCollide: null,
+      socket: SocketState.state,
       dataSet: {
-        groupProduction: 200,
-        usersConsumptions: [
-          { id: 1, value: 60 },
-          { id: 2, value: 50 },
-          { id: 3, value: 12 },
-          { id: 4, value: 30 },
-          { id: 5, value: 14 },
-          { id: 6, value: 22 },
-          { id: 7, value: 32 },
-          { id: 8, value: 19 },
-          { id: 9, value: 5 },
-        ],
+        usersConsumptions: [],
       },
     };
   },
   computed: {
     allValues() {
-      const all = this.dataSet.usersConsumptions.map(d => d.value);
-      all.push(this.dataSet.groupProduction);
+      const all = this.socket.group_users.map(d => d.power);
+      all.push(this.socket.group_production);
       return all;
     },
   },
   mounted() {
     this.create();
   },
+  watch: {
+    socket() {
+      this.updateChart();
+    },
+  },
   methods: {
     updateValues() {
-      this.dataSet.usersConsumptions = this.dataSet.usersConsumptions.map((d) => {
-        // eslint-disable-next-line
-        d.oldValue = d.value;
-        // eslint-disable-next-line
-        d.value += (Math.random() - 0.5) * 4;
-        // eslint-disable-next-line
-        d.value = d.value < 0 ? 0 : d.value;
-        return d;
-      });
+      // this.dataSet.usersConsumptions = this.dataSet.usersConsumptions.map((d) => {
+      //   // eslint-disable-next-line
+      //   d.oldValue = d.power;
+      //   // eslint-disable-next-line
+      //   d.power += (Math.random() - 0.5) * 4;
+      //   // eslint-disable-next-line
+      //   d.value = d.value < 0 ? 0 : d.value;
+      //   return d;
+      // });
       this.updateChart();
     },
 
@@ -74,13 +70,13 @@ export default {
         .tween('radius', function (d) {
           if (!d) return;
           const that = d3.select(this);
-          const i = d3.interpolate(d.radius, circleRadiusScale(d.value));
+          const i = d3.interpolate(d.radius, circleRadiusScale(d.power));
           // eslint-disable-next-line
           return function (t) {
             // eslint-disable-next-line
             d.radius = i(t);
             that.attr('r', dat => dat.radius);
-            self.forceSimulation.nodes(self.dataSet.usersConsumptions);
+            self.forceSimulation.nodes(self.socket.group_users);
           };
         });
       this.forceSimulation.alpha(0.2).restart();
@@ -91,12 +87,12 @@ export default {
         .range([0, 80]);
 
       const [width, height] = [this.$refs.chart.offsetWidth, this.$refs.chart.offsetHeight];
-      this.dataSet.usersConsumptions = this.dataSet.usersConsumptions.map(consumption => ({
+      this.dataSet.usersConsumptions = this.socket.group_users.map(consumption => ({
         ...consumption,
-        oldValue: consumption.value,
+        oldValue: consumption.power,
         x: width / 2,
         y: height / 2,
-        radius: circleRadiusScale(consumption.value),
+        radius: circleRadiusScale(consumption.power),
       }));
 
       // create svg
@@ -115,7 +111,7 @@ export default {
 
       // draw production circle
       productionGroup.selectAll('circle.production')
-        .data([this.dataSet.groupProduction])
+        .data([this.socket.group_production])
         .enter()
         .append('circle')
         .attr('class', 'production')
@@ -144,7 +140,6 @@ export default {
 
       this.forceSimulation.nodes(this.dataSet.usersConsumptions)
         .on('tick', this.tick);
-      setInterval(this.updateValues, 5000);
     },
   },
 };

@@ -84,6 +84,7 @@
     "global-challenge-claim": "Ein Planet,<br>ein Ziel.",
     "global-challenge-subline": "<strong>1.000</strong> Münchner Haushalte sparen <br><strong>1.000.000</strong> Kilowattstunden Strom. *",
     "global-challenge-no-benchmark": "Leider konnten wir keinen Jahresverbrauch als Referenzwert zu Deinem Haushalt ermitteln.<br> Sei auch dabei und kontaktiere <a href=\"mailto:team@buzzn.net\" target=\"_blank\">team@buzzn.net</a>, um ein Teil unseres großen Ziels zu sein.",
+    "global-challenge-benchmark-pending": "Vielen Dank, dass Du Dich bei der BUZZN App registriert hast. Wir berechnen jetzt Deinen Stromverbrauch der letzten 365 Tage als Referenzwert für die Global Challenge. Er müsste morgen hier angezeigt werden und dann kann es losgehen!",
     "benchmark-text": "Um unserer gemeinsames Ziel zu erreichen unterbiete deinen Jahresverbrauch** von ",
     "prognose-text": "Wenn du so weitermachst wie bisher, liegt dein aktueller geschätzter Jahresverbrauch** bei",
     "saving-prognose": "Du sparst im Jahr:",

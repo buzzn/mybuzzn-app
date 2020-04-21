@@ -8,7 +8,8 @@
           <counter unit="kWh" :number="Math.round(globalChallenge.totalPrognose/1000/1000/1000) || 0"></counter>
         </div>
         <div class="personal">
-          <p v-html="$options.filters.translate('global-challenge-no-benchmark')"></p>
+          <p v-if="!globalChallenge.pending" v-html="$options.filters.translate('global-challenge-no-benchmark')"></p>
+          <p v-if="globalChallenge.pending" v-html="$options.filters.translate('global-challenge-benchmark-pending')"></p>
         </div>
       </div>
       <div v-if="!isLoading && globalChallenge.benchmark">
@@ -22,14 +23,14 @@
         </div>
         <div class="personal">
           <p>{{ 'benchmark-text' | translate }}<strong>{{ Intl.NumberFormat('de-DE').format((globalChallenge.benchmark/1000/1000/10000).toFixed(2)) }} kWh</strong>.</p>
-          <p>{{ 'prognose-text' | translate }} <strong>{{ Intl.NumberFormat('de-DE').format((globalChallenge.prognose/1000/1000/10000).toFixed(2)) }} kWh</strong>
+          <p>{{ 'prognose-text' | translate }} <strong>{{ Intl.NumberFormat('de-DE').format((globalChallenge.benchmark/1000/1000/10000 - globalChallenge.prognose/1000/1000/10000).toFixed(2)) }} kWh</strong>
           <p>{{ 'saving-prognose' | translate }}</p>
-          <counter unit="kWh" :number="Math.round(globalChallenge.benchmark/1000/1000/10000 - globalChallenge.prognose/1000/1000/10000) || 0"></counter>
+          <counter unit="kWh" :number="Math.min(Math.round(globalChallenge.benchmark/1000/1000/10000 - globalChallenge.prognose/1000/1000/10000), 0)"></counter>
         </div>
         <div class="amount">
-          <p v-if="true || (globalChallenge.benchmark - globalChallenge.prognose) > 0"  v-html="$options.filters.translate('positive-savings-text')"></p>
-          <p v-if="(globalChallenge.benchmark - globalChallenge.prognose) <= 0" v-html="$options.filters.translate('negative-savings-text')"></p>
-          <counter unit="kWh" :number="Math.round(globalChallenge.totalPrognose/1000/1000/1000) || 0"></counter>
+          <p v-if="(globalChallenge.prognose) > 0"  v-html="$options.filters.translate('positive-savings-text')"></p>
+          <p v-if="(globalChallenge.prognose) <= 0" v-html="$options.filters.translate('negative-savings-text')"></p>
+          <counter unit="kWh" :number="Math.max((globalChallenge.totalPrognose/1000/1000/1000), 0)"></counter>
         </div>
         <div class="button">
           <field-button @click="openLandingpage" :label="'Mehr erfahren'"></field-button>

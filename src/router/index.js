@@ -9,6 +9,7 @@ import Register from '@/pages/Register';
 import Error from '@/pages/Error';
 import AuthState from '../states/AuthState';
 import APIService from '../services/APIService';
+import AppState from '../states/AppState';
 
 Vue.use(Router);
 
@@ -76,11 +77,20 @@ router.beforeEach((to, from, next) => {
         params: { nextUrl: to.fullPath },
       });
     } else {
+      const expiredAt = AuthState.get('expired');
+
+      if (expiredAt && Date.now() < expiredAt) {
+        next();
+        return;
+      }
       APIService.auth({
         user: AuthState.get('user'),
         password: AuthState.get('password'),
       })
-        .then(() => next())
+        .then(() => {
+          AppState.set('loading', false);
+          next();
+        })
         .catch(() => next({
           name: 'Login',
           params: { nextUrl: to.fullPath },

@@ -1,19 +1,29 @@
+/* eslint-disable no-console */
 import io from 'socket.io-client';
 import axios from 'axios';
 import SocketState from '../states/SocketState';
 
 const WebSocketService = () => {
+  this.status = 'idle';
   const connect = (meterId) => {
+    SocketState.set('status', 'pending');
     axios.get(`http://mybuzzn-backend.buzzn.net/live?meter_id=${meterId}`).then(() => {
       const socket = io('mybuzzn-backend.buzzn.net/live');
-      socket.on('connect', () => socket.emit('my_event', { data: 'connected' }));
+      socket.on('connect', () => {
+        socket.emit('my_event', { data: 'connected' });
+        SocketState.set('status', 'connected');
+      });
       socket.on('live_data', (message) => {
-        console.log('live_data');
-        const data = JSON.parse(message.data);
         if (message.data.startsWith('Connected')) {
           return;
         }
-        SocketState.set('group_consumption', data.group_consumption);
+
+        const data = JSON.parse(message.data);
+        let groupConsumption = 0;
+        data.group_users.forEach((a) => {
+          groupConsumption += a.power;
+        });
+        SocketState.set('group_consumption', groupConsumption);
         SocketState.set('group_production', data.group_production);
         SocketState.set('group_users', data.group_users);
       });
