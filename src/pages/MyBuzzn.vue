@@ -27,8 +27,11 @@
             {{ 'current-sufficiency' | translate }}
           </p>
           <great-number class="number" unit="kWh pro Jahr">{{ Intl.NumberFormat('de-DE').format(+Object.values(perPersonConsumption.data).join(), 'de-de') }}</great-number>
-          <p class="labels">{{ 'current-consumption' | translate }}</p>
-          <great-number class="smaller number" unit="Watt">{{ Intl.NumberFormat('de-DE').format((usersValues.power/1000).toFixed(2), 'de-de') }}</great-number>
+          <p v-if="usersValues && usersValues.power" class="labels">{{ 'current-consumption' | translate }}</p>
+          <great-number v-if="usersValues && usersValues.power" class="smaller number" unit="Watt">{{ Intl.NumberFormat('de-DE').format((usersValues.power/1000).toFixed(2), 'de-de') }}</great-number>
+          <div v-if="!usersValues || !usersValues.power" class="section-loader">
+            <loading-icon></loading-icon>
+          </div>
         </div>
       </section>
       <section class="section--universe">
@@ -78,6 +81,7 @@ import WebSocketService from '../services/WebSocketService';
 import SocketState from '../states/SocketState';
 import PerPersonConsumptionState from '../states/PerPersonConsumptionState';
 import APIService from '../services/APIService';
+import LoadingIcon from '../components/LoadingIcon';
 
 export default {
   name: 'MyBuzzn',
@@ -89,6 +93,7 @@ export default {
     ConsumptionHistory,
     Advices,
     Challenges,
+    LoadingIcon,
   },
   mounted() {
     if (this.socket.status === 'idle') {
