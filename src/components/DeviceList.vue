@@ -56,7 +56,7 @@ export default {
   mounted() {
     APIService.devicelist().then(() => {
       this.isLoading = false;
-      this.groupDeviceList();
+      this.$nextTick(() => this.groupDeviceList());
     });
   },
   methods: {

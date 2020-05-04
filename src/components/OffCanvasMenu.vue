@@ -23,6 +23,13 @@
 <script>
 import AuthState from '../states/AuthState';
 import ProfileState from '../states/ProfileState';
+import AdvicesState from '../states/AdvicesState';
+import ChallengesState from '../states/ChallengesState';
+import ConsumptionHistoryState from '../states/ConsumptionHistoryState';
+import DevicelistState from '../states/DevicelistState';
+import HitlistState from '../states/HitlistState';
+import GlobalChallengeState from '../states/GlobalChallengeState';
+import PerPersonConsumptionState from '../states/PerPersonConsumptionState';
 
 export default {
   name: 'OffCanvasMenu',
@@ -36,7 +43,16 @@ export default {
       // do logout call here
       AuthState.set('loggedIn', false);
       AuthState.set('token', null);
+      // cleanup
       AuthState.destroy();
+      AdvicesState.destroy();
+      ChallengesState.destroy();
+      ConsumptionHistoryState.destroy();
+      DevicelistState.destroy();
+      HitlistState.destroy();
+      GlobalChallengeState.destroy();
+      PerPersonConsumptionState.destroy();
+      ProfileState.destroy();
       this.$emit('navigate');
       this.$router.push({ name: 'Login' });
     },

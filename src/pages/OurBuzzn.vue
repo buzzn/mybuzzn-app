@@ -22,12 +22,12 @@
           <hit-list></hit-list>
         </div>
       </section -->
-      <!-- section class="section--lavendel">
+      <section class="section--lavendel">
         <div class="wrap">
           <h3>{{ 'consumption-headline' | translate }}</h3>
           <consumption-history type="our"></consumption-history>
         </div>
-      </section -->
+      </section>
     </main>
   </div>
 </template>

@@ -34,7 +34,7 @@ export default {
     this.create();
   },
   watch: {
-    socket() {
+    allValues() {
       this.updateChart();
     },
   },

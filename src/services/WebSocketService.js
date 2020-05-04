@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable no-console */
 import io from 'socket.io-client';
 import axios from 'axios';
@@ -7,17 +8,25 @@ const WebSocketService = () => {
   this.status = 'idle';
   const connect = (meterId) => {
     SocketState.set('status', 'pending');
-    axios.get(`http://mybuzzn-backend.buzzn.net/live?meter_id=${meterId}`).then(() => {
-      const socket = io('mybuzzn-backend.buzzn.net/live');
-      socket.on('connect', () => {
-        socket.emit('my_event', { data: 'connected' });
+    axios.get(`https://mybuzzn-backend.buzzn.net/live?meter_id=${meterId}`, { withCredentials: true }).then(() => {
+      // eslint-disable-next-line no-var
+      window.socket = io('https://mybuzzn-backend.buzzn.net/live', {
+        autoConnect: false,
+        query: {
+          meter_id: meterId,
+        },
+      });
+      window.socket.open();
+
+      window.socket.on('connect', () => {
+        window.socket.emit('my_event', { data: 'connected' });
         SocketState.set('status', 'connected');
       });
-      socket.on('live_data', (message) => {
+
+      window.socket.on('live_data', (message) => {
         if (message.data.startsWith('Connected')) {
           return;
         }
-
         const data = JSON.parse(message.data);
         let groupConsumption = 0;
         data.group_users.forEach((a) => {
@@ -27,9 +36,10 @@ const WebSocketService = () => {
         SocketState.set('group_production', data.group_production);
         SocketState.set('group_users', data.group_users);
       });
-      socket.on('disconnect', () => {
-        socket.emit('my_event', { data: 'disconnected' });
-        socket.disconnect();
+
+      window.socket.on('disconnect', () => {
+        window.socket.emit('my_event', { data: 'disconnected' });
+        window.socket.disconnect();
       });
     });
   };

@@ -28,10 +28,15 @@ const GlobalChallengeState = () => {
 
   const get = key => state[key];
 
+  const destroy = () => {
+    localStorage.removeItem(storeKey);
+  };
+
   return {
     state,
     get,
     set,
+    destroy,
   };
 };
 

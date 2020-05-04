@@ -66,6 +66,9 @@ export default {
   },
   methods: {
     createGraph() {
+      if (!this.$refs.graph) {
+        return;
+      }
       const width = this.$refs.graph.offsetWidth;
       const height = this.$refs.graph.offsetHeight;
       const [marginTop, marginRight, marginLeft, marginBottom] = [10, 0, 0, 30];

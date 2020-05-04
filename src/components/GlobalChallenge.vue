@@ -5,7 +5,7 @@
         <h6 v-html="$options.filters.translate('global-challenge-subline')"></h6>
         <div class="amount">
           <p v-html="$options.filters.translate('neutral-savings-text')"></p>
-          <counter unit="kWh" :number="Math.round(globalChallenge.totalPrognose/1000/1000/1000) || 0"></counter>
+          <counter unit="kWh" :number="Math.max((globalChallenge.totalPrognose/1000/1000/1000), 0)"></counter>
         </div>
         <div class="personal">
           <p v-if="!globalChallenge.pending" v-html="$options.filters.translate('global-challenge-no-benchmark')"></p>

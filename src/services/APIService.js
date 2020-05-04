@@ -250,13 +250,26 @@ const APIService = () => {
         axios.get(endpoints().individualChallenge, {
           token: AuthState.get('token'),
         }).then((individual) => {
-          GlobalChallengeState.set('prognose', Object.values(individual.data.saving)[0]);
-          GlobalChallengeState.set('benchmark', Object.values(individual.data.baseline)[0]);
+          if (individual.status === 200) {
+            GlobalChallengeState.set('prognose', Object.values(individual.data.saving)[0]);
+            GlobalChallengeState.set('benchmark', Object.values(individual.data.baseline)[0]);
+          } else if (individual.data.name && individual.data.name === 'No baseline') {
+            GlobalChallengeState.set('pending', false);
+          } else {
+            GlobalChallengeState.set('pending', true);
+          }
+
           resolve();
         }).catch((error) => {
           if (error.response && error.response.status === 0) {
-            GlobalChallengeState.set('prognose', Object.values(error.response.data.saving)[0]);
-            GlobalChallengeState.set('prognose', Object.values(error.response.data.baseline)[0]);
+            if (error.response.data && error.response.data.saving) {
+              GlobalChallengeState.set('prognose', Object.values(error.response.data.saving)[0]);
+              GlobalChallengeState.set('benchmark', Object.values(error.response.data.baseline)[0]);
+            } else if (error.response.data.name && error.response.data.name === 'No baseline') {
+              GlobalChallengeState.set('pending', false);
+            } else {
+              GlobalChallengeState.set('pending', true);
+            }
             resolve();
           } else {
             reject(error);
@@ -311,7 +324,7 @@ const APIService = () => {
         timeSpace.forEach(({ index }) => {
           value += rawData[index];
         });
-        data[timeSpace[0].timestamp] = value / timeSpace.length;
+        data[Math.round(timeIndex)] = value / timeSpace.length;
       }
       timeIndex += stepInSec;
     }
@@ -343,18 +356,40 @@ const APIService = () => {
   const ourConsumptionHistory = () => new Promise((resolve, reject) => {
     const startTime = (Date.now() / 1000) - (24 * 60 * 60);
     const success = ({ data }) => {
+      // consumed
       const consumedPower = prepareHistoryData(data.consumed_power, startTime);
+      const groupUsers = Object.keys(data.group_users).map(user => data.group_users[user]).map(d => prepareHistoryData(d.power, startTime));
+      const consumed = {};
+      Object.keys(consumedPower).forEach((timestamp) => {
+        let sum = 0;
+        groupUsers.forEach((user) => {
+          sum += user[timestamp];
+        });
+        consumed[timestamp] = consumedPower[timestamp] + sum;
+      });
+
+      // produced
       const firstProducedPower = prepareHistoryData(data.produced_first_meter_power, startTime);
       const secondProducedPower = prepareHistoryData(data.produced_second_meter_power, startTime);
+      const produced = {};
+      Object.keys(firstProducedPower).forEach((timestamp) => {
+        produced[timestamp] = firstProducedPower[timestamp] + secondProducedPower[timestamp];
+      });
+      ConsumptionHistoryState.set('data', { consumed, produced });
 
+      // other data
       const consumedEnergyValues = Object.keys(data.consumed_energy).map(key => data.consumed_energy[key]);
-      const firstProductionEnergy = Object.keys(data.produced_first_meter_power).map(key => data.produced_first_meter_power[key]);
-      const secondProductionEnergy = Object.keys(data.produced_second_meter_power).map(key => data.produced_second_meter_power[key]);
-      ConsumptionHistoryState.set('consumption', consumedEnergyValues[consumedEnergyValues.length - 1] - consumedEnergyValues[0]);
+      const groupUsersEnergy = Object.keys(data.group_users).map(user => data.group_users[user]).map(d => d.energy).reduce((collection, energy) => {
+        const value = Object.keys(energy).map(d => energy[d]);
+        return collection + (value[1] - value[0]);
+      }, 0);
+
+      const firstProductionEnergy = Object.keys(data.produced_first_meter_energy).map(key => data.produced_first_meter_energy[key]);
+      const secondProductionEnergy = Object.keys(data.produced_second_meter_energy).map(key => data.produced_second_meter_energy[key]);
+      ConsumptionHistoryState.set('consumption', groupUsersEnergy + (consumedEnergyValues[1] - consumedEnergyValues[0]));
       ConsumptionHistoryState.set('production',
-        (firstProductionEnergy[firstProductionEnergy.length - 1] - firstProductionEnergy[0]) +
-        (secondProductionEnergy[secondProductionEnergy.length - 1] - secondProductionEnergy[0]));
-      ConsumptionHistoryState.set('data', { consumed: consumedPower, produced: firstProducedPower, second: secondProducedPower });
+        (firstProductionEnergy[1] - firstProductionEnergy[0]) +
+        (secondProductionEnergy[1] - secondProductionEnergy[0]));
       resolve(data);
     };
 
