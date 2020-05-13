@@ -1,3 +1,5 @@
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-console */
 import axios from 'axios';
 import AuthState from '../states/AuthState';
@@ -252,7 +254,7 @@ const APIService = () => {
         }).then((individual) => {
           if (individual.status === 200) {
             GlobalChallengeState.set('prognose', Object.values(individual.data.saving)[0]);
-            GlobalChallengeState.set('benchmark', Object.values(individual.data.baseline)[0]);
+            GlobalChallengeState.set('benchmark', individual.data.baseline);
           } else if (individual.data.name && individual.data.name === 'No baseline') {
             GlobalChallengeState.set('pending', false);
           } else {
@@ -264,7 +266,7 @@ const APIService = () => {
           if (error.response && error.response.status === 0) {
             if (error.response.data && error.response.data.saving) {
               GlobalChallengeState.set('prognose', Object.values(error.response.data.saving)[0]);
-              GlobalChallengeState.set('benchmark', Object.values(error.response.data.baseline)[0]);
+              GlobalChallengeState.set('benchmark', error.response.data.baseline);
             } else if (error.response.data.name && error.response.data.name === 'No baseline') {
               GlobalChallengeState.set('pending', false);
             } else {
@@ -303,33 +305,50 @@ const APIService = () => {
       });
   });
 
-  const prepareHistoryData = (rawData, startTime) => {
-    const steps = 0.25; // of an hour - 0.25 = every 15min
-    const data = {};
-    const stepInSec = 60 * 60 * steps;
-
-    const times = Object.keys(rawData).map((index) => {
-      const a = index.split(/[^0-9]/);
+  const prepareHistoryData = (rawData) => {
+    const times = Object.keys(rawData).map((dateTime) => {
+      const a = dateTime.split(/[^0-9]/);
       const d = new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
-      return { index, timestamp: d / 1000 };
+      return { dateTime, timestamp: d / 1000 };
     });
 
-    let timeIndex = startTime;
-    for (let i = 0; i < 24 / steps; i += 1) {
-      // eslint-disable-next-line no-loop-func
-      const timeSpace = times.filter(ts => timeIndex < ts.timestamp && (timeIndex + stepInSec) > ts.timestamp);
-
-      if (timeSpace.length) {
-        let value = 0;
-        timeSpace.forEach(({ index }) => {
-          value += rawData[index];
-        });
-        data[Math.round(timeIndex)] = value / timeSpace.length;
-      }
-      timeIndex += stepInSec;
+    const data = {};
+    let i = 0;
+    for (const dateTime in rawData) {
+      data[times[i].timestamp] = rawData[dateTime];
+      i += 1;
     }
+
     return data;
   };
+
+  // const prepareHistoryData = (rawData, startTime) => {
+  //   const steps = 0.25; // of an hour - 0.25 = every 15min
+  //   const data = {};
+  //   const stepInSec = 60 * 60 * steps;
+
+  //   const times = Object.keys(rawData).map((index) => {
+  //     const a = index.split(/[^0-9]/);
+  //     const d = new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
+  //     return { index, timestamp: d / 1000 };
+  //   });
+
+  //   let timeIndex = startTime;
+  //   for (let i = 0; i < 24 / steps; i += 1) {
+  //     // eslint-disable-next-line no-loop-func
+  //     const timeSpace = times.filter(ts => timeIndex < ts.timestamp && (timeIndex + stepInSec) > ts.timestamp);
+
+  //     if (timeSpace.length) {
+  //       let value = 0;
+  //       timeSpace.forEach(({ index }) => {
+  //         value += rawData[index];
+  //       });
+  //       data[Math.round(timeIndex)] = value / timeSpace.length;
+  //     }
+  //     timeIndex += stepInSec;
+  //   }
+  //   return data;
+  // };
 
   const consumptionHistory = () => new Promise((resolve, reject) => {
     const success = ({ data }) => {
@@ -354,11 +373,10 @@ const APIService = () => {
   });
 
   const ourConsumptionHistory = () => new Promise((resolve, reject) => {
-    const startTime = (Date.now() / 1000) - (24 * 60 * 60);
     const success = ({ data }) => {
       // consumed
-      const consumedPower = prepareHistoryData(data.consumed_power, startTime);
-      const groupUsers = Object.keys(data.group_users).map(user => data.group_users[user]).map(d => prepareHistoryData(d.power, startTime));
+      const consumedPower = prepareHistoryData(data.consumed_power);
+      const groupUsers = Object.keys(data.group_users).map(user => data.group_users[user]).map(d => prepareHistoryData(d.power));
       const consumed = {};
       Object.keys(consumedPower).forEach((timestamp) => {
         let sum = 0;
@@ -369,8 +387,8 @@ const APIService = () => {
       });
 
       // produced
-      const firstProducedPower = prepareHistoryData(data.produced_first_meter_power, startTime);
-      const secondProducedPower = prepareHistoryData(data.produced_second_meter_power, startTime);
+      const firstProducedPower = prepareHistoryData(data.produced_first_meter_power);
+      const secondProducedPower = prepareHistoryData(data.produced_second_meter_power);
       const produced = {};
       Object.keys(firstProducedPower).forEach((timestamp) => {
         produced[timestamp] = firstProducedPower[timestamp] + secondProducedPower[timestamp];

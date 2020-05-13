@@ -40,7 +40,14 @@ const WebSocketService = () => {
       window.socket.on('disconnect', () => {
         window.socket.emit('my_event', { data: 'disconnected' });
         window.socket.disconnect();
+        SocketState.set('status', 'disconnected');
       });
+
+      document.addEventListener('resume', () => {
+        if (SocketState.get('status') === 'disconnected') {
+          window.socket.open();
+        }
+      }, false);
     });
   };
   return {

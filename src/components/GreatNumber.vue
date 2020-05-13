@@ -1,14 +1,30 @@
 <template>
     <div class="great-number">
-        <span class="number"><slot></slot></span>
-        <span class="unit">{{ unit }}</span>
+        <span ref="number" class="number"></span>
+        <span ref="unit" class="unit">{{ unit }}</span>
     </div>
 </template>
 
 <script>
+import { CountUp } from 'countup.js';
+
 export default {
   name: 'GreatNumber',
-  props: ['unit'],
+  props: ['unit', 'number'],
+  data() {
+    return {
+      countUp: null,
+    };
+  },
+  watch: {
+    number() {
+      this.countUp.update(this.number);
+    },
+  },
+  mounted() {
+    this.countUp = new CountUp(this.$refs.number, this.number, { separator: '.' });
+    this.countUp.start();
+  },
 };
 </script>
 
