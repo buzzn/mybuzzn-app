@@ -11,10 +11,10 @@
         </nav>
         <nav class="meta">
             <ul>
-                <li><a href="https://www.buzzn.net/datenschutz/" target="_blank">{{ 'privacy-policy' | translate }}</a></li>
-                <li><a href="https://www.buzzn.net/impressum/" target="_blank">{{ 'imprint' | translate }}</a></li>
-                <li><router-link @click.native="$emit('navigate')" :to="{ path: '/meta/terms' }">{{ 'terms' | translate }}</router-link></li>
+                <li><a href="https://www.buzzn.net/nutzungsbedingungen-buzzn-app/" target="_blank">{{ 'terms' | translate }}</a></li>
+                <li><a href="https://www.buzzn.net/datenschutzbestimmungen-buzzn-app/" target="_blank">{{ 'privacy-policy' | translate }}</a></li>
                 <li><router-link @click.native="$emit('navigate')" :to="{ path: '/meta/about' }">{{ 'about' | translate }}</router-link></li>
+                <li><a href="https://www.buzzn.net/impressum/" target="_blank">{{ 'imprint' | translate }}</a></li>
             </ul>
         </nav>
     </div>
