@@ -29,6 +29,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../assets/scss/variables";
 @import "../assets/scss/animations";
 
 .great-number {
@@ -40,6 +41,61 @@ export default {
   &.smaller {
     .number {
       font-size: 54px;
+    }
+  }
+  &.live {
+    .unit {
+      //animation: liveNumber 2000ms ease infinite;
+      display: inline-block;
+    }
+    .number {
+      display: inline-block;
+      position: relative;
+      &:after {
+        content: '';
+        display: block;
+        width: 10px;
+        height: 10px;
+        background: $error;
+        position: absolute;
+        top: 6px;
+        left: 0px;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+      }
+      &:before {
+        content: '';
+        display: block;
+        width: 14px;
+        height: 14px;
+        position: absolute;
+        top: 6px;
+        left: 0;
+        border-radius: 50%;
+        border: 2px solid $error;
+        transform: translate(-50%, -50%);
+        animation: liveIcon 2000ms ease infinite;
+      }
+      @keyframes liveIcon {
+        0% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(0.6);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(1.1);
+        }
+     }
+      @keyframes liveNumber {
+        100%, 0% {
+          // opacity: 0.8;
+          transform: scale(1);
+        }
+        50% {
+          // opacity: 1;
+          transform: scale(0.95);
+        }
+     }
     }
   }
 }

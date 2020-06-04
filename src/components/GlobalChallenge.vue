@@ -1,6 +1,7 @@
 <template>
     <div class="globalChallenge">
-      <div v-if="!isLoading && !globalChallenge.benchmark">
+      <!-- no baseline -->
+      <div v-if="!isLoading && profile.baselineState === 'NO_READINGS_AVAILABLE'">
         <h3 v-html="$options.filters.translate('global-challenge-claim')"></h3>
         <h6 v-html="$options.filters.translate('global-challenge-subline')"></h6>
         <div class="amount">
@@ -8,11 +9,25 @@
           <counter unit="kWh" :number="Math.max((globalChallenge.totalPrognose/1000/1000/1000), 0)"></counter>
         </div>
         <div class="personal">
-          <p v-if="!globalChallenge.pending" v-html="$options.filters.translate('global-challenge-no-benchmark')"></p>
-          <p v-if="globalChallenge.pending" v-html="$options.filters.translate('global-challenge-benchmark-pending')"></p>
+          <p v-html="$options.filters.translate('global-challenge-no-benchmark')"></p>
         </div>
       </div>
-      <div v-if="!isLoading && globalChallenge.benchmark">
+
+      <!-- no baseline -->
+      <div v-if="!isLoading && profile.baselineState === 'WAITING_FOR_DATA'">
+        <h3 v-html="$options.filters.translate('global-challenge-claim')"></h3>
+        <h6 v-html="$options.filters.translate('global-challenge-subline')"></h6>
+        <div class="amount">
+          <p v-html="$options.filters.translate('neutral-savings-text')"></p>
+          <counter unit="kWh" :number="Math.max((globalChallenge.totalPrognose/1000/1000/1000), 0)"></counter>
+        </div>
+        <div class="personal">
+          <p v-html="$options.filters.translate('global-challenge-benchmark-pending')"></p>
+        </div>
+      </div>
+
+      <!-- baseline -->
+      <div v-if="!isLoading && profile.baselineState === 'READY'">
         <h3 v-html="$options.filters.translate('global-challenge-claim')"></h3>
         <h6 v-html="$options.filters.translate('global-challenge-subline')"></h6>
         <div class="earth">
@@ -54,6 +69,7 @@ import FieldButton from '@/components/FieldButton';
 import APIService from '../services/APIService';
 import GlobalChallengeState from '../states/GlobalChallengeState';
 import LoadingIcon from './LoadingIcon';
+import ProfileState from '../states/ProfileState';
 
 
 export default {
@@ -68,6 +84,7 @@ export default {
     return {
       isLoading: true,
       globalChallenge: GlobalChallengeState.state,
+      profile: ProfileState.state,
     };
   },
   mounted() {

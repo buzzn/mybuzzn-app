@@ -96,6 +96,10 @@ const APIService = () => {
           case 'meterId':
             ProfileState.set('meterId', data[key]);
             break;
+          case 'baselineState':
+          case 'baseline_state':
+            ProfileState.set('baselineState', data[key]);
+            break;
           default:
             break;
         }

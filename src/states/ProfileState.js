@@ -11,6 +11,7 @@ const ProfileState = () => {
     flatSize: 0,
     flatPopulation: 0,
     meterId: '',
+    baselineState: '',
   };
 
   const boot = () => {

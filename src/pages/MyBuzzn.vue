@@ -28,7 +28,7 @@
           </p>
           <great-number class="number" unit="kWh pro Jahr" :number="Object.keys(perPersonConsumption.data).map(key => perPersonConsumption.data[key])[0]"></great-number>
           <p v-if="usersValues && usersValues.power" class="labels">{{ 'current-consumption' | translate }}</p>
-          <great-number v-if="usersValues && usersValues.power" class="smaller number" unit="Watt" :number="(usersValues.power/1000).toFixed(0)"></great-number>
+          <great-number v-if="usersValues && usersValues.power" class="smaller number live" unit="Watt" :number="(usersValues.power/1000).toFixed(0)"></great-number>
           <div v-if="!usersValues || !usersValues.power" class="section-loader">
             <loading-icon></loading-icon>
           </div>

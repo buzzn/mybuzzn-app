@@ -6,7 +6,7 @@
         <div class="wrap" v-if="socket.group_consumption">
           <bubble-chart></bubble-chart>
           <p><strong>{{ 'self-sufficiency-of-group' | translate }}</strong></p>
-          <great-number unit="%" :number="socket.group_production/socket.group_consumption * 100"></great-number>
+          <great-number unit="%" :number="Math.min(100, socket.group_production/socket.group_consumption * 100)"></great-number>
           <p>
             {{ 'current-production-group' | translate(new Intl.NumberFormat('de-DE').format((socket.group_production/1000/1000).toFixed(2))) }}<br>
             {{ 'current-consumption-group' | translate(new Intl.NumberFormat('de-DE').format((socket.group_consumption/1000/1000).toFixed(2))) }}
